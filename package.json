@@ -1,0 +1,22 @@
+{
+  "name": "@adenta/monorepo",
+  "version": "1.0.0",
+  "description": "monorepo for my adenta library",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/codewreaker/adenta.git"
+  },
+  "keywords": [
+    "library"
+  ],
+  "author": "@codewreaker",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/codewreaker/adenta/issues"
+  },
+  "homepage": "https://github.com/codewreaker/adenta#readme"
+}
