@@ -8,3 +8,8 @@ node_modules/
 **/vite.config.{js,ts,mjs,mts,cjs,cts}.timestamp*
 
 storybook-static
+.env.local
+packages/.DS_Store
+packages/cli/src/lib/setup-local-registry/verdaccio-storage/.verdaccio-db.json
+packages/cli/src/lib/setup-local-registry/verdaccio-storage/@adenta/cli/cli-0.0.1.tgz
+packages/cli/.DS_Store
