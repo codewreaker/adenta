@@ -18,5 +18,10 @@
   "bugs": {
     "url": "https://github.com/codewreaker/adenta/issues"
   },
-  "homepage": "https://github.com/codewreaker/adenta#readme"
+  "homepage": "https://github.com/codewreaker/adenta#readme",
+  "workspaces": [
+    "packages/core",
+    "packages/ui",
+    "packages/cli"
+  ]
 }
