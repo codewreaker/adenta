@@ -1,11 +1,16 @@
 {
-  "name": "core",
-  "version": "1.0.0",
+  "name": "@adenta/core",
+  "version": "0.0.1",
   "description": "core libraries for @adenta",
-  "main": "index.js",
+  "main": "./src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "@swc/helpers": "~0.5.11"
+  },
+  "type": "commonjs",
+  "typings": "./src/index.d.ts"
 }
