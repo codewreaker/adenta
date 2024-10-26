@@ -1,0 +1,91 @@
+{
+	"name": "@adenta/cli",
+	"versions": {
+		"0.0.1": {
+			"name": "@adenta/cli",
+			"version": "0.0.1",
+			"description": "cli tools for adenta monorepo",
+			"main": "./src/index.js",
+			"devDependencies": {},
+			"scripts": {
+				"test": "echo \"Error: no test specified\" && exit 1"
+			},
+			"keywords": [
+				"cli"
+			],
+			"author": {
+				"name": "@codewreaker"
+			},
+			"license": "ISC",
+			"dependencies": {
+				"@swc/helpers": "~0.5.11"
+			},
+			"type": "commonjs",
+			"typings": "./src/index.d.ts",
+			"_id": "@adenta/cli@0.0.1",
+			"gitHead": "d71c972c9f0cca72b6896c5205365956ef688a8f",
+			"_nodeVersion": "20.17.0",
+			"_npmVersion": "10.8.2",
+			"dist": {
+				"integrity": "sha512-JNm2Fz98smYPWtaHr2OBNXXZiSnFDNUm8huIZ0TW3b/amPXNtJZ7YP+w8Bgq+bRGtembaRKLElseiJTtmBCo/A==",
+				"shasum": "470547d41a6879285aaa27cbd357234d7e78399f",
+				"tarball": "https://registry.npmjs.org/@adenta/cli/-/cli-0.0.1.tgz",
+				"fileCount": 12,
+				"unpackedSize": 4936,
+				"signatures": [
+					{
+						"keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+						"sig": "MEQCIG39/urB6lEP1CV6tX6fK9Kg5d6o2bnL+rxnRs+WPu8zAiAwYigkXyi6OKIZpFMjWkdCf9W1MdlW/JGZMYYvAkexWA=="
+					}
+				]
+			},
+			"_npmUser": {
+				"name": "codewreaker",
+				"email": "developer.prempeh@gmail.com"
+			},
+			"directories": {},
+			"maintainers": [
+				{
+					"name": "codewreaker",
+					"email": "developer.prempeh@gmail.com"
+				}
+			],
+			"_npmOperationalInternal": {
+				"host": "s3://npm-registry-packages",
+				"tmp": "tmp/cli_0.0.1_1729909600513_0.35674011744828316"
+			},
+			"_hasShrinkwrap": false,
+			"contributors": []
+		}
+	},
+	"time": {
+		"created": "2024-10-26T02:26:40.419Z",
+		"0.0.1": "2024-10-26T02:26:40.684Z",
+		"modified": "2024-10-26T02:26:40.950Z"
+	},
+	"users": {},
+	"dist-tags": {
+		"latest": "0.0.1"
+	},
+	"_uplinks": {
+		"npmjs": {
+			"etag": "W/\"0abb56adfb00310b9cf6cac2a6e9c76c\"",
+			"fetched": 1729948684347
+		}
+	},
+	"_distfiles": {
+		"cli-0.0.1.tgz": {
+			"url": "https://registry.npmjs.org/@adenta/cli/-/cli-0.0.1.tgz",
+			"sha": "470547d41a6879285aaa27cbd357234d7e78399f",
+			"registry": "npmjs"
+		}
+	},
+	"_attachments": {
+		"cli-0.0.1.tgz": {
+			"shasum": "296e02a65eb3b21c4b99a15c78675c81767ed1ee"
+		}
+	},
+	"_rev": "2-4baa379059c00a7d",
+	"_id": "@adenta/cli",
+	"readme": "# cli\n\nThis library was generated with [Nx](https://nx.dev).\n\n## Building\n\nRun `nx build cli` to build the library.\n\n## Running unit tests\n\nRun `nx test cli` to execute the unit tests via [Vitest](https://vitest.dev/)."
+}
