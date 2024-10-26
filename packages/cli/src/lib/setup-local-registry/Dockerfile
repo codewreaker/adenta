@@ -4,9 +4,9 @@ FROM node:20-alpine
 RUN npm install -g verdaccio@latest
 
 # Create app directory and a non-root user
-RUN mkdir -p /app /verdaccio-storage && \
+RUN mkdir -p /app && \
     adduser -D -h /app verdaccio && \
-    chown -R verdaccio:verdaccio /app /verdaccio-storage
+    chown -R verdaccio:verdaccio /app
 
 # Set working directory
 WORKDIR /app

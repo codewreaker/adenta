@@ -53,8 +53,8 @@ docker build -t verdaccio-image "$SCRIPT_DIR"
 # Get the port number (use default 4873 if not specified)
 PORT=${1:-4873}
 
-# Get the absolute path of the storage directory
-STORAGE_PATH="$SCRIPT_DIR/verdaccio-storage"
+# Get the absolute path of the storage directory in the base directory
+STORAGE_PATH="$BASE_DIR/verdaccio-storage"
 
 # Create the storage directory if it doesn't exist
 mkdir -p "$STORAGE_PATH"
