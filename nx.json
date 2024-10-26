@@ -1,0 +1,10 @@
+{
+  "$schema": "./node_modules/nx/schemas/nx-schema.json",
+  "targetDefaults": {
+    "test": {
+      "cache": true
+    }
+  },
+  "defaultBase": "main",
+  "nxCloudId": "671c43a471a0492840700dbe"
+}

@@ -23,5 +23,8 @@
     "packages/core",
     "packages/ui",
     "packages/cli"
-  ]
+  ],
+  "devDependencies": {
+    "nx": "20.0.6"
+  }
 }
