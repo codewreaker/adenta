@@ -86,5 +86,9 @@
         "linter": "eslint"
       }
     }
+  },
+  "namedInputs": {
+    "sharedGlobals": ["{workspaceRoot}/.github/workflows/publish-ci.yml"],
+    "default": ["sharedGlobals"]
   }
 }
