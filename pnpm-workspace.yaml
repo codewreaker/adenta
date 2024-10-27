@@ -5,4 +5,4 @@ packages:
   - 'packages/cli'   # cli tools
   - 'packages/core'  # core library
   - 'packages/ui'    # UI component library
-  - 'packages/docs'  # Documentation page
+  - 'packages/docs-website'  # Documentation page
