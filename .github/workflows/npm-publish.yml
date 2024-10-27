@@ -17,7 +17,7 @@ jobs:
           version: latest
       - run: pnpm i
       - run: pnpm exec nx run core:build 
-      - run: nx --version
+      - run: pnpm exec nx --version
 
   publish-npm:
     needs: build
