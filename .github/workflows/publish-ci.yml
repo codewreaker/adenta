@@ -34,7 +34,6 @@ jobs:
           cache: 'pnpm'
 
       - run: pnpm i
-      - run: pnpm add -D playwright@latest
       - run: pnpm exec playwright install
       - uses: nrwl/nx-set-shas@v4
 
