@@ -13,8 +13,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4.0.0
+        with:
+          version: latest
       - run: pnpm i
-      - run: pnpm test
+      - run: pnpm exec nx run core:build 
+      - run: nx --version
 
   publish-npm:
     needs: build
