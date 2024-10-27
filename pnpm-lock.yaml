@@ -219,6 +219,8 @@ importers:
         specifier: ^1.3.1
         version: 1.6.0(@types/node@18.16.9)(@vitest/ui@1.6.0)(jsdom@22.1.0)(less@4.1.3)(sass@1.80.4)(stylus@0.59.0)(terser@5.36.0)
 
+  docs-website: {}
+
   packages/cli:
     dependencies:
       '@swc/helpers':
@@ -230,21 +232,6 @@ importers:
       '@swc/helpers':
         specifier: ~0.5.11
         version: 0.5.13
-
-  packages/docs-website:
-    devDependencies:
-      '@docusaurus/module-type-aliases':
-        specifier: 3.5.2
-        version: 3.5.2(@swc/core@1.5.29(@swc/helpers@0.5.13))(acorn@8.13.0)(esbuild@0.23.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@docusaurus/tsconfig':
-        specifier: 3.5.2
-        version: 3.5.2
-      '@docusaurus/types':
-        specifier: 3.5.2
-        version: 3.5.2(@swc/core@1.5.29(@swc/helpers@0.5.13))(acorn@8.13.0)(esbuild@0.23.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      typescript:
-        specifier: ~5.5.2
-        version: 5.5.4
 
   packages/ui:
     dependencies:

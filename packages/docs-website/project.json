@@ -1,34 +1,33 @@
 {
     "name": "docs-website",
     "$schema": "../../node_modules/nx/schemas/project-schema.json",
-    "sourceRoot": "packages/docs",
+    "sourceRoot": "{projectRoot}/src",
     "projectType": "application",
     "tags": [],
     "targets": {
       "build": {
-        "command": "docusaurus build",
+        "executor": "nx:run-script",
         "options": {
-            "config": "docusaurus.config.ts"
+          "script": "build"
         }
       },
       "dev":{
-        "command": "docusaurus start",
+        "executor": "nx:run-script",
         "options": {
-            "config": "{projectRoot}/docusaurus.config.ts"
+          "script": "start"
         }
+
       },
       "serve": {
-        "command": "docusaurus serve",
-        "dependsOn": ["^build"],
+        "executor": "nx:run-script",
         "options": {
-            "config": "{projectRoot}/docusaurus.config.ts"
+          "script": "serve"
         }
       },
       "publish":{
-        "command": "docusaurus deploy",
-        "dependsOn": ["^build"],
+        "executor": "nx:run-script",
         "options": {
-            "config": "{projectRoot}/docusaurus.config.ts"
+          "script": "deploy"
         }
       }
     }
