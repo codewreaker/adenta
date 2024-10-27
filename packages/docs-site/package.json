@@ -1,0 +1,13 @@
+{
+  "name": "@adenta/docs-site",
+  "version": "1.0.0",
+  "description": "documentation for all @adenta packages and libraries",
+  "main": "index.js",
+  "scripts": {
+    "dev": "next",
+    "build": "next build",
+    "start": "next start"
+  },
+  "author": "@codewreaker",
+  "license": "ISC"
+}

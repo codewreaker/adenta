@@ -1,5 +1,5 @@
 {
-    "name": "docs-website",
+    "name": "docs-site",
     "$schema": "../../node_modules/nx/schemas/project-schema.json",
     "sourceRoot": "{projectRoot}/src",
     "projectType": "application",
@@ -14,20 +14,14 @@
       "dev":{
         "executor": "nx:run-script",
         "options": {
-          "script": "start"
+          "script": "dev"
         }
 
       },
-      "serve": {
+      "start": {
         "executor": "nx:run-script",
         "options": {
-          "script": "serve"
-        }
-      },
-      "publish":{
-        "executor": "nx:run-script",
-        "options": {
-          "script": "deploy"
+          "script": "start"
         }
       }
     }
