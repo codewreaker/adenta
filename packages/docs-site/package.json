@@ -1,13 +1,11 @@
 {
   "name": "@adenta/docs-site",
-  "version": "1.0.0",
-  "description": "documentation for all @adenta packages and libraries",
-  "main": "index.js",
+  "version": "0.1.0",
   "scripts": {
-    "dev": "next",
+    "dev": "next dev --turbopack",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "lint": "next lint"
   },
-  "author": "@codewreaker",
-  "license": "ISC"
+  "dependencies": {}
 }

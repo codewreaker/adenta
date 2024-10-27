@@ -1,7 +1,7 @@
 {
     "name": "docs-site",
     "$schema": "../../node_modules/nx/schemas/project-schema.json",
-    "sourceRoot": "{projectRoot}/src",
+    "sourceRoot": "packages/docs-site",
     "projectType": "application",
     "tags": [],
     "targets": {
@@ -16,7 +16,6 @@
         "options": {
           "script": "dev"
         }
-
       },
       "start": {
         "executor": "nx:run-script",

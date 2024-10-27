@@ -1,4 +1,4 @@
-import type { NextConfig } from 'next'
+import type { NextConfig } from "next";
 import nextra from 'nextra'
  
 const withNextra = nextra({
@@ -6,11 +6,9 @@ const withNextra = nextra({
   themeConfig: './theme.config.jsx'
 })
 
-const nextConfig:NextConfig = {
+const nextConfig: NextConfig = {
+  /* config options here */
+};
 
-}
  
 export default withNextra(nextConfig)
- 
-// If you have other Next.js configurations, you can pass them as the parameter:
-// export default withNextra({ /* other next.js config */ })
