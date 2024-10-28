@@ -5,6 +5,10 @@
     "declaration": true,
     "types": ["node"],
     "jsx": "preserve",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
   },
   "include": ["src/**/*.ts", "src/**/*.tsx"],
   "exclude": [
