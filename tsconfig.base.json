@@ -17,8 +17,8 @@
     "paths": {
       "@adenta/cli": ["packages/cli/src/index.ts"],
       "@adenta/core": ["packages/core/src/index.ts"],
-      "@adenta/ui": ["packages/ui/src/index.ts"],
-      "@adenta/docs-site/*": ["packages/docs-site/src/*"]
+      "@adenta/docs-site/*": ["packages/docs-site/src/*"],
+      "@adenta/ui/*": ["packages/ui/src/lib/*"]
     }
   },
   "exclude": ["node_modules", "tmp"]
