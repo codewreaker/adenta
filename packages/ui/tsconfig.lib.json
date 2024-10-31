@@ -9,7 +9,7 @@
       "vite/client"
     ],
     "paths": {
-      "@/*": ["./src/lib/*"]
+      "@/*": ["./src/*"]
     }
   },
   "exclude": [
