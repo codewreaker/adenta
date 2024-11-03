@@ -115,6 +115,7 @@
     "includedScripts": []
   },
   "dependencies": {
+    "glob": "^11.0.0",
     "shadcn": "^2.1.2"
   }
 }

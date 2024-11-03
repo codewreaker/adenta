@@ -1,27 +1,37 @@
 //@ts-check
+const {globSync} = require('glob')
+
 const { composePlugins, withNx, withReact } = require('@nx/rspack');
 const path = require('node:path');
 
+const globFiles = globSync([
+  "**/*.{js,ts,tsx}"
+],{
+  cwd: path.resolve(__dirname, './'),
+});
+
+const entries = globFiles.reduce((acc, filePath) => {
+  const entryName = path.relative("packages/ui/", filePath).replace(/\.[jt]sx?$/, "");
+  acc[entryName] = `./${filePath}`;
+  return acc;
+}, {});
+
 module.exports = composePlugins(withNx(), withReact(), (config) => {
-  return  {
+  return {
     ...config,
-    output: {
-      ...config.output,
-      filename: (pathData) => {
-        // Get the chunk name
-        const chunk = pathData.chunk;
-        // Get the relative path from src to the file
-        const relativePath = path.relative(
-          path.resolve(__dirname, 'src'),
-          chunk.entryModule.resource
-        );
-        // Replace the extension with .js
-        return relativePath.replace(/\.[^/.]+$/, '.js');
-      }
+    entry: {
+      // Point to each component directory, or use `index.ts` for main entry points
+      ...entries
     },
-    resolve:{
+    output: {
+      ...config.output
+    },
+    experiments: {
+      outputModule: true,
+    },
+    resolve: {
       ...config.resolve,
-      alias:{
+      alias: {
         "@": path.resolve(__dirname, "./src")
       }
     }
