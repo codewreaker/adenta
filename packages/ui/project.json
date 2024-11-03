@@ -10,8 +10,8 @@
       "outputs": ["{options.outputPath}"],
       "defaultConfiguration": "production",
       "options": {
-        "target": "web",
-        "outputPath": "dist/ui",
+        "target": "node",
+        "outputPath": "dist/ui/",
         "main": "packages/ui/src/index.ts",
         "tsConfig": "packages/ui/tsconfig.lib.json",
         "rspackConfig": "packages/ui/rspack.config.js",
