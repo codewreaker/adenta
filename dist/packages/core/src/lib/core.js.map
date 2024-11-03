@@ -1,1 +1,0 @@
-{"version":3,"sources":["../../../../../packages/core/src/lib/core.ts"],"sourcesContent":["export function core(): string {\n  return 'core';\n}\n"],"names":["core"],"rangeMappings":";;;;;;;;;;;;","mappings":";;;;+BAAgBA;;;eAAAA;;;AAAT,SAASA;IACd,OAAO;AACT"}

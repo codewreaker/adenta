@@ -17,7 +17,7 @@
       "executor": "@nx/js:swc",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/packages/cli",
+        "outputPath": "dist/cli",
         "main": "packages/cli/src/index.ts",
         "tsConfig": "packages/cli/tsconfig.lib.json",
         "assets": ["packages/cli/*.md"]
