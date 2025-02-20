@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunk_adenta_monorepo=self.webpackChunk_adenta_monorepo||[]).push([[647],{370:(e,r,a)=>{a.r(r),a.d(r,{default:()=>d});a(758);var s=a(3526),n=a(3960),o=a(8371),t=a(389),u=a(7034),c=a(6070);function d(e){return(0,c.jsx)(n.e3,{className:(0,s.A)(o.G.wrapper.docsPages),children:(0,c.jsx)(u.A,{children:(0,t.v)(e.route.routes)})})}}}]);
