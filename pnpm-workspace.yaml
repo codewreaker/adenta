@@ -1,0 +1,7 @@
+# pnpm-workspace.yml
+# We use pnpm to configures multi-package workspace project.
+# This file lists all packages in project
+packages:
+  - 'packages/cli'   # cli tools
+  - 'packages/core'  # core library
+  - 'packages/ui'    # UI component library

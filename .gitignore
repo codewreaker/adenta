@@ -22,3 +22,6 @@ out
 # Generated Docusaurus files
 .docusaurus/
 .cache-loader/
+.nx/installation
+vite.config.*.timestamp*
+vitest.config.*.timestamp*
