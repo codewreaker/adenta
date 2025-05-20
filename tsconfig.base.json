@@ -15,9 +15,9 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@adenta/cli": ["cli/src/index.ts"],
-      "@adenta/core": ["core/src/index.ts"],
-      "@adenta/ui": ["ui/src/index.ts"]
+      "@adenta/cli": ["packages/cli/src/index.ts"],
+      "@adenta/core": ["packages/core/src/index.ts"],
+      "@adenta/ui": ["packages/ui/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

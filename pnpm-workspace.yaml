@@ -1,9 +1,6 @@
 packages:
   # all packages in subdirectories
-  - '@adenta/cli'
-  - '@adenta/core'
-  - '@adenta/ui'
-  - '@adenta/website'
+  - 'packages/*'
   # exclude packages that are inside test directories
   - '!**/test/**'
   - '!**/tests/**'
