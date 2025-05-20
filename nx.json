@@ -65,7 +65,7 @@
       }
     },
     {
-      "plugin": "@nx/rspack/plugin",
+      "plugin": "@nx/rspack",
       "options": {
         "buildTargetName": "build",
         "serveTargetName": "serve",
