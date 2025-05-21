@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import {
   EnvelopeIcon,
   HomeIcon,
@@ -17,8 +16,8 @@ CommandLineIcon,
 
 const IconWrapper = (IconComponent: React.ElementType) => (
   <IconComponent
-    width={32}
-    height={32}
+    width={28}
+    height={28}
     stroke="#ff6a1a"
     style={{ marginBottom: 8 }}
   />
