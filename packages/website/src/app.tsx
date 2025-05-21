@@ -1,26 +1,33 @@
 import { useState } from 'react';
-import { EnvelopeIcon, HomeIcon, DevicePhoneMobileIcon } from '@heroicons/react/24/outline';
+import {
+  EnvelopeIcon,
+  HomeIcon,
+  DevicePhoneMobileIcon,
+} from '@heroicons/react/24/outline';
 import { motion } from 'framer-motion';
 import Terminal from './components/terminal';
-const DEBUG_PAUSE = true; // Set to true to pause all framer-motion animations
+import { DEBUG_PAUSE } from './constants';
+import {
 
 // Heroicons SVGs (outline style)
+CubeIcon,
+RectangleStackIcon,
+CommandLineIcon,
+} from '@heroicons/react/24/outline';
+
+const IconWrapper = (IconComponent: React.ElementType) => (
+  <IconComponent
+    width={32}
+    height={32}
+    stroke="#ff6a1a"
+    style={{ marginBottom: 8 }}
+  />
+);
+
 const icons = {
-  core: (
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="#ff6a1a" width={32} height={32} style={{marginBottom: 8}}>
-      <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v18m9-9H3" />
-    </svg>
-  ),
-  ui: (
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="#ff6a1a" width={32} height={32} style={{marginBottom: 8}}>
-      <rect x="4" y="4" width="16" height="16" rx="4" />
-    </svg>
-  ),
-  cli: (
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="#ff6a1a" width={32} height={32} style={{marginBottom: 8}}>
-      <path strokeLinecap="round" strokeLinejoin="round" d="M4 17v-2a2 2 0 012-2h12a2 2 0 012 2v2M8 13V7a4 4 0 118 0v6" />
-    </svg>
-  ),
+  core: IconWrapper(CubeIcon),
+  ui: IconWrapper(RectangleStackIcon),
+  cli: IconWrapper(CommandLineIcon),
 };
 
 const bio = {
@@ -35,11 +42,11 @@ const bio = {
   ],
 };
 
-
 const tabProjects = [
   {
     name: '@adenta/core',
-    description: 'Core utilities and shared functionality for the @adenta ecosystem',
+    description:
+      'Core utilities and shared functionality for the @adenta ecosystem',
     path: '/core',
     icon: icons.core,
     key: 'core',
@@ -62,7 +69,7 @@ const tabProjects = [
 
 export default function App() {
   const [activeTab, setActiveTab] = useState(tabProjects[0].key);
-  const activeProject = tabProjects.find(p => p.key === activeTab);
+  const activeProject = tabProjects.find((p) => p.key === activeTab);
 
   return (
     <div className="portfolio-root">
@@ -75,48 +82,97 @@ export default function App() {
       >
         <div className="portfolio-hero-content">
           <div className="portfolio-hello">— Hello</div>
-          <h1 className="portfolio-name">I'm <span style={{ color: '#ff6a1a' }}>{bio.name}</span></h1>
+          <h1 className="portfolio-name">
+            I'm <span style={{ color: '#ff6a1a' }}>{bio.name}</span>
+          </h1>
           <div className="portfolio-title">{bio.title}</div>
           <div className="portfolio-description">{bio.description}</div>
           <div className="portfolio-links">
-        {bio.links.map((link) => {
-          let icon = null;
-          if (link.label === 'GitHub') icon = <HomeIcon width={22} height={22} style={{verticalAlign: 'middle', marginRight: 6}} />;
-          if (link.label === 'LinkedIn') icon = <DevicePhoneMobileIcon width={22} height={22} style={{verticalAlign: 'middle', marginRight: 6}} />;
-          if (link.label === 'Email') icon = <EnvelopeIcon width={22} height={22} style={{verticalAlign: 'middle', marginRight: 6}} />;
-          return (
-            <a key={link.label} href={link.url} target="_blank" rel="noopener noreferrer">
-          {icon}{link.label}
-            </a>
-          );
-        })}
+            {bio.links.map((link) => {
+              let icon = null;
+              if (link.label === 'GitHub')
+                icon = (
+                  <HomeIcon
+                    width={22}
+                    height={22}
+                    style={{ verticalAlign: 'middle', marginRight: 6 }}
+                  />
+                );
+              if (link.label === 'LinkedIn')
+                icon = (
+                  <DevicePhoneMobileIcon
+                    width={22}
+                    height={22}
+                    style={{ verticalAlign: 'middle', marginRight: 6 }}
+                  />
+                );
+              if (link.label === 'Email')
+                icon = (
+                  <EnvelopeIcon
+                    width={22}
+                    height={22}
+                    style={{ verticalAlign: 'middle', marginRight: 6 }}
+                  />
+                );
+              return (
+                <a
+                  key={link.label}
+                  href={link.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {icon}
+                  {link.label}
+                </a>
+              );
+            })}
           </div>
           <button className="portfolio-learn-btn">Learn more</button>
         </div>
-          <motion.img
+        <motion.img
           src="assets/avatar-3D.png"
           alt="avatar"
           className="portfolio-asset portfolio-avatar"
           initial={{ y: 0, scale: 1 }}
-          animate={DEBUG_PAUSE ? { y: 0, scale: 1 } : { y: [0, -10, 0], scale: [1, 1.05, 1] }}
-          transition={DEBUG_PAUSE ? {} : { duration: 8, repeat: Infinity, ease: 'easeInOut' }}
+          animate={
+            DEBUG_PAUSE
+              ? { y: 0, scale: 1 }
+              : { y: [0, -10, 0], scale: [1, 1.05, 1] }
+          }
+          transition={
+            DEBUG_PAUSE
+              ? {}
+              : { duration: 8, repeat: Infinity, ease: 'easeInOut' }
+          }
         />
         {/* 3D PNG assets with subtle animations */}
         <motion.img
-          src="assets/cloud_icon.png"
-          alt="Cloud"
-          className="portfolio-asset portfolio-asset-cloud"
+          src="assets/python.png"
+          alt="Python Ion"
+          className="portfolio-asset portfolio-asset-python"
           initial={{ x: -20 }}
-          animate={DEBUG_PAUSE ? { x: -20 } : { x: [ -20, 40, -20 ] }}
-          transition={DEBUG_PAUSE ? {} : { duration: 7, repeat: Infinity, ease: 'easeInOut' }}
+          animate={DEBUG_PAUSE ? { x: -20 } : { x: [-20, 40, -20] }}
+          transition={
+            DEBUG_PAUSE
+              ? {}
+              : { duration: 7, repeat: Infinity, ease: 'easeInOut' }
+          }
         />
         <motion.img
           src="assets/typescript.png"
           alt="TypeScript"
           className="portfolio-asset portfolio-asset-typescript"
           initial={{ y: 0, rotate: 0 }}
-          animate={DEBUG_PAUSE ? { y: 0, rotate: 0 } : { y: [0, -18, 0], rotate: [0, 10, 0] }}
-          transition={DEBUG_PAUSE ? {} : { duration: 6, repeat: Infinity, ease: 'easeInOut' }}
+          animate={
+            DEBUG_PAUSE
+              ? { y: 0, rotate: 0 }
+              : { y: [0, -18, 0], rotate: [0, 10, 0] }
+          }
+          transition={
+            DEBUG_PAUSE
+              ? {}
+              : { duration: 6, repeat: Infinity, ease: 'easeInOut' }
+          }
         />
         <motion.img
           src="assets/mug.png"
@@ -124,13 +180,18 @@ export default function App() {
           className="portfolio-asset portfolio-asset-mug"
           initial={{ y: 0 }}
           animate={DEBUG_PAUSE ? { y: 0 } : { y: [0, 12, 0] }}
-          transition={DEBUG_PAUSE ? {} : { duration: 5, repeat: Infinity, ease: 'easeInOut' }}
+          transition={
+            DEBUG_PAUSE
+              ? {}
+              : { duration: 5, repeat: Infinity, ease: 'easeInOut' }
+          }
         />
       </motion.div>
 
       {/* Projects Tabs Section */}
-      <Terminal tabProjects={tabProjects}/>
-
+      <div className="portfolio-tabs" style={{ padding: "3%" }}>
+        <Terminal tabProjects={tabProjects} />
+      </div>
     </div>
   );
 }

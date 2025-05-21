@@ -1,7 +1,7 @@
 import { ReactNode, useState } from 'react';
 import { motion } from 'framer-motion';
+import { DEBUG_PAUSE } from '../../constants';
 
-const DEBUG_PAUSE = true; // Set to true to pause all framer-motion animations
 
 // Sample data for demonstration
 const sampleTabProjects = [
@@ -58,7 +58,7 @@ const Terminal = ({
             animate={DEBUG_PAUSE ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
             transition={DEBUG_PAUSE ? {} : { duration: 0.7, delay: 0.3 }}
             style={{
-                width: 540,
+                minWidth: 630,
                 borderRadius: 12,
                 boxShadow:
                     '0 6px 32px 0 rgba(0,0,0,0.10), 0 1.5px 6px 0 rgba(0,0,0,0.08)',

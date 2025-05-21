@@ -152,7 +152,6 @@ html {
 }
 
 .portfolio-avatar {
-  top: 10%;
   width: 650px;
   height: auto;
   left: 63%;
@@ -296,17 +295,17 @@ html {
   opacity: 0.92;
 }
 
-.portfolio-asset-cloud {
-  top: 60px;
+.portfolio-asset-python {
+  top: 50px;
   left: 60%;
-  width: 110px;
+  width: 250px;
   filter: drop-shadow(0 4px 16px #0002);
 }
 
 .portfolio-asset-typescript {
   position: fixed;
-  left: 25%;
-  top: 11%;
+  left: 28%;
+  top: 20%;
   z-index: 3;
   height: auto;
   width: 200px;
@@ -344,7 +343,7 @@ html {
   .portfolio-sidebar {
     display: none;
   }
-  .portfolio-asset-cloud {
+  .portfolio-asset-python {
     top: 30px;
     left: 50%;
     width: 70px;
