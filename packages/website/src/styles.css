@@ -154,7 +154,7 @@ html {
 .portfolio-avatar {
   width: 650px;
   height: auto;
-  left: 63%;
+  left: 55%;
   z-index: 2;
   filter: drop-shadow(0 2px 8px #ff6a1a22);
 }
@@ -296,14 +296,13 @@ html {
 }
 
 .portfolio-asset-python {
-  top: 50px;
-  left: 60%;
-  width: 250px;
+  top: 8%;
+  left: 55%;
+  width: 180px;
   filter: drop-shadow(0 4px 16px #0002);
 }
 
 .portfolio-asset-typescript {
-  position: fixed;
   left: 28%;
   top: 20%;
   z-index: 3;

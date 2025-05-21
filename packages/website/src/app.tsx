@@ -68,81 +68,25 @@ const tabProjects = [
 ];
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState(tabProjects[0].key);
-  const activeProject = tabProjects.find((p) => p.key === activeTab);
 
   return (
     <div className="portfolio-root">
       {/* Hero Section */}
-      <motion.div
-        className="portfolio-hero"
-        initial={{ opacity: 0, y: -40 }}
-        animate={DEBUG_PAUSE ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
-        transition={DEBUG_PAUSE ? {} : { duration: 0.7 }}
-      >
-        <div className="portfolio-hero-content">
-          <div className="portfolio-hello">— Hello</div>
-          <h1 className="portfolio-name">
-            I'm <span style={{ color: '#ff6a1a' }}>{bio.name}</span>
-          </h1>
-          <div className="portfolio-title">{bio.title}</div>
-          <div className="portfolio-description">{bio.description}</div>
-          <div className="portfolio-links">
-            {bio.links.map((link) => {
-              let icon = null;
-              if (link.label === 'GitHub')
-                icon = (
-                  <HomeIcon
-                    width={22}
-                    height={22}
-                    style={{ verticalAlign: 'middle', marginRight: 6 }}
-                  />
-                );
-              if (link.label === 'LinkedIn')
-                icon = (
-                  <DevicePhoneMobileIcon
-                    width={22}
-                    height={22}
-                    style={{ verticalAlign: 'middle', marginRight: 6 }}
-                  />
-                );
-              if (link.label === 'Email')
-                icon = (
-                  <EnvelopeIcon
-                    width={22}
-                    height={22}
-                    style={{ verticalAlign: 'middle', marginRight: 6 }}
-                  />
-                );
-              return (
-                <a
-                  key={link.label}
-                  href={link.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {icon}
-                  {link.label}
-                </a>
-              );
-            })}
-          </div>
-          <button className="portfolio-learn-btn">Learn more</button>
-        </div>
+      <div className="portfolio-assets">
         <motion.img
           src="assets/avatar-3D.png"
           alt="avatar"
           className="portfolio-asset portfolio-avatar"
           initial={{ y: 0, scale: 1 }}
           animate={
-            DEBUG_PAUSE
-              ? { y: 0, scale: 1 }
-              : { y: [0, -10, 0], scale: [1, 1.05, 1] }
+        DEBUG_PAUSE
+          ? { y: 0, scale: 1 }
+          : { y: [0, -10, 0], scale: [1, 1.05, 1] }
           }
           transition={
-            DEBUG_PAUSE
-              ? {}
-              : { duration: 8, repeat: Infinity, ease: 'easeInOut' }
+        DEBUG_PAUSE
+          ? {}
+          : { duration: 8, repeat: Infinity, ease: 'easeInOut' }
           }
         />
         {/* 3D PNG assets with subtle animations */}
@@ -153,9 +97,9 @@ export default function App() {
           initial={{ x: -20 }}
           animate={DEBUG_PAUSE ? { x: -20 } : { x: [-20, 40, -20] }}
           transition={
-            DEBUG_PAUSE
-              ? {}
-              : { duration: 7, repeat: Infinity, ease: 'easeInOut' }
+        DEBUG_PAUSE
+          ? {}
+          : { duration: 7, repeat: Infinity, ease: 'easeInOut' }
           }
         />
         <motion.img
@@ -164,14 +108,14 @@ export default function App() {
           className="portfolio-asset portfolio-asset-typescript"
           initial={{ y: 0, rotate: 0 }}
           animate={
-            DEBUG_PAUSE
-              ? { y: 0, rotate: 0 }
-              : { y: [0, -18, 0], rotate: [0, 10, 0] }
+        DEBUG_PAUSE
+          ? { y: 0, rotate: 0 }
+          : { y: [0, -18, 0], rotate: [0, 10, 0] }
           }
           transition={
-            DEBUG_PAUSE
-              ? {}
-              : { duration: 6, repeat: Infinity, ease: 'easeInOut' }
+        DEBUG_PAUSE
+          ? {}
+          : { duration: 6, repeat: Infinity, ease: 'easeInOut' }
           }
         />
         <motion.img
@@ -181,11 +125,67 @@ export default function App() {
           initial={{ y: 0 }}
           animate={DEBUG_PAUSE ? { y: 0 } : { y: [0, 12, 0] }}
           transition={
-            DEBUG_PAUSE
-              ? {}
-              : { duration: 5, repeat: Infinity, ease: 'easeInOut' }
+        DEBUG_PAUSE
+          ? {}
+          : { duration: 5, repeat: Infinity, ease: 'easeInOut' }
           }
         />
+      </div>
+      <motion.div
+        className="portfolio-hero"
+        initial={{ opacity: 0, y: -40 }}
+        animate={DEBUG_PAUSE ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
+        transition={DEBUG_PAUSE ? {} : { duration: 0.7 }}
+      >
+        <div className="portfolio-hero-content">
+          <div className="portfolio-hello">— Hello</div>
+          <h1 className="portfolio-name">
+        I'm <span style={{ color: '#ff6a1a' }}>{bio.name}</span>
+          </h1>
+          <div className="portfolio-title">{bio.title}</div>
+          <div className="portfolio-description">{bio.description}</div>
+          <div className="portfolio-links">
+        {bio.links.map((link) => {
+          let icon = null;
+          if (link.label === 'GitHub')
+            icon = (
+          <HomeIcon
+            width={22}
+            height={22}
+            style={{ verticalAlign: 'middle', marginRight: 6 }}
+          />
+            );
+          if (link.label === 'LinkedIn')
+            icon = (
+          <DevicePhoneMobileIcon
+            width={22}
+            height={22}
+            style={{ verticalAlign: 'middle', marginRight: 6 }}
+          />
+            );
+          if (link.label === 'Email')
+            icon = (
+          <EnvelopeIcon
+            width={22}
+            height={22}
+            style={{ verticalAlign: 'middle', marginRight: 6 }}
+          />
+            );
+          return (
+            <a
+          key={link.label}
+          href={link.url}
+          target="_blank"
+          rel="noopener noreferrer"
+            >
+          {icon}
+          {link.label}
+            </a>
+          );
+        })}
+          </div>
+          <button className="portfolio-learn-btn">Learn more</button>
+        </div>
       </motion.div>
 
       {/* Projects Tabs Section */}

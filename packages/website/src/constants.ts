@@ -1,1 +1,1 @@
-export const DEBUG_PAUSE = true;
+export const DEBUG_PAUSE = false;
