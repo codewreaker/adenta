@@ -1,5 +1,8 @@
+import { useState } from 'react';
+import { EnvelopeIcon, HomeIcon, DevicePhoneMobileIcon } from '@heroicons/react/24/outline';
 import { motion } from 'framer-motion';
-import './app.css';
+import Terminal from './components/terminal';
+const DEBUG_PAUSE = true; // Set to true to pause all framer-motion animations
 
 // Heroicons SVGs (outline style)
 const icons = {
@@ -32,25 +35,6 @@ const bio = {
   ],
 };
 
-const socialLinks = [
-  { icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" width={28} height={28}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25H4.5a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5H4.5a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-.659 1.591l-7.591 7.591a2.25 2.25 0 01-3.182 0L3.909 8.584A2.25 2.25 0 013.25 6.993V6.75" />
-      </svg>
-    ), label: 'Email', url: 'mailto:your@email.com' },
-  { icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" width={28} height={28}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v7.5A2.25 2.25 0 006.75 19.5h2.25m9-9.75v7.5a2.25 2.25 0 01-2.25 2.25h-2.25m-6.75 0h6.75" />
-      </svg>
-    ), label: 'GitHub', url: 'https://github.com/your-github' },
-  { icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" width={28} height={28}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 3.75A2.25 2.25 0 0118.75 6v12a2.25 2.25 0 01-2.25 2.25h-9A2.25 2.25 0 015.25 18V6A2.25 2.25 0 017.5 3.75h9z" />
-      </svg>
-    ), label: 'LinkedIn', url: 'https://linkedin.com/in/your-linkedin' },
-];
-
-import { useState } from 'react';
 
 const tabProjects = [
   {
@@ -82,21 +66,12 @@ export default function App() {
 
   return (
     <div className="portfolio-root">
-      {/* Sidebar Social Icons */}
-      <div className="portfolio-sidebar">
-        {socialLinks.map((link) => (
-          <a key={link.label} href={link.url} target="_blank" rel="noopener noreferrer" title={link.label}>
-            {link.icon}
-          </a>
-        ))}
-      </div>
-
       {/* Hero Section */}
       <motion.div
         className="portfolio-hero"
         initial={{ opacity: 0, y: -40 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.7 }}
+        animate={DEBUG_PAUSE ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
+        transition={DEBUG_PAUSE ? {} : { duration: 0.7 }}
       >
         <div className="portfolio-hero-content">
           <div className="portfolio-hello">— Hello</div>
@@ -104,67 +79,58 @@ export default function App() {
           <div className="portfolio-title">{bio.title}</div>
           <div className="portfolio-description">{bio.description}</div>
           <div className="portfolio-links">
-            {bio.links.map((link) => (
-              <a key={link.label} href={link.url} target="_blank" rel="noopener noreferrer">{link.label}</a>
-            ))}
+        {bio.links.map((link) => {
+          let icon = null;
+          if (link.label === 'GitHub') icon = <HomeIcon width={22} height={22} style={{verticalAlign: 'middle', marginRight: 6}} />;
+          if (link.label === 'LinkedIn') icon = <DevicePhoneMobileIcon width={22} height={22} style={{verticalAlign: 'middle', marginRight: 6}} />;
+          if (link.label === 'Email') icon = <EnvelopeIcon width={22} height={22} style={{verticalAlign: 'middle', marginRight: 6}} />;
+          return (
+            <a key={link.label} href={link.url} target="_blank" rel="noopener noreferrer">
+          {icon}{link.label}
+            </a>
+          );
+        })}
           </div>
           <button className="portfolio-learn-btn">Learn more</button>
         </div>
-        <div className="portfolio-avatar">
-          <span className="portfolio-avatar-emoji" role="img" aria-label="avatar">🧑‍💻</span>
-        </div>
+          <motion.img
+          src="assets/avatar-3D.png"
+          alt="avatar"
+          className="portfolio-asset portfolio-avatar"
+          initial={{ y: 0, scale: 1 }}
+          animate={DEBUG_PAUSE ? { y: 0, scale: 1 } : { y: [0, -10, 0], scale: [1, 1.05, 1] }}
+          transition={DEBUG_PAUSE ? {} : { duration: 8, repeat: Infinity, ease: 'easeInOut' }}
+        />
+        {/* 3D PNG assets with subtle animations */}
+        <motion.img
+          src="assets/cloud_icon.png"
+          alt="Cloud"
+          className="portfolio-asset portfolio-asset-cloud"
+          initial={{ x: -20 }}
+          animate={DEBUG_PAUSE ? { x: -20 } : { x: [ -20, 40, -20 ] }}
+          transition={DEBUG_PAUSE ? {} : { duration: 7, repeat: Infinity, ease: 'easeInOut' }}
+        />
+        <motion.img
+          src="assets/typescript.png"
+          alt="TypeScript"
+          className="portfolio-asset portfolio-asset-typescript"
+          initial={{ y: 0, rotate: 0 }}
+          animate={DEBUG_PAUSE ? { y: 0, rotate: 0 } : { y: [0, -18, 0], rotate: [0, 10, 0] }}
+          transition={DEBUG_PAUSE ? {} : { duration: 6, repeat: Infinity, ease: 'easeInOut' }}
+        />
+        <motion.img
+          src="assets/mug.png"
+          alt="Mug"
+          className="portfolio-asset portfolio-asset-mug"
+          initial={{ y: 0 }}
+          animate={DEBUG_PAUSE ? { y: 0 } : { y: [0, 12, 0] }}
+          transition={DEBUG_PAUSE ? {} : { duration: 5, repeat: Infinity, ease: 'easeInOut' }}
+        />
       </motion.div>
 
       {/* Projects Tabs Section */}
-      <motion.div
-        className="portfolio-section"
-        initial={{ opacity: 0, y: 40 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.7, delay: 0.3 }}
-      >
-        <div className="portfolio-section-card">
-          <h2 className="portfolio-section-title">Projects in this Monorepo</h2>
-          <div className="portfolio-tabs">
-            {tabProjects.map((project) => (
-              <button
-                key={project.key}
-                className={`portfolio-tab${activeTab === project.key ? ' active' : ''}`}
-                onClick={() => setActiveTab(project.key)}
-                type="button"
-              >
-                {project.icon}
-                <span>{project.name.replace('@adenta/', '')}</span>
-              </button>
-            ))}
-          </div>
-          <div className="portfolio-tab-content">
-            {activeProject ? (
-              <>
-                <a href={activeProject.path} className="portfolio-project-title" style={{ fontSize: '1.3rem', marginBottom: 8, color: '#ff6a1a' }}>{activeProject.name}</a>
-                <p className="portfolio-project-desc" style={{ fontSize: '1.08rem', marginTop: 8 }}>{activeProject.description}</p>
-              </>
-            ) : null}
-          </div>
-        </div>
-      </motion.div>
+      <Terminal tabProjects={tabProjects}/>
 
-      {/* Nx Quick Start Section */}
-      <motion.div
-        className="portfolio-section"
-        initial={{ opacity: 0, y: 40 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.7, delay: 0.5 }}
-      >
-        <div className="portfolio-section-card">
-          <h2 className="portfolio-section-title" style={{ fontSize: '1.5rem' }}>Nx Quick Start</h2>
-          <ul className="portfolio-nx-list">
-            <li><b>Build:</b> <code>nx build website</code></li>
-            <li><b>Test:</b> <code>nx test website</code></li>
-            <li><b>Lint:</b> <code>nx lint website</code></li>
-            <li><b>Graph:</b> <code>nx graph</code></li>
-          </ul>
-        </div>
-      </motion.div>
     </div>
   );
 }
