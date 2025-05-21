@@ -67,6 +67,8 @@
     "includedScripts": []
   },
   "dependencies": {
+    "@monaco-editor/react": "^4.7.0",
+    "@swc/wasm-web": "^1.11.29",
     "framer-motion": "^12.12.1",
     "react": "19.0.0",
     "react-dom": "19.0.0"
