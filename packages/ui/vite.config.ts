@@ -5,7 +5,10 @@ import { nxCopyAssetsPlugin } from '@nx/vite/plugins/nx-copy-assets.plugin';
 export default defineConfig(() => ({
   root: __dirname,
   cacheDir: '../node_modules/.vite/ui',
-  plugins: [nxViteTsPaths(), nxCopyAssetsPlugin(['*.md'])],
+  plugins: [
+    nxViteTsPaths(),
+    nxCopyAssetsPlugin(['*.md', 'src/**/*.html']),
+  ],
   // Uncomment this if you are using workers.
   // worker: {
   //  plugins: [ nxViteTsPaths() ],
@@ -19,6 +22,14 @@ export default defineConfig(() => ({
     coverage: {
       reportsDirectory: '../coverage/ui',
       provider: 'v8' as const,
+    },
+  },
+  build: {
+    rollupOptions: {
+      input: {
+        index: './src/index.ts',
+        sandbox: './src/lib/LiveEditor/sandbox.html',
+      },
     },
   },
 }));

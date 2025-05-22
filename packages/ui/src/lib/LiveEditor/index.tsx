@@ -21,7 +21,6 @@ const LiveEditor: React.FC<LiveEditorProps> = ({
   height = '100vh',
   width = '100%',
   theme = 'vs-dark',
-  sandboxPath
 }) => {
   const [transformedCode, setTransformedCode] = useState('');
 
@@ -60,7 +59,7 @@ const LiveEditor: React.FC<LiveEditorProps> = ({
         />
       </div>
       <div style={{ flex: 1 }}>
-        <Preview code={transformedCode} sandboxPath={sandboxPath} />
+        <Preview code={transformedCode} />
       </div>
     </div>
   );

@@ -5,7 +5,7 @@ function App() {
 	return (
 		<div className="app-container">
 			<div className="editor-container">
-				<LiveEditor sandboxPath="/sandbox.html" />
+				<LiveEditor />
 			</div>
 		</div>
 	);
