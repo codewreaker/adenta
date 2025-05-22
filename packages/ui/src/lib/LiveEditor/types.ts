@@ -8,13 +8,12 @@ export interface LiveEditorProps {
 
 export interface PreviewProps {
   code: string;
-  dependencies?: Record<string, string>;
+  sandboxPath?: string;
 }
 
 export interface SandboxMessage {
-  type: 'compile' | 'error' | 'ready';
+  type: 'ready' | 'error';
   payload?: {
-    code?: string;
     error?: string;
   };
 }

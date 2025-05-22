@@ -1,7 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { PreviewProps, SandboxMessage } from './types';
 
-const Preview: React.FC<PreviewProps> = ({ code }) => {
+const DEFAULT_SANDBOX_PATH = '/sandbox.html';
+
+const Preview: React.FC<PreviewProps> = ({ code, sandboxPath = DEFAULT_SANDBOX_PATH }) => {
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const [error, setError] = useState<string | null>(null);
 
@@ -33,7 +35,7 @@ const Preview: React.FC<PreviewProps> = ({ code }) => {
       )}
       <iframe
         ref={iframeRef}
-        src="/sandbox.html"
+        src={sandboxPath}
         style={{
           width: '100%',
           height: error ? 'calc(100% - 60px)' : '100%',

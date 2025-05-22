@@ -1,0 +1,40 @@
+.sidebar-container {
+  width: 48px;
+  background: var(--vscode-sidebar);
+  border-right: 1px solid var(--vscode-border);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 8px;
+}
+
+.sidebar-button {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--vscode-text);
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  position: relative;
+}
+
+.sidebar-button:hover {
+  color: var(--vscode-text-active);
+}
+
+.sidebar-button.active {
+  color: var(--vscode-text-active);
+}
+
+.sidebar-button.active::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--vscode-text-active);
+}

@@ -21,6 +21,7 @@ const LiveEditor: React.FC<LiveEditorProps> = ({
   height = '100vh',
   width = '100%',
   theme = 'vs-dark',
+  sandboxPath
 }) => {
   const [transformedCode, setTransformedCode] = useState('');
 
@@ -49,7 +50,7 @@ const LiveEditor: React.FC<LiveEditorProps> = ({
           defaultLanguage="typescript"
           defaultValue={defaultValue}
           theme={theme}
-          onChange={(value: string | undefined) => handleEditorChange(value)}
+          onChange={handleEditorChange}
           options={{
             minimap: { enabled: false },
             fontSize: 14,
@@ -59,7 +60,7 @@ const LiveEditor: React.FC<LiveEditorProps> = ({
         />
       </div>
       <div style={{ flex: 1 }}>
-        <Preview code={transformedCode} />
+        <Preview code={transformedCode} sandboxPath={sandboxPath} />
       </div>
     </div>
   );
