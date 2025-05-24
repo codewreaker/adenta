@@ -1,25 +1,7 @@
 import { ReactNode, useState } from 'react';
 import { motion } from 'framer-motion';
-import { DEBUG_PAUSE } from '../../constants';
 
 
-// Sample data for demonstration
-const sampleTabProjects = [
-    {
-        key: 'project1',
-        name: '@adenta/project1',
-        icon: <span role="img" aria-label="folder">📁</span>,
-        description: 'This is the first sample project.',
-        path: '/projects/project1',
-    },
-    {
-        key: 'project2',
-        name: '@adenta/project2',
-        icon: <span role="img" aria-label="folder">📁</span>,
-        description: 'This is the second sample project.',
-        path: '/projects/project2',
-    },
-];
 
 // Types for props
 type TabProject = {
@@ -37,7 +19,7 @@ type TerminalProps = {
 };
 
 const Terminal = ({
-    tabProjects = sampleTabProjects,
+    tabProjects = [],
     activeTabKey,
     onTabChange,
 }: TerminalProps) => {
@@ -55,17 +37,20 @@ const Terminal = ({
     return (
         <motion.div
             initial={{ opacity: 0, y: 40 }}
-            animate={DEBUG_PAUSE ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
-            transition={DEBUG_PAUSE ? {} : { duration: 0.7, delay: 0.3 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.3 }}
             style={{
-                minWidth: 630,
-                borderRadius: 12,
+                width: '100%', // 630 * 0.8
+                borderRadius: 10, // 12 * 0.8
+                margin: '3% auto',
                 boxShadow:
-                    '0 6px 32px 0 rgba(0,0,0,0.10), 0 1.5px 6px 0 rgba(0,0,0,0.08)',
+                    '0 5px 26px 0 rgba(0,0,0,0.10), 0 1px 5px 0 rgba(0,0,0,0.08)',
                 background: '#18181b',
                 border: '1px solid #232329',
                 overflow: 'hidden',
                 fontFamily: 'monospace',
+                transform: 'scale(0.8)',
+                transformOrigin: 'top center'
             }}
         >
             {/* Terminal Header */}
@@ -73,20 +58,20 @@ const Terminal = ({
                 style={{
                     display: 'flex',
                     alignItems: 'center',
-                    height: 36,
+                    height: 29, // 36 * 0.8
                     background: '#232329',
                     borderBottom: '1px solid #232329',
-                    padding: '0 16px',
-                    gap: 8,
+                    padding: '0 13px', // 16 * 0.8
+                    gap: 6, // 8 * 0.8
                     userSelect: 'none',
                 }}
             >
                 {/* Mac window controls */}
-                <span style={{ display: 'flex', gap: 6, marginRight: 12 }}>
+                <span style={{ display: 'flex', gap: 5, marginRight: 10 }}>
                     <span
                         style={{
-                            width: 10,
-                            height: 10,
+                            width: 8,
+                            height: 8,
                             borderRadius: '50%',
                             background: '#ff5f56',
                             border: '1px solid #e0443e',
@@ -94,8 +79,8 @@ const Terminal = ({
                     />
                     <span
                         style={{
-                            width: 10,
-                            height: 10,
+                            width: 8,
+                            height: 8,
                             borderRadius: '50%',
                             background: '#ffbd2e',
                             border: '1px solid #dea123',
@@ -103,15 +88,15 @@ const Terminal = ({
                     />
                     <span
                         style={{
-                            width: 10,
-                            height: 10,
+                            width: 8,
+                            height: 8,
                             borderRadius: '50%',
                             background: '#27c93f',
                             border: '1px solid #13a10e',
                         }}
                     />
                 </span>
-                <span style={{ color: '#fff', fontSize: 14, opacity: 0.7 }}>
+                <span style={{ color: '#fff', fontSize: 11, opacity: 0.7 }}>
                     israel@adenta:~$
                 </span>
             </div>
@@ -121,7 +106,7 @@ const Terminal = ({
                     display: 'flex',
                     background: '#18181b',
                     borderBottom: '1px solid #232329',
-                    padding: '0 8px',
+                    padding: '2px 6px 0px 6px',
                     gap: 2,
                 }}
             >
@@ -135,9 +120,9 @@ const Terminal = ({
                             background: activeTab === project.key ? '#232329' : 'transparent',
                             color: activeTab === project.key ? '#ff6a1a' : '#fff',
                             border: 'none',
-                            borderRadius: '8px 8px 0 0',
-                            padding: '7px 12px 6px 8px',
-                            fontSize: 15,
+                            borderRadius: '4px 4px 0 0',
+                            padding: '6px 10px 5px 6px',
+                            fontSize: 12,
                             display: 'flex',
                             alignItems: 'center',
                             gap: 7,
@@ -155,9 +140,9 @@ const Terminal = ({
                 style={{
                     background: '#18181b',
                     color: '#fff',
-                    minHeight: 90,
-                    padding: '20px 20px 16px 20px',
-                    fontSize: 16,
+                    minHeight: 72,
+                    padding: '16px 16px 13px 16px',
+                    fontSize: 13,
                     borderRadius: '0 0 12px 12px',
                     borderTop: '1px solid #232329',
                 }}
@@ -169,7 +154,14 @@ const Terminal = ({
                                 {activeProject.name}
                             </span>
                         </div>
-                        <div style={{ color: '#bdbdbd', fontSize: 15 }}>
+                        <div style={{
+                            color: '#bdbdbd',
+                            fontSize: 14,
+                            overflow: 'hidden',
+                            textOverflow: 'ellipsis',
+                            whiteSpace: 'nowrap',
+                            width: '95%'
+                        }}>
                             {activeProject.description}
                         </div>
                         <div style={{ marginTop: 14 }}>
@@ -178,7 +170,7 @@ const Terminal = ({
                                 style={{
                                     color: '#ff6a1a',
                                     textDecoration: 'underline',
-                                    fontSize: 14,
+                                    fontSize: 11,
                                 }}
                             >
                                 Open Project &rarr;

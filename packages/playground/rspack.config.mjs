@@ -15,6 +15,7 @@ export default defineConfig({
 	entry: {
 		main: "./src/main.tsx"
 	},
+	target: ["node"],
 	resolve: {
 		extensions: ["...", ".ts", ".tsx", ".jsx"],
 		alias: {
