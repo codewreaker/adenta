@@ -1,18 +1,33 @@
 :root {
+  /* Base colors - these are the only ones you need to change */
   --color-bg: #1f2028;
-  --color-bg-dark: #181114;
-  --color-bg-darker: #1a1012;
-  --color-bg-gradient: linear-gradient(135deg, #231a1c 60%, #ff6a1a 100%);
   --color-primary: #ff6a1a;
-  --color-primary-light: #ff6a1a;
+  
+  /* Automatically calculated background variants */
+  --color-bg-dark: color-mix(in srgb, var(--color-bg) 90%, black);
+  --color-bg-darker: color-mix(in srgb, var(--color-bg) 80%, black);
+  --color-tab-bg: color-mix(in srgb, var(--color-bg) 85%, black);
+  --color-tab-bg-active: color-mix(in srgb, var(--color-bg) 80%, black);
+  
+  /* Gradient calculation */
+  --color-bg-gradient: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--color-bg) 95%, white) 60%,
+    var(--color-primary) 100%
+  );
+  
+  /* Primary color variants */
+  --color-primary-light: var(--color-primary);
+  
+  /* Text colors */
   --color-text: #fff;
   --color-text-secondary: #d1d5db;
-  --color-tab-bg: #23181c;
-  --color-tab-bg-active: #1a1012;
-  --color-shadow: rgba(255, 106, 26, 0.1);
-  --color-shadow-strong: rgba(255, 106, 26, 0.18);
-  --color-shadow-light: rgba(255, 106, 26, 0.04);
-  --color-shadow-tab: rgba(255, 106, 26, 0.08);
+  
+  /* Shadow colors with opacity */
+  --color-shadow: color-mix(in srgb, var(--color-primary) 10%, transparent);
+  --color-shadow-strong: color-mix(in srgb, var(--color-primary) 18%, transparent);
+  --color-shadow-light: color-mix(in srgb, var(--color-primary) 4%, transparent);
+  --color-shadow-tab: color-mix(in srgb, var(--color-primary) 8%, transparent);
 }
 
 body,

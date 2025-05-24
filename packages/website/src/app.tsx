@@ -12,7 +12,7 @@ import {
   CommandLineIcon,
 } from '@heroicons/react/24/outline';
 
-import { ColorWheel } from './ColorWheel';
+import ColorPicker from './ColorPicker';
 
 MotionGlobalConfig.skipAnimations = true;
 
@@ -180,13 +180,11 @@ export default function App() {
       </motion.div>
 
 
-      <ColorWheel
-        initialColor="#1f2028"
-        position="bottom-right"
-        onChange={(color) => {
+      <ColorPicker
+        position="top-right"
+        onChange={(colors) => {
           try {
-            // Save the color preference to localStorage
-            localStorage.setItem('theme-color', color);
+            localStorage.setItem('theme-color', JSON.stringify(colors));
           } catch (error) {
             console.warn('Failed to save theme color preference:', error);
           }
