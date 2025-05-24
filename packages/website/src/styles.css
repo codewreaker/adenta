@@ -1,32 +1,40 @@
 :root {
   /* Base colors - these are the only ones you need to change */
-  --color-bg: #1f2028;
+  --color-bg: #0E0E11;
   --color-primary: #ff6a1a;
-  
+
   /* Automatically calculated background variants */
   --color-bg-dark: color-mix(in srgb, var(--color-bg) 90%, black);
   --color-bg-darker: color-mix(in srgb, var(--color-bg) 80%, black);
   --color-tab-bg: color-mix(in srgb, var(--color-bg) 85%, black);
   --color-tab-bg-active: color-mix(in srgb, var(--color-bg) 80%, black);
-  
+
   /* Gradient calculation */
   --color-bg-gradient: linear-gradient(
     135deg,
     color-mix(in srgb, var(--color-bg) 95%, white) 60%,
     var(--color-primary) 100%
   );
-  
+
   /* Primary color variants */
   --color-primary-light: var(--color-primary);
-  
+
   /* Text colors */
   --color-text: #fff;
   --color-text-secondary: #d1d5db;
-  
+
   /* Shadow colors with opacity */
   --color-shadow: color-mix(in srgb, var(--color-primary) 10%, transparent);
-  --color-shadow-strong: color-mix(in srgb, var(--color-primary) 18%, transparent);
-  --color-shadow-light: color-mix(in srgb, var(--color-primary) 4%, transparent);
+  --color-shadow-strong: color-mix(
+    in srgb,
+    var(--color-primary) 18%,
+    transparent
+  );
+  --color-shadow-light: color-mix(
+    in srgb,
+    var(--color-primary) 4%,
+    transparent
+  );
   --color-shadow-tab: color-mix(in srgb, var(--color-primary) 8%, transparent);
 }
 
@@ -60,18 +68,18 @@ html {
 }
 
 .asset-python {
-  left: 4%;
-  top: -14%;
+  left: -1%;
+  top: 15%;
 }
 
 .asset-typescript {
-  right: -4%;
-  top: 4%;
+  right: 5%;
+  top: 2%;
 }
 
 .asset-rust {
-  right: 2%;
-  bottom: -4%;
+  right: 8%;
+  bottom: 4%;
 }
 
 .portfolio-hero {

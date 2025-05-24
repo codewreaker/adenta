@@ -14,7 +14,7 @@ import {
 
 import ColorPicker from './ColorPicker';
 
-MotionGlobalConfig.skipAnimations = true;
+MotionGlobalConfig.skipAnimations = false;
 
 interface SocialLinksProps {
   links: Link[];

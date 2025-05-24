@@ -1,4 +1,11 @@
-import { FC, forwardRef, MouseEventHandler, useEffect, useImperativeHandle, useRef } from 'react';
+import {
+  FC,
+  forwardRef,
+  useEffect,
+  useImperativeHandle,
+  useRef,
+  useState
+} from 'react';
 import './styles.css';
 
 export interface ColorWheelProps {
@@ -103,18 +110,24 @@ export const ColorWheelComponent = forwardRef<HTMLDivElement, ColorWheelProps>(
 
 const ColorPicker: FC<ColorWheelProps> = (props) => {
   const cRef = useRef<HTMLDivElement>(null);
+  const [_, setIsOpen] = useState<boolean>(false);
 
-  
-  const onMouseEnterLeave = ({type, target}) => {
-    console.log(type, cRef?.current);
-  }
+  const onToggle = () => {
+    setIsOpen((prev) => {
+      cRef.current?.style.setProperty('opacity', prev ? '0':'1');
+      return !prev;
+    });
+
+  };
 
   return (
     <>
-      <div 
-      onMouseOver={onMouseEnterLeave} 
-      onMouseLeave={onMouseEnterLeave}
-      className={`color-picker-launcher ${props.position}`}>+</div>
+      <div
+        onClick={onToggle}
+        className={`color-picker-launcher ${props.position}`}
+      >
+        +
+      </div>
       <ColorWheelComponent ref={cRef} {...props} />
     </>
   );
