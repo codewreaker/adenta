@@ -1,17 +1,10 @@
-import {
-  FC,
-  forwardRef,
+import  {
   useEffect,
-  useImperativeHandle,
   useRef,
-  useState
+  useImperativeHandle,
+  forwardRef,
 } from 'react';
-import './styles.css';
 
-export interface ColorWheelProps {
-  onChange?: (colors: { bg: string; primary: string }) => void;
-  position?: 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right';
-}
 
 class ColorWheel {
   private container: HTMLDivElement;
@@ -75,8 +68,13 @@ class ColorWheel {
   }
 }
 
-export const ColorWheelComponent = forwardRef<HTMLDivElement, ColorWheelProps>(
-  ({ onChange, position = 'bottom-right' }, ref) => {
+export interface ColorWheelProps {
+  onChange?: (colors: { bg: string; primary: string }) => void;
+}
+
+
+const ColorWheelComponent = forwardRef<HTMLDivElement, ColorWheelProps>(
+  ({ onChange}, ref) => {
     const containerRef = useRef<HTMLDivElement>(null);
     const wheelRef = useRef<ColorWheel | null>(null);
 
@@ -100,37 +98,9 @@ export const ColorWheelComponent = forwardRef<HTMLDivElement, ColorWheelProps>(
     }, [onChange]);
 
     return (
-      <div
-        ref={containerRef}
-        className={`color-picker-container ${position}`}
-      />
+      <div ref={containerRef} className={`color-wheel-picker-container`}/>
     );
   }
 );
 
-const ColorPicker: FC<ColorWheelProps> = (props) => {
-  const cRef = useRef<HTMLDivElement>(null);
-  const [_, setIsOpen] = useState<boolean>(false);
-
-  const onToggle = () => {
-    setIsOpen((prev) => {
-      cRef.current?.style.setProperty('opacity', prev ? '0':'1');
-      return !prev;
-    });
-
-  };
-
-  return (
-    <>
-      <div
-        onClick={onToggle}
-        className={`color-picker-launcher ${props.position}`}
-      >
-        +
-      </div>
-      <ColorWheelComponent ref={cRef} {...props} />
-    </>
-  );
-};
-
-export default ColorPicker;
+export default ColorWheelComponent;

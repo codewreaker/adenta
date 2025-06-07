@@ -1,0 +1,219 @@
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  backdrop-filter: blur(10px);
+  z-index: 1000;
+  padding: 20px 0px;
+
+  & .header-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  & .logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--color-text);
+
+    & span {
+      background: var(--color-bg-gradient);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-size: 1.8rem;
+    }
+  }
+
+  & .nav-menu {
+    & ul {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      align-items: center;
+
+      & li {
+        & a {
+          color: var(--color-text-secondary);
+          text-decoration: none;
+          font-weight: 500;
+          transition: color 0.2s ease;
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          font-size: 0.95rem;
+
+          &:hover {
+            color: var(--color-primary);
+          }
+
+          & .nav-icon {
+            display: flex;
+            align-items: center;
+          }
+        }
+      }
+    }
+  }
+
+  & .github-icon {
+    transition: transform 0.3s ease;
+
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
+
+  & .theme-toggle {
+    background: var(--color-bg-darker);
+    border: 1px solid var(--color-shadow-light);
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-text-secondary);
+    transition: all 0.2s ease;
+
+    &:hover {
+      border-color: var(--color-primary);
+      color: var(--color-primary);
+    }
+
+    & .theme-toggle-content {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      position: relative;
+      width: 20px;
+      height: 20px;
+    }
+
+    & .sun-icon,
+    & .moon-icon {
+      position: absolute;
+      transition: transform 0.2s ease, opacity 0.2s ease;
+    }
+
+    & .sun-icon {
+      opacity: 0;
+      transform: rotate(90deg) scale(0.5);
+    }
+
+    & .moon-icon {
+      opacity: 1;
+      transform: rotate(0) scale(1);
+    }
+  }
+
+  &[data-theme='light'] .theme-toggle {
+    & .sun-icon {
+      opacity: 1;
+      transform: rotate(0) scale(1);
+    }
+
+    & .moon-icon {
+      opacity: 0;
+      transform: rotate(-90deg) scale(0.5);
+    }
+  }
+
+  & .mobile-menu-button {
+    display: none;
+  }
+}
+
+/* Mobile styles */
+@media (max-width: 768px) {
+  .header {
+    & .mobile-menu-button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--color-bg-darker);
+      border: 1px solid var(--color-shadow-light);
+      cursor: pointer;
+      padding: 0.75rem;
+      border-radius: 0.5rem;
+      color: var(--color-text-secondary);
+      z-index: 2;
+
+      &:hover {
+        border-color: var(--color-primary);
+      }
+
+      & .hamburger {
+        display: block;
+        width: 20px;
+        height: 2px;
+        background: currentColor;
+        position: relative;
+        transition: all 0.3s ease;
+
+        &::before,
+        &::after {
+          content: '';
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          background: currentColor;
+          transition: all 0.3s ease;
+        }
+
+        &::before {
+          top: -6px;
+        }
+
+        &::after {
+          top: 6px;
+        }
+
+        &.active {
+          background: transparent;
+
+          &::before {
+            transform: rotate(45deg);
+            top: 0;
+          }
+
+          &::after {
+            transform: rotate(-45deg);
+            top: 0;
+          }
+        }
+      }
+    }
+
+    & .nav-menu {
+      position: fixed;
+      top: 0;
+      right: -100%;
+      width: 70%;
+      height: 100vh;
+      background: var(--color-bg-dark);
+      padding: 6rem 2rem 2rem;
+      transition: right 0.3s ease;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-left: 1px solid var(--color-shadow-light);
+
+      &.active {
+        right: 0;
+      }
+
+      & ul {
+        flex-direction: column;
+        gap: 2rem;
+        align-items: flex-start;
+      }
+    }
+  }
+}
