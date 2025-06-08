@@ -24,13 +24,6 @@
   .portfolio-intro {
     color: var(--color-primary);
 
-    & .portfolio-hello {
-      font-size: 1.1rem;
-      font-weight: 500;
-      margin-block-end: 12px;
-      letter-spacing: 1px;
-    }
-
     & .portfolio-name {
       font-size: 8.6rem;
       font-weight: 100;

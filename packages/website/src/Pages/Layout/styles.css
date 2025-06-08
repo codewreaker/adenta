@@ -1,8 +1,10 @@
 :root {
   /* Base colors - these are the only ones you need to change */
   --color-bg: #0e0e11;
+  --color-primary-grey: #232329;
   --color-primary: #ff6a1a;
-
+  --color-primary-two: #9f2b00;
+  --color-grizzly-red: #ef474a;
   /* Automatically calculated background variants */
   --color-bg-dark: color-mix(in srgb, var(--color-bg) 90%, black);
   --color-bg-darker: color-mix(in srgb, var(--color-bg) 80%, black);
@@ -22,7 +24,7 @@
 
   /* Text colors */
   --color-text: #fff;
-  --color-text-secondary: #d1d5db;
+  --color-text-secondary: #d3d3cb;
 
   /* Shadow colors with opacity */
   --color-shadow: color-mix(in srgb, var(--color-primary) 10%, transparent);

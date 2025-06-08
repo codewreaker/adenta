@@ -5,8 +5,9 @@ import './hero.css';
 import {
   EnvelopeIcon,
   HomeIcon,
-  DevicePhoneMobileIcon
+  DevicePhoneMobileIcon,
 } from '@heroicons/react/24/outline';
+import { SpeechBubble } from '../../Components/SpeechBubble';
 
 interface Link {
   label: 'GitHub' | 'LinkedIn' | 'Email';
@@ -15,7 +16,6 @@ interface Link {
 interface SocialLinksProps {
   links: Link[];
 }
-
 
 const bio: {
   name: string;
@@ -33,8 +33,6 @@ const bio: {
     { label: 'Email', url: 'mailto:your@email.com' },
   ],
 };
-
-
 
 const SocialLinks = ({ links }: SocialLinksProps) => {
   const iconMap: Record<Link['label'], React.ElementType> = {
@@ -73,9 +71,7 @@ export default function Hero() {
   return (
     <div className="portfolio-hero">
       <div className="portfolio-intro">
-        <div className="portfolio-hello">
-          — Hello <span style={{ color: 'var(--color-text)' }}>I'm</span>
-        </div>
+        <SpeechBubble direction="bottom">Hello I'm</SpeechBubble>
         <h1 className="portfolio-name">{bio.name}</h1>
       </div>
 
@@ -89,7 +85,12 @@ export default function Hero() {
           <div className="portfolio-title">{bio.title}</div>
           <div className="portfolio-description">{bio.description}</div>
           <SocialLinks links={bio.links} />
-          <button className="portfolio-learn-btn" onClick={()=>window.location.href="#projects"}>Projects</button>
+          <button
+            className="portfolio-learn-btn"
+            onClick={() => (window.location.href = '#projects')}
+          >
+            Projects
+          </button>
         </div>
 
         <div className="portfolio-avatar">
