@@ -1,0 +1,9 @@
+.portfolio-projects {
+  width: 100%; /* 630 * 0.8 */
+  margin: 3% auto;
+  overflow: hidden;
+  transform-origin: top center;
+  display: flex;
+  justify-content: flex-start;
+}
+

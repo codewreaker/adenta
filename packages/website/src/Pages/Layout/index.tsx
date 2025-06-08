@@ -1,6 +1,8 @@
 import Hero from '../Hero';
 import Header from '../Header';
+import Footer from '../Footer';
 import './styles.css';
+import Projects from '../Projects';
 
 export default function Layout() {
   return (
@@ -8,10 +10,9 @@ export default function Layout() {
       <Header/>
       <main className="layout-content">
         <Hero />
+        <Projects />
       </main>
-      <footer className="layout-footer">
-        <p>&copy; {new Date().getFullYear()} Adenta</p>
-      </footer>
+      {/* <Footer /> */}
     </div>
   );
 }

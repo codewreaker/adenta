@@ -1,6 +1,6 @@
 :root {
   /* Base colors - these are the only ones you need to change */
-  --color-bg: #0E0E11;
+  --color-bg: #0e0e11;
   --color-primary: #ff6a1a;
 
   /* Automatically calculated background variants */
@@ -8,6 +8,7 @@
   --color-bg-darker: color-mix(in srgb, var(--color-bg) 80%, black);
   --color-tab-bg: color-mix(in srgb, var(--color-bg) 85%, black);
   --color-tab-bg-active: color-mix(in srgb, var(--color-bg) 80%, black);
+  --font-inter: 'Inter', 'inter Fallback';
 
   /* Gradient calculation */
   --color-bg-gradient: linear-gradient(
@@ -44,7 +45,7 @@ html {
   color: var(--color-text);
   margin: 0;
   padding: 0;
-  font-family: 'Inter', ui-sans-serif, system-ui, -apple-system,
+  font-family: var(--font-inter), ui-sans-serif, system-ui, -apple-system,
     BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans',
     sans-serif;
 }
@@ -58,4 +59,20 @@ html {
   justify-content: center;
   position: relative;
   margin-inline: 10vw;
+}
+
+.gradient-bg {
+  background-image: repeating-linear-gradient(
+    315deg,
+    rgba(255, 255, 255, 0.05) 0px,
+    rgba(255, 255, 255, 0.05) 1px,
+    transparent 1px,
+    transparent 50%
+  );
+  background-size: 10px 10px;
+  background-attachment: fixed;
+}
+
+.layout-content {
+  margin-top: 5%;
 }

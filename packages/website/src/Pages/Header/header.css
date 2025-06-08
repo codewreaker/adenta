@@ -5,7 +5,6 @@
   right: 0;
   backdrop-filter: blur(10px);
   z-index: 1000;
-  padding: 20px 0px;
 
   & .header-content {
     max-width: 1200px;
