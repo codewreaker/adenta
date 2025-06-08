@@ -7,3 +7,16 @@
   justify-content: flex-start;
 }
 
+.signature-container {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: center;
+  width: 50%;
+  height: 100%;
+}
+
+.signature-container img {
+  filter: brightness(0) invert(1); /* This will make black signature appear white */
+  max-width: 260px;
+  opacity: 0.9; /* Makes it slightly softer */
+}

@@ -174,43 +174,6 @@ const CVSection: React.FC<CVSectionProps> = () => {
           </div>
         </section>
 
-        {/* Projects */}
-        <section
-          id="cv-projects"
-          ref={setSectionRef("cv-projects")}
-          className={`cv-section ${isVisible("cv-projects") ? "visible" : ""}`}
-        >
-          <h3 className="section-title">Key Projects</h3>
-          <div className="section-content">
-            <div className="project-item">
-              <h4 className="project-title">E-Commerce Platform</h4>
-              <p className="project-description">
-                Full-stack e-commerce solution with React frontend, Node.js backend, and PostgreSQL database. Features
-                include user authentication, payment processing, and admin dashboard.
-              </p>
-              <div className="project-tech">
-                <span className="tech-tag">React</span>
-                <span className="tech-tag">Node.js</span>
-                <span className="tech-tag">PostgreSQL</span>
-                <span className="tech-tag">Stripe API</span>
-              </div>
-            </div>
-
-            <div className="project-item">
-              <h4 className="project-title">Real-time Chat Application</h4>
-              <p className="project-description">
-                WebSocket-based chat application with real-time messaging, file sharing, and user presence indicators.
-                Deployed on AWS with auto-scaling capabilities.
-              </p>
-              <div className="project-tech">
-                <span className="tech-tag">Socket.io</span>
-                <span className="tech-tag">Express</span>
-                <span className="tech-tag">MongoDB</span>
-                <span className="tech-tag">AWS</span>
-              </div>
-            </div>
-          </div>
-        </section>
 
         {/* Certifications */}
         <section

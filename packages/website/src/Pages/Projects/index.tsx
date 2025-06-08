@@ -50,6 +50,7 @@ export default function Projects() {
       className="portfolio-projects"
     >
       <Terminal tabProjects={tabProjects} />
+      <div className="signature-container"><img src='./assets/signature.png' alt="signature" /></div>
     </motion.div>
   );
 }

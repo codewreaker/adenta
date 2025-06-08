@@ -58,7 +58,11 @@ html {
   align-items: stretch;
   justify-content: center;
   position: relative;
+}
+
+.layout-content {
   margin-inline: 10vw;
+  margin-top: 5%;
 }
 
 .gradient-bg {
@@ -71,8 +75,4 @@ html {
   );
   background-size: 10px 10px;
   background-attachment: fixed;
-}
-
-.layout-content {
-  margin-top: 5%;
 }
