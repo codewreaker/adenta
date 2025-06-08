@@ -3,7 +3,7 @@ import ColorPicker from '../../Components/ColorPicker';
 
 import {
   MoonIcon as DarkIcon,
-  SunIcon as LightIcon
+  SunIcon as LightIcon,
 } from '@heroicons/react/24/outline';
 import './header.css';
 import ThemeToggle from '../../Components/ThemeToggle';
@@ -16,12 +16,13 @@ interface NavItem {
 }
 
 const navConfig: NavItem[] = [
-  { label: 'CV', href: '/cv' },
+  { label: 'CV', href: '#cv' },
+  { label: 'Projecs', href: '#projects' },
   { label: 'Blog', href: '/blog' },
   { label: 'Dev', href: '/playground' },
   {
     label: 'GitHub',
-    href: 'https://github.com/israelagyeman',
+    href: 'https://github.com/codewreaker',
     external: true,
     icon: (
       <svg className="github-icon" viewBox="0 0 24 24" width="20" height="20">
@@ -33,7 +34,6 @@ const navConfig: NavItem[] = [
     ),
   },
 ];
-
 
 const Header = () => {
   const [isDark, setIsDark] = useState(false);
@@ -105,8 +105,8 @@ const Header = () => {
                 onToggle={toggleTheme}
                 isDark={isDark}
                 alternate={true}
-                darkIcon={<DarkIcon/>}
-                lightIcon={<LightIcon/>}
+                darkIcon={<DarkIcon />}
+                lightIcon={<LightIcon />}
               />
             </li>
             <li>
