@@ -85,12 +85,17 @@ export default function Hero() {
           <div className="portfolio-title">{bio.title}</div>
           <div className="portfolio-description">{bio.description}</div>
           <SocialLinks links={bio.links} />
-          <button
-            className="portfolio-learn-btn"
-            onClick={() => (window.location.href = '#projects')}
-          >
-            Projects
-          </button>
+          <div className="portfolio-hero-actions">
+            <button
+              className="portfolio-btn"
+              onClick={() => (window.location.href = '#projects')}
+            >
+              Projects
+            </button>
+            <div className="signature-container">
+              <img src="./assets/signature.png" alt="signature" />
+            </div>
+          </div>
         </div>
 
         <div className="portfolio-avatar">

@@ -7,6 +7,7 @@ import { motion } from 'framer-motion';
 
 import Terminal from '../../Components/Terminal';
 import IconWrapper from '../../Components/IconWrapper';
+import GeometricCard from '../../Components/GeometricCard';
 import './projects.css';
 
 const icons = {
@@ -47,10 +48,10 @@ export default function Projects() {
       initial={{ opacity: 0, y: 40 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.7, delay: 0.3 }}
-      className="portfolio-projects"
+      className="portfolio-projects gradient-bg"
     >
+      <GeometricCard customStyle={{width:360}}/>
       <Terminal tabProjects={tabProjects} />
-      <div className="signature-container"><img src='./assets/signature.png' alt="signature" /></div>
     </motion.div>
   );
 }

@@ -67,6 +67,25 @@ html {
   margin-top: 5%;
 }
 
+.portfolio-btn {
+  background: var(--color-primary);
+  color: var(--color-text);
+  border: none;
+  border-radius: 8px;
+  padding: 12px 28px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-block-start: 10px;
+  box-shadow: 0 2px 12px var(--color-shadow);
+  transition: background 0.2s, color 0.2s;
+
+  &:hover {
+    background: var(--color-text);
+    color: var(--color-primary);
+  }
+}
+
 .gradient-bg {
   background-image: repeating-linear-gradient(
     315deg,

@@ -16,8 +16,8 @@ interface NavItem {
 }
 
 const navConfig: NavItem[] = [
+  { label: 'Projects', href: '#projects' },
   { label: 'CV', href: '#cv' },
-  { label: 'Projecs', href: '#projects' },
   { label: 'Blog', href: '/blog' },
   { label: 'Dev', href: '/playground' },
   {

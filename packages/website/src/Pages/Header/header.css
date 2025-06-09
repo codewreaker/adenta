@@ -5,9 +5,10 @@
   right: 0;
   backdrop-filter: blur(10px);
   z-index: 1000;
+  margin-inline: 10vw;
 
   & .header-content {
-    max-width: 1200px;
+    min-width: 1200px;
     margin: 0 auto;
     padding: 1rem 2rem;
     display: flex;

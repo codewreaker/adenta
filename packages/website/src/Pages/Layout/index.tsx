@@ -2,8 +2,11 @@ import Hero from '../Hero';
 import Header from '../Header';
 import Footer from '../Footer';
 import CVSection from '../CVSection';
-import './styles.css';
+import '../../styles.css';
 import Projects from '../Projects';
+import {MotionGlobalConfig} from 'framer-motion';
+
+MotionGlobalConfig.skipAnimations = false;
 
 export default function Layout() {
   return (
