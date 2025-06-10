@@ -3,6 +3,7 @@ import type React from 'react';
 interface SpeechBubbleProps {
   children: React.ReactNode;
   direction?: 'bottom' | 'top' | 'left' | 'right';
+  className?: string;
   color?: string;
 }
 
@@ -10,6 +11,7 @@ export function SpeechBubble({
   children,
   direction = 'bottom',
   color = 'var(--color-primary)', // Default color
+  className = '',
 }: SpeechBubbleProps) {
 
   const bubbleStyle = {
@@ -77,6 +79,7 @@ export function SpeechBubble({
 
   return (
     <div
+      className={`speech-bubble ${className}`}
       style={{ position: 'relative', display: 'inline-block', margin: '10px' }}
     >
       <div style={bubbleStyle}>{children}</div>

@@ -108,23 +108,6 @@
   background-color: var(--color-primary);
 }
 
-/* Social Links */
-#cv .social-links {
-  display: flex;
-  gap: 20px;
-  margin-top: auto;
-
-  & a {
-    color: color-mix(in srgb, var(--color-text-secondary) 70%, transparent);
-    transition: all 0.2s ease;
-  }
-
-  & a:hover {
-    color: var(--color-primary);
-    transform: translateY(-2px);
-  }
-}
-
 /* Main Content Styles */
 .main-content {
   width: 100%;
@@ -311,11 +294,6 @@
 
   .experience-item {
     padding: 16px;
-  }
-
-  .social-links {
-    justify-content: center;
-    margin-top: 32px;
   }
 }
 
