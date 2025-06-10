@@ -7,6 +7,7 @@ import {
 } from '@heroicons/react/24/outline';
 import './header.css';
 import ThemeToggle from '../../Components/ThemeToggle';
+import { scrollToSection } from '../../utils/scrollToSection';
 
 interface NavItem {
   label: string;
@@ -16,10 +17,10 @@ interface NavItem {
 }
 
 const navConfig: NavItem[] = [
-  { label: 'Projects', href: '#projects' },
-  { label: 'CV', href: '#cv' },
-  { label: 'Blog', href: '/blog' },
-  { label: 'Dev', href: '/playground' },
+  { label: 'Projects', href: 'projects' },
+  { label: 'CV', href: 'cv' },
+  { label: 'Blog', href: 'blog' },
+  { label: 'Dev', href: 'playground' },
   {
     label: 'GitHub',
     href: 'https://github.com/codewreaker',
@@ -92,6 +93,7 @@ const Header = () => {
               <li key={item.label}>
                 <a
                   href={item.href}
+                  onClick={scrollToSection(item.href, null)}
                   target={item.external ? '_blank' : undefined}
                   rel={item.external ? 'noopener noreferrer' : undefined}
                 >

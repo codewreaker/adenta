@@ -2,6 +2,7 @@
 
 import type React from 'react';
 import { useState } from 'react';
+import { scrollToSection } from '../../utils/scrollToSection';
 import './cvinteractive.css';
 
 export const experienceData = [
@@ -137,13 +138,6 @@ const ExperienceItem: React.FC<ExperienceItemProps> = ({
 const CVInteractive: React.FC = () => {
   const [activeSection, setActiveSection] = useState('about');
 
-  const scrollToSection = (sectionId: string) => {
-    setActiveSection(sectionId);
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
 
   // Usage example:
 
@@ -176,7 +170,7 @@ const CVInteractive: React.FC = () => {
                   className={`nav-link ${
                     activeSection === 'about' ? 'active' : ''
                   }`}
-                  onClick={() => scrollToSection('about')}
+                  onClick={scrollToSection('about', setActiveSection)}
                 >
                   <span className="nav-indicator"></span>
                   <span className="nav-text">ABOUT</span>
@@ -187,7 +181,7 @@ const CVInteractive: React.FC = () => {
                   className={`nav-link ${
                     activeSection === 'experience' ? 'active' : ''
                   }`}
-                  onClick={() => scrollToSection('experience')}
+                  onClick={scrollToSection('experience', setActiveSection)}
                 >
                   <span className="nav-indicator"></span>
                   <span className="nav-text">EXPERIENCE</span>
@@ -196,9 +190,9 @@ const CVInteractive: React.FC = () => {
               <li>
                 <button
                   className={`nav-link ${
-                    activeSection === 'projects' ? 'active' : ''
+                    activeSection === 'cvprojects' ? 'active' : ''
                   }`}
-                  onClick={() => scrollToSection('projects')}
+                  onClick={scrollToSection('cvprojects', setActiveSection)}
                 >
                   <span className="nav-indicator"></span>
                   <span className="nav-text">PROJECTS</span>
@@ -225,7 +219,7 @@ const CVInteractive: React.FC = () => {
           ))}
         </section>
 
-        <section id="projects" className="content-section">
+        <section id="cvprojects" className="content-section">
           <p>Coming soon...</p>
         </section>
       </div>

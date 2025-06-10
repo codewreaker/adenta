@@ -50,7 +50,7 @@ export default function Projects() {
       transition={{ duration: 0.7, delay: 0.3 }}
       className="portfolio-projects gradient-bg"
     >
-      <GeometricCard customStyle={{width:360}}/>
+      <GeometricCard customStyle={{ width: 360 }} />
       <Terminal tabProjects={tabProjects} />
     </motion.div>
   );

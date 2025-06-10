@@ -2,12 +2,9 @@ import { motion } from 'framer-motion';
 
 import './hero.css';
 
-import {
-  EnvelopeIcon,
-  HomeIcon,
-  DevicePhoneMobileIcon,
-} from '@heroicons/react/24/outline';
+import { EnvelopeIcon } from '@heroicons/react/24/outline';
 import { SpeechBubble } from '../../Components/SpeechBubble';
+import { scrollToSection } from '../../utils/scrollToSection';
 
 const GitHubIcon = ({
   width = 20,
@@ -154,7 +151,9 @@ const SocialLinks = ({ links }: SocialLinksProps) => {
                 style={{ verticalAlign: 'middle', marginRight: 6 }}
               />
             )}
-            <SpeechBubble className='social-tooltip' direction="top">{link.label}</SpeechBubble>
+            <SpeechBubble className="social-tooltip" direction="top">
+              {link.label}
+            </SpeechBubble>
           </a>
         );
       })}
@@ -234,6 +233,12 @@ export default function Hero() {
           </div>
         </div>
       </motion.div>
+      <div
+        className="scroll-indicator"
+        onClick={scrollToSection('projects', null, 100)}
+      >
+        <img src="./assets/scroll-lottie.gif" alt="scroll" />
+      </div>
     </div>
   );
 }

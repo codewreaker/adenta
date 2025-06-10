@@ -6,7 +6,7 @@ import '../../styles.css';
 import Projects from '../Projects';
 import {MotionGlobalConfig} from 'framer-motion';
 
-MotionGlobalConfig.skipAnimations = false;
+MotionGlobalConfig.skipAnimations = true;
 
 export default function Layout() {
   return (
