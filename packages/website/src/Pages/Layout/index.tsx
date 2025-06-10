@@ -2,6 +2,7 @@ import Hero from '../Hero';
 import Header from '../Header';
 import Footer from '../Footer';
 import CVSection from '../CVSection';
+import BlogList from '../Blog/BlogList';
 import '../../styles.css';
 import Projects from '../Projects';
 import {MotionGlobalConfig} from 'framer-motion';
@@ -16,6 +17,7 @@ export default function Layout() {
         <Hero />
         <Projects />
         <CVSection/>
+        <BlogList />
       </main>
       <Footer />
     </div>
