@@ -5,9 +5,9 @@ import {
 } from '@heroicons/react/24/outline';
 import { motion } from 'framer-motion';
 
-import Terminal from '../../Components/Terminal';
-import IconWrapper from '../../Components/IconWrapper';
-import GeometricCard from '../../Components/GeometricCard';
+import Terminal from '../../../Components/Terminal';
+import IconWrapper from '../../../Components/IconWrapper';
+import GeometricCard from '../../../Components/GeometricCard';
 import './projects.css';
 
 const icons = {

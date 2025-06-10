@@ -2,7 +2,7 @@
 
 import type React from 'react';
 import { useState } from 'react';
-import { scrollToSection } from '../../utils/scrollToSection';
+import { scrollToSection } from '../../../utils/scrollToSection';
 import './cvinteractive.css';
 
 export const experienceData = [
@@ -43,7 +43,7 @@ export const experienceData = [
     techStack: ['JavaScript', 'TypeScript', 'React', 'Node.js', 'WordPress'],
     subtitles: ['Lead Engineer', 'Engineer'],
   },
-    {
+  {
     period: '2024 — PRESENT',
     title: 'Senior Frontend Engineer, Accessibility',
     company: 'Klaviyo',
@@ -79,7 +79,7 @@ export const experienceData = [
       'Build, style, and ship high-quality websites, design systems, mobile apps, and digital experiences for a diverse array of projects for clients including Harvard Business School, Everytown for Gun Safety, Pratt Institute, Koala Health, Vanderbilt University, The 19th News, and more. Provide leadership within engineering department through close collaboration, knowledge shares, and mentorship.',
     techStack: ['JavaScript', 'TypeScript', 'React', 'Node.js', 'WordPress'],
     subtitles: ['Lead Engineer', 'Engineer'],
-  }
+  },
 ];
 
 type ExperienceItemProps = {
@@ -137,7 +137,6 @@ const ExperienceItem: React.FC<ExperienceItemProps> = ({
 
 const CVInteractive: React.FC = () => {
   const [activeSection, setActiveSection] = useState('about');
-
 
   // Usage example:
 
@@ -200,6 +199,8 @@ const CVInteractive: React.FC = () => {
               </li>
             </ul>
           </nav>
+
+          <button className="portfolio-btn">Download CV</button>
         </div>
       </div>
 

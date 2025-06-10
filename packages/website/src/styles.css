@@ -97,3 +97,12 @@ html {
   background-size: 10px 10px;
   background-attachment: fixed;
 }
+
+.quote {
+    font-style: italic;
+    font-size: 1.2rem;
+    line-height: 1.6;
+    margin: 34px 0;
+    text-align: center;
+    padding: 10px 20px;
+}

@@ -3,8 +3,8 @@ import { motion } from 'framer-motion';
 import './hero.css';
 
 import { EnvelopeIcon } from '@heroicons/react/24/outline';
-import { SpeechBubble } from '../../Components/SpeechBubble';
-import { scrollToSection } from '../../utils/scrollToSection';
+import { SpeechBubble } from '../../../Components/SpeechBubble';
+import { scrollToSection } from '../../../utils/scrollToSection';
 
 const GitHubIcon = ({
   width = 20,
