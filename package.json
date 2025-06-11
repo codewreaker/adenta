@@ -56,6 +56,7 @@
     "jest-environment-jsdom": "^29.7.0",
     "jiti": "2.4.2",
     "jsonc-eslint-parser": "^2.1.0",
+    "msw": "^2.10.2",
     "nx": "21.1.0",
     "prettier": "^2.6.2",
     "react": "19.0.0",
@@ -77,5 +78,10 @@
   },
   "nx": {
     "includedScripts": []
+  },
+  "msw": {
+    "workerDirectory": [
+      "packages/website/public"
+    ]
   }
 }
