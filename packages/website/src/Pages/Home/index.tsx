@@ -1,8 +1,6 @@
-//@ts-nocheck
-
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import type React from 'react';
 import { useState } from 'react';
 import { motion } from 'framer-motion';
@@ -13,8 +11,12 @@ import GeometricCard from '../../Components/GeometricCard';
 import { scrollToSection } from '../../utils/scrollToSection';
 import { formatDate } from '../../utils/formatDate';
 
-import { bio, tabProjects, experienceData, blogPosts } from '../../data';
 import { portfolioAPI } from '../../mock-service/api';
+
+import useProgressLoader, {
+  ProgressStep,
+} from '../../Components/Loader/useProgressLoader';
+import ProgressLoader from '../../Components/Loader/ProgressLoader';
 
 import './home.css';
 
@@ -109,12 +111,12 @@ const SocialLinks: React.FC<SocialLinksProps> = ({ links }) => {
 };
 
 // Hero Section Component
-const Hero: React.FC<{data:any}> = ({data:bio}) => {
+const Hero: React.FC<{ data: Bio }> = ({ data }) => {
   return (
     <div className="portfolio-hero">
       <div className="portfolio-intro">
         <SpeechBubble direction="bottom">Hello I'm</SpeechBubble>
-        <h1 className="portfolio-name">{bio.name}</h1>
+        <h1 className="portfolio-name">{data.name}</h1>
       </div>
 
       <motion.div
@@ -124,9 +126,9 @@ const Hero: React.FC<{data:any}> = ({data:bio}) => {
         transition={{ duration: 0.7 }}
       >
         <div className="portfolio-hero-main">
-          <div className="portfolio-title">{bio.title}</div>
-          <div className="portfolio-description">{bio.description}</div>
-          <SocialLinks links={bio.links} />
+          <div className="portfolio-title">{data.title}</div>
+          <div className="portfolio-description">{data.description}</div>
+          <SocialLinks links={data.links} />
           <div className="portfolio-hero-actions">
             <button
               className="portfolio-btn"
@@ -206,7 +208,7 @@ const Hero: React.FC<{data:any}> = ({data:bio}) => {
 };
 
 // Projects Section Component
-const Projects: React.FC<{data:any}> = ({data:tabProjects}) => {
+const Projects: React.FC<{ data: Project[] }> = ({ data }) => {
   return (
     <motion.div
       id="projects"
@@ -216,7 +218,7 @@ const Projects: React.FC<{data:any}> = ({data:tabProjects}) => {
       className="portfolio-projects gradient-bg"
     >
       <GeometricCard customStyle={{ width: 360 }} />
-      <Terminal tabProjects={tabProjects} />
+      <Terminal tabProjects={data} />
     </motion.div>
   );
 };
@@ -266,7 +268,7 @@ const ExperienceItemComponent: React.FC<ExperienceItem> = ({
 );
 
 // CV Section Component
-const CVSection: React.FC<{data:any}> = ({data:experienceData}) => {
+const CVSection: React.FC<{ data: ExperienceItem[] }> = ({ data }) => {
   const [activeSection, setActiveSection] = useState('about');
 
   return (
@@ -334,7 +336,7 @@ const CVSection: React.FC<{data:any}> = ({data:experienceData}) => {
 
       <div className="main-content">
         <section id="experience" className="content-section">
-          {experienceData.map((item, index) => (
+          {data.map((item, index) => (
             <ExperienceItemComponent
               key={index}
               period={item.period}
@@ -356,9 +358,10 @@ const CVSection: React.FC<{data:any}> = ({data:experienceData}) => {
 };
 
 // Blog Section Component
-const BlogList: React.FC<{data:any}> = ({data:blogPosts}) => {
-  const featuredPost = blogPosts.find((post) => post.featured) || blogPosts[0];
-  const allPosts = blogPosts.filter((post) => post.id !== featuredPost.id);
+const BlogList: React.FC<{ data: BlogPost[] }> = ({ data }) => {
+  console.log('D', data);
+  const featuredPost = data.find((post) => post.featured) || data[0];
+  const allPosts = data.filter((post) => post.id !== featuredPost.id);
 
   return (
     <div id="blog" className="blog-container">
@@ -376,18 +379,20 @@ const BlogList: React.FC<{data:any}> = ({data:blogPosts}) => {
           <div className="featured-badge">Latest</div>
           <div className="featured-image">
             <img
-              src={featuredPost.image || './assets/placeholder.svg'}
-              alt={featuredPost.title}
+              src={featuredPost?.image || './assets/placeholder.svg'}
+              alt={featuredPost?.title}
             />
           </div>
           <div className="featured-content">
             <div className="post-meta">
-              <span className="category">{featuredPost.category}</span>
-              <span className="date">{formatDate(featuredPost.date)}</span>
-              <span className="read-time">{featuredPost.readTime}</span>
+              <span className="category">{featuredPost?.category}</span>
+              <span className="date">
+                {formatDate(featuredPost?.date || new Date().toISOString())}
+              </span>
+              <span className="read-time">{featuredPost?.readTime}</span>
             </div>
-            <h2 className="featured-title">{featuredPost.title}</h2>
-            <p className="featured-excerpt">{featuredPost.excerpt}</p>
+            <h2 className="featured-title">{featuredPost?.title}</h2>
+            <p className="featured-excerpt">{featuredPost?.excerpt}</p>
             <button className="portfolio-btn">Read Article</button>
           </div>
         </article>
@@ -421,49 +426,225 @@ const BlogList: React.FC<{data:any}> = ({data:blogPosts}) => {
 };
 
 // Main Home Component
+// const Home: React.FC = () => {
+//   const [homePage, setHomePage] = useState<HomeData>({
+//     bio: { name: 'loading', description: '...', links: [], title: '...' },
+//     blogPosts: [],
+//     experiences: [],
+//     projects: [],
+//   });
+//   const [loading, setLoading] = useState(true);
+
+//   useEffect(() => {
+//     const loadData = async () => {
+//       try {
+//         const [bio, projects, blogPosts, experiences] = await Promise.all([
+//           portfolioAPI.getBio().then(({ data }) => data),
+//           portfolioAPI.getProjects().then(({ data }) => data),
+//           portfolioAPI.getBlogPosts({ limit: 3 }).then(({ data }) => data), // Get latest 3 posts
+//           portfolioAPI.getExperience().then(({ data }) => data),
+//         ]);
+
+//         setHomePage({
+//           bio,
+//           blogPosts,
+//           experiences,
+//           projects
+//         });
+
+//       } catch (error) {
+//         console.error('Error loading portfolio data:', error);
+//       } finally {
+//         setLoading(false);
+//       }
+//     };
+
+//     //loadData();
+//   }, []);
+
+//     const steps = [
+//     {
+//       name: 'Loading bio...',
+//       action: () => portfolioAPI.getBio().then(({ data }) => data)
+//     },
+//     {
+//       name: 'Fetching projects...',
+//       action: () => portfolioAPI.getProjects().then(({ data }) => data)
+//     },
+//     {
+//       name: 'Getting blog posts...',
+//       action: () => portfolioAPI.getBlogPosts({ limit: 3 }).then(({ data }) => data)
+//     },
+//     {
+//       name: 'Loading experience...',
+//       action: () => portfolioAPI.getExperience().then(({ data }) => data)
+//     }
+//   ];
+
+//   const handleComplete = (results:any[]) => {
+//     console.log('All steps completed!', results);
+//     setHomePage({
+//       bio: results[0],
+//       projects: results[1],
+//       blogPosts: results[2],
+//       experiences: results[3]
+//     });
+
+//     // Hide loader after a brief delay
+//     setTimeout(() => {
+//       setLoading(false);
+//     }, 1000);
+//   };
+
+//   const handleStep = (index:number, step:{name:string}, result:any) => {
+//     console.log(`Step ${index + 1} completed:`, step.name, result);
+//   };
+
+//   if (loading) return (
+//           //@ts-ignore
+//           <ProgressLoader steps={steps} onComplete={handleComplete} onStep={handleStep}/>
+//   );
+
+//   return (
+//     <>
+//       <Hero data={homePage.bio} />
+//       <Projects data={homePage.projects} />
+//       <CVSection data={homePage.experiences} />
+//       <p className="quote">
+//         The only way to do great work is to love what you do.{' '}
+//         <span className="highlight"> — Steve Jobs</span>
+//       </p>
+//       <BlogList data={homePage.blogPosts} />
+//     </>
+//   );
+// };
+
+type Results = [Bio, Project[], BlogPost[], ExperienceItem[]];
 const Home: React.FC = () => {
-  // const [bio, setBio] = useState(null);
-  // const [projects, setProjects] = useState([]);
-  // const [blogPosts, setBlogPosts] = useState([]);
-  // const [experience, setExperience] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [homePage, setHomePage] = useState<HomeData>({
+    bio: { name: 'loading', description: '...', links: [], title: '...' },
+    blogPosts: [],
+    experiences: [],
+    projects: [],
+  });
 
-  // useEffect(() => {
-  //   const loadData = async () => {
-  //     try {
-  //       const [bioData, projectsData, blogData, experienceData] = await Promise.all([
-  //         portfolioAPI.getBio(),
-  //         portfolioAPI.getProjects(),
-  //         portfolioAPI.getBlogPosts({ limit: 3 }), // Get latest 3 posts
-  //         portfolioAPI.getExperience()
-  //       ]);
+  // Memoize steps to prevent recreation on every render
+  const steps = useMemo<ProgressStep<[Bio, Project[], BlogPost[], ExperienceItem[]]>[]>(
+    () => [
+      {
+        name: 'Loading bio...',
+        action: () => portfolioAPI.getBio().then(({ data }) => data),
+      },
+      {
+        name: 'Fetching projects...',
+        action: () => portfolioAPI.getProjects().then(({ data }) => data),
+      },
+      {
+        name: 'Getting blog posts...',
+        action: () =>
+          portfolioAPI.getBlogPosts({ limit: 3 }).then(({ data }) => data),
+      },
+      {
+        name: 'Loading experience...',
+        action: () => portfolioAPI.getExperience().then(({ data }) => data),
+      },
+    ],
+    []
+  );
 
-  //       setBio(bioData.data);
-  //       setProjects(projectsData.data);
-  //       setBlogPosts(blogData.data);
-  //       setExperience(experienceData)
-  //     } catch (error) {
-  //       console.error('Error loading portfolio data:', error);
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
+  const handleComplete = (results: [Bio, Project[], BlogPost[], ExperienceItem[]]) => {
+    console.log('All steps completed!', results);
 
-  //   loadData();
-  // }, []);
+    // Safely destructure results with fallbacks
+    const [bio, projects, blogPosts, experiences] = results;
 
-  if (loading) return <div>Loading portfolio...</div>;
+    setHomePage({
+      bio: bio || {
+        name: 'Error',
+        description: 'Failed to load',
+        links: [],
+        title: 'Error',
+      },
+      projects: projects || [],
+      blogPosts: blogPosts || [],
+      experiences: experiences || [],
+    });
+  };
+
+  const handleStep = (index: number, step: ProgressStep, result: any) => {
+    console.log(`Step ${index + 1} completed:`, step.name, result);
+  };
+
+  const handleError = (error: Error, stepIndex: number) => {
+    console.error(`Error in step ${stepIndex + 1}:`, error);
+    // You can show error notifications here if needed
+  };
+
+  // Use the custom hook
+  const progressState = useProgressLoader<[Bio, Project[], BlogPost[], ExperienceItem[]]>({
+    steps,
+    onComplete: handleComplete,
+    onStep: handleStep,
+    onError: handleError,
+    autoStart: true,
+    delay: 150,
+  });
+
+  // Show loader while loading
+  if (progressState.isLoading || !progressState.isComplete) {
+    return (
+      <ProgressLoader
+        state={progressState}
+        title="Loading Portfolio"
+        subtitle="Fetching your content..."
+      />
+    );
+  }
+
+  // Show error state if there's an error
+  if (progressState.error) {
+    return (
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          height: '100vh',
+          color: '#ef474a',
+          textAlign: 'center',
+        }}
+      >
+        <h2>Something went wrong</h2>
+        <p>{progressState.error.message}</p>
+        <button
+          onClick={progressState.reset}
+          style={{
+            padding: '10px 20px',
+            background: '#ff6a1a',
+            color: 'white',
+            border: 'none',
+            borderRadius: '5px',
+            cursor: 'pointer',
+            marginTop: '1rem',
+          }}
+        >
+          Try Again
+        </button>
+      </div>
+    );
+  }
 
   return (
     <>
-      <Hero data={bio}/>
-      <Projects data={tabProjects}/>
-      <CVSection data={experienceData}/>
+      <Hero data={homePage.bio} />
+      <Projects data={homePage.projects} />
+      <CVSection data={homePage.experiences} />
       <p className="quote">
         The only way to do great work is to love what you do.{' '}
         <span className="highlight"> — Steve Jobs</span>
       </p>
-      <BlogList data={blogPosts}/>
+      <BlogList data={homePage.blogPosts} />
     </>
   );
 };

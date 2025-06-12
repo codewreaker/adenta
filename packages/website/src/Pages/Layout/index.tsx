@@ -9,24 +9,23 @@ import { startMocking } from '../../mock-service/setup';
 MotionGlobalConfig.skipAnimations = false;
 
 export default function Layout() {
-  // const [mockingStarted, setMockingStarted] = useState(false);
+  const [mockingStarted, setMockingStarted] = useState(false);
 
-  // useEffect(() => {
-  //   console.log('ENV', process.env.NODE_ENV);
-  //   // Start MSW in development
-  //   if (process.env.NODE_ENV === 'development') {
-  //     startMocking().then(() => {
-  //       setMockingStarted(true);
-  //       console.log('MSW mocking started');
-  //     });
-  //   } else {
-  //     setMockingStarted(true);
-  //   }
-  // }, []);
+  useEffect(() => {
+    // Start MSW in development
+    if (process.env.NODE_ENV === 'development') {
+      startMocking().then(() => {
+        setMockingStarted(true);
+        console.log('MSW mocking started');
+      });
+    } else {
+      setMockingStarted(true);
+    }
+  }, []);
 
-  // if (!mockingStarted) {
-  //   return <div>Loading...</div>;
-  // }
+  if (process.env.NODE_ENV === 'development' && !mockingStarted) {
+    return <div>Setting Up MSW...</div>;
+  }
 
   return (
     <div className="layout-root">

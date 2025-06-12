@@ -17,7 +17,7 @@
         "index": "packages/website/src/index.html",
         "main": "packages/website/src/main.tsx",
         "tsConfig": "packages/website/tsconfig.app.json",
-        "rspackConfig": "packages/website/rspack.config.js",
+        "rspackConfig": "packages/website/rspack.config.mjs",
         "assets": [
           "packages/website/src/favicon.ico",
           "packages/website/src/assets"

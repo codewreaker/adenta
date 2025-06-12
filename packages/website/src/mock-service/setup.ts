@@ -1,13 +1,27 @@
 // mocks/setup.js
-//import { setupServer } from 'msw/node';
 import { setupWorker } from 'msw/browser';
 import { handlers } from './handlers';
+import { HttpHandler } from 'msw';
 
 // For browser environment
 export const worker = setupWorker(...handlers);
 
+const getServer = async (handlers: HttpHandler[]) => {
+  if (typeof window === 'undefined') {
+    try {
+      const { setupServer } = await import(/* webpackIgnore: true */ "msw/node");
+      return setupServer(...handlers);
+    } catch (error) {
+      // Fallback if import fails
+      console.warn('Failed to load msw/node:', error);
+      return null;
+    }
+  }
+  return null;
+};
+
 // For Node.js environment (testing)
-//export const server = setupServer(...handlers);
+export const server = await getServer(handlers);
 
 // Setup function for browser
 export const startMocking = async () => {
@@ -17,10 +31,10 @@ export const startMocking = async () => {
       onUnhandledRequest: 'bypass',
     });
   } else {
-    console.log("Node Environment");
+    console.log('Node Environment');
     // Node.js environment
-    // server.listen({
-    //   onUnhandledRequest: 'bypass',
-    // });
+    server?.listen({
+      onUnhandledRequest: 'bypass',
+    });
   }
 };
