@@ -7,9 +7,8 @@ export interface ProgressStep<T = any> {
 
 export interface UseProgressLoaderOptions<T = any> {
   steps: ProgressStep<T>[];
-  onComplete?: (results: T) => void;
+  onComplete?: (results: T, state: ProgressLoaderState) => void;
   onStep?: (index: number, step: ProgressStep<T>, result: T) => void;
-  onError?: (error: Error, stepIndex: number) => void;
   autoStart?: boolean;
   delay?: number; // Delay between steps for visual feedback
 }
@@ -18,7 +17,6 @@ export interface ProgressLoaderState {
   progress: number;
   currentStepIndex: number;
   isLoading: boolean;
-  isComplete: boolean;
   currentStep: ProgressStep | null;
   error: Error | null;
   results: any[];
@@ -28,18 +26,16 @@ const useProgressLoader = <T = any>({
   steps,
   onComplete,
   onStep,
-  onError,
   autoStart = true,
-  delay = 150
+  delay = 150,
 }: UseProgressLoaderOptions<T>) => {
   const [state, setState] = useState<ProgressLoaderState>({
     progress: 0,
     currentStepIndex: 0,
     isLoading: false,
-    isComplete: false,
     currentStep: null,
     error: null,
-    results: []
+    results: [],
   });
 
   // Use ref to prevent re-execution on re-renders
@@ -47,22 +43,27 @@ const useProgressLoader = <T = any>({
   const hasExecutedRef = useRef(false);
 
   const executeSteps = useCallback(async () => {
-    if (steps.length === 0 || isExecutingRef.current || hasExecutedRef.current) {
+    if (
+      steps.length === 0 ||
+      isExecutingRef.current ||
+      hasExecutedRef.current
+    ) {
       return;
     }
+
+    steps.push({name: 'Done',action: () => Promise.resolve({} as T)});
 
     isExecutingRef.current = true;
     hasExecutedRef.current = true;
 
-    setState(prev => ({
+    setState((prev) => ({
       ...prev,
       isLoading: true,
       progress: 0,
       currentStepIndex: 0,
-      isComplete: false,
       error: null,
       results: [],
-      currentStep: steps[0] || null
+      currentStep: steps[0] || null,
     }));
 
     const results: T[] = [];
@@ -70,11 +71,11 @@ const useProgressLoader = <T = any>({
     try {
       for (let i = 0; i < steps.length; i++) {
         const step = steps[i];
-        
-        setState(prev => ({
+
+        setState((prev) => ({
           ...prev,
           currentStepIndex: i,
-          currentStep: step
+          currentStep: step,
         }));
 
         try {
@@ -86,47 +87,46 @@ const useProgressLoader = <T = any>({
 
           // Update progress
           const newProgress = ((i + 1) / steps.length) * 100;
-          setState(prev => ({
+          setState((prev) => ({
             ...prev,
             progress: newProgress,
-            results: [...results]
+            results: [...results],
           }));
 
           // Small delay for visual feedback
           if (delay > 0 && i < steps.length - 1) {
-            await new Promise(resolve => setTimeout(resolve, delay));
+            await new Promise((resolve) => setTimeout(resolve, delay));
           }
         } catch (stepError) {
-          const error = stepError instanceof Error ? stepError : new Error(String(stepError));
+          const error =
+            stepError instanceof Error
+              ? stepError
+              : new Error(String(stepError));
           console.error(`Step ${i + 1} failed:`, error);
-          
-          onError?.(error, i);
           results.push(null as T);
         }
       }
 
       // Complete
-      setState(prev => ({
+      setState((prev) => ({
         ...prev,
-        isComplete: true,
         isLoading: false,
-        results
+        results,
       }));
 
       // Call onComplete callback
-      onComplete?.(results);
+      onComplete?.(results as T, state);
     } catch (error) {
       const err = error instanceof Error ? error : new Error(String(error));
-      setState(prev => ({
+      setState((prev) => ({
         ...prev,
         error: err,
-        isLoading: false
+        isLoading: false,
       }));
-      onError?.(err, -1);
     } finally {
       isExecutingRef.current = false;
     }
-  }, [steps, onComplete, onStep, onError, delay]);
+  }, [steps, onComplete, onStep, delay]);
 
   // Reset function to allow re-execution
   const reset = useCallback(() => {
@@ -136,10 +136,9 @@ const useProgressLoader = <T = any>({
       progress: 0,
       currentStepIndex: 0,
       isLoading: false,
-      isComplete: false,
       currentStep: null,
       error: null,
-      results: []
+      results: [],
     });
   }, []);
 
@@ -161,7 +160,7 @@ const useProgressLoader = <T = any>({
     ...state,
     start,
     reset,
-    isExecuting: isExecutingRef.current
+    isExecuting: isExecutingRef.current,
   };
 };
 

@@ -9,17 +9,17 @@ export interface ProgressLoaderProps {
   subtitle?: string;
 }
 
-const ProgressLoader: React.FC<ProgressLoaderProps> = ({ 
+const ProgressLoader: React.FC<ProgressLoaderProps> = ({
   state,
   className = '',
   style = {},
   title = 'Loading',
-  subtitle
+  subtitle,
 }) => {
-  const { progress, currentStep, isComplete, isLoading } = state;
+  const { progress, currentStep, isLoading } = state;
 
   return (
-    <div 
+    <div
       className={className}
       style={{
         position: 'fixed',
@@ -34,24 +34,11 @@ const ProgressLoader: React.FC<ProgressLoaderProps> = ({
         justifyContent: 'center',
         zIndex: 9999,
         fontFamily: 'var(--font-inter, Inter, system-ui)',
-        ...style
+        ...style,
       }}
     >
       {/* CSS Variables */}
-      <style>{`
-        :root {
-          --color-bg: #0e0e11;
-          --color-primary-grey: #232329;
-          --color-primary: #ff6a1a;
-          --color-primary-two: #9f2b00;
-          --color-grizzly-red: #ef474a;
-          --color-bg-dark: color-mix(in srgb, var(--color-bg) 90%, black);
-          --color-text: #fff;
-          --color-text-secondary: #d3d3cb;
-          --color-shadow-strong: color-mix(in srgb, var(--color-primary) 18%, transparent);
-          --color-bg-gradient: linear-gradient(135deg, color-mix(in srgb, var(--color-bg) 95%, white) 60%, var(--color-primary) 100%);
-        }
-        
+      <style>{`        
         @keyframes shine {
           0% { left: -100%; }
           100% { left: 100%; }
@@ -68,116 +55,103 @@ const ProgressLoader: React.FC<ProgressLoaderProps> = ({
           }
         }
       `}</style>
-      
+
       {/* Loading Content */}
-      <div style={{
-        textAlign: 'center',
-        maxWidth: '500px',
-        width: '100%',
-        padding: '0 2rem'
-      }}>
+      <div
+        style={{
+          textAlign: 'center',
+          maxWidth: '500px',
+          width: '100%',
+          padding: '0 2rem',
+        }}
+      >
         {/* Title */}
-        <div style={{ marginBottom: '3rem' }}>
-          <h1 style={{
-            fontSize: '3rem',
-            fontWeight: '700',
-            background: 'var(--color-bg-gradient)',
+        <h1
+          style={{
+            fontSize: '8.6rem',
+            fontWeight: 100,
+            margin: '0 0 0.5rem 0',
+            background: 'var(--color-primary-two)',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
             backgroundClip: 'text',
-            marginBottom: '0.5rem',
-            letterSpacing: '-0.02em'
-          }}>
-            {title}
-          </h1>
-          <p style={{
-            color: 'var(--color-text-secondary)',
-            fontSize: '1.1rem',
-            margin: 0
-          }}>
-            {isComplete ? 'Complete!' : subtitle || 'Please wait...'}
-          </p>
-        </div>
+            letterSpacing: '-0.02em',
+          }}
+        >
+          {title}
+        </h1>
 
         {/* Progress Bar Container */}
-        <div style={{
-          background: 'var(--color-bg-dark)',
-          borderRadius: '12px',
-          padding: '6px',
-          marginBottom: '2rem',
-          border: '1px solid color-mix(in srgb, var(--color-primary) 10%, transparent)',
-          boxShadow: 'inset 0 2px 8px rgba(0, 0, 0, 0.3)'
-        }}>
+        <div
+          style={{
+            background: 'var(--color-bg-dark)',
+            padding: '6px',
+            marginBottom: '2rem',
+            border:
+              '1px solid color-mix(in srgb, var(--color-primary) 10%, transparent)',
+            boxShadow: 'inset 0 2px 8px rgba(0, 0, 0, 0.3)',
+          }}
+        >
           {/* Progress Bar */}
-          <div style={{
-            height: '12px',
-            background: 'linear-gradient(90deg, var(--color-primary) 0%, var(--color-grizzly-red) 50%, var(--color-primary) 100%)',
-            borderRadius: '8px',
-            width: `${progress}%`,
-            transition: 'width 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-            boxShadow: progress > 0 ? '0 0 20px var(--color-shadow-strong)' : 'none',
-            position: 'relative',
-            overflow: 'hidden'
-          }}>
+          <div
+            style={{
+              height: '1px',
+              background:
+                'linear-gradient(90deg, var(--color-primary) 0%, var(--color-grizzly-red) 50%, var(--color-primary) 100%)',
+              borderRadius: '8px',
+              width: `${progress}%`,
+              transition: 'width 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+              boxShadow:
+                progress > 0 ? '0 0 20px var(--color-shadow-strong)' : 'none',
+              position: 'relative',
+              overflow: 'hidden',
+            }}
+          >
             {/* Animated shine effect */}
             {progress > 0 && (
-              <div style={{
-                position: 'absolute',
-                top: 0,
-                left: '-100%',
-                width: '100%',
-                height: '100%',
-                background: 'linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent)',
-                animation: 'shine 2s infinite',
-              }} />
+              <div
+                style={{
+                  position: 'absolute',
+                  top: 0,
+                  left: '-100%',
+                  width: '100%',
+                  height: '100%',
+                  background:
+                    'linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent)',
+                  animation: 'shine 2s infinite',
+                }}
+              />
             )}
           </div>
         </div>
 
         {/* Progress Text */}
-        <div style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          marginBottom: '1.5rem'
-        }}>
-          <span style={{
-            color: 'var(--color-text)',
-            fontSize: '1.1rem',
-            fontWeight: '600'
-          }}>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            marginBottom: '1.5rem',
+          }}
+        >
+          <span
+            style={{
+              color: 'var(--color-primary)',
+              fontSize: '0.8rem',
+              fontWeight: '600',
+            }}
+          >
             {Math.round(progress)}%
           </span>
-          <span style={{
-            color: 'var(--color-text-secondary)',
-            fontSize: '0.95rem'
-          }}>
+          <span
+            style={{
+              color: 'var(--color-text)',
+              fontSize: '0.8rem',
+            }}
+          >
             {currentStep?.name || 'Initializing...'}
           </span>
         </div>
-
-        {/* Loading Animation */}
-        {isLoading && !isComplete && (
-          <div style={{
-            display: 'flex',
-            justifyContent: 'center',
-            gap: '4px'
-          }}>
-            {[0, 1, 2].map((i) => (
-              <div
-                key={i}
-                style={{
-                  width: '8px',
-                  height: '8px',
-                  borderRadius: '50%',
-                  background: 'var(--color-primary)',
-                  animation: `pulse 1.5s ease-in-out ${i * 0.2}s infinite`,
-                  opacity: 0.6
-                }}
-              />
-            ))}
-          </div>
-        )}
       </div>
     </div>
   );

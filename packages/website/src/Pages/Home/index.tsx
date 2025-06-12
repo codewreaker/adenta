@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo } from 'react';
+import { useMemo } from 'react';
 import type React from 'react';
 import { useState } from 'react';
 import { motion } from 'framer-motion';
@@ -14,6 +14,7 @@ import { formatDate } from '../../utils/formatDate';
 import { portfolioAPI } from '../../mock-service/api';
 
 import useProgressLoader, {
+  ProgressLoaderState,
   ProgressStep,
 } from '../../Components/Loader/useProgressLoader';
 import ProgressLoader from '../../Components/Loader/ProgressLoader';
@@ -425,102 +426,11 @@ const BlogList: React.FC<{ data: BlogPost[] }> = ({ data }) => {
   );
 };
 
-// Main Home Component
-// const Home: React.FC = () => {
-//   const [homePage, setHomePage] = useState<HomeData>({
-//     bio: { name: 'loading', description: '...', links: [], title: '...' },
-//     blogPosts: [],
-//     experiences: [],
-//     projects: [],
-//   });
-//   const [loading, setLoading] = useState(true);
-
-//   useEffect(() => {
-//     const loadData = async () => {
-//       try {
-//         const [bio, projects, blogPosts, experiences] = await Promise.all([
-//           portfolioAPI.getBio().then(({ data }) => data),
-//           portfolioAPI.getProjects().then(({ data }) => data),
-//           portfolioAPI.getBlogPosts({ limit: 3 }).then(({ data }) => data), // Get latest 3 posts
-//           portfolioAPI.getExperience().then(({ data }) => data),
-//         ]);
-
-//         setHomePage({
-//           bio,
-//           blogPosts,
-//           experiences,
-//           projects
-//         });
-
-//       } catch (error) {
-//         console.error('Error loading portfolio data:', error);
-//       } finally {
-//         setLoading(false);
-//       }
-//     };
-
-//     //loadData();
-//   }, []);
-
-//     const steps = [
-//     {
-//       name: 'Loading bio...',
-//       action: () => portfolioAPI.getBio().then(({ data }) => data)
-//     },
-//     {
-//       name: 'Fetching projects...',
-//       action: () => portfolioAPI.getProjects().then(({ data }) => data)
-//     },
-//     {
-//       name: 'Getting blog posts...',
-//       action: () => portfolioAPI.getBlogPosts({ limit: 3 }).then(({ data }) => data)
-//     },
-//     {
-//       name: 'Loading experience...',
-//       action: () => portfolioAPI.getExperience().then(({ data }) => data)
-//     }
-//   ];
-
-//   const handleComplete = (results:any[]) => {
-//     console.log('All steps completed!', results);
-//     setHomePage({
-//       bio: results[0],
-//       projects: results[1],
-//       blogPosts: results[2],
-//       experiences: results[3]
-//     });
-
-//     // Hide loader after a brief delay
-//     setTimeout(() => {
-//       setLoading(false);
-//     }, 1000);
-//   };
-
-//   const handleStep = (index:number, step:{name:string}, result:any) => {
-//     console.log(`Step ${index + 1} completed:`, step.name, result);
-//   };
-
-//   if (loading) return (
-//           //@ts-ignore
-//           <ProgressLoader steps={steps} onComplete={handleComplete} onStep={handleStep}/>
-//   );
-
-//   return (
-//     <>
-//       <Hero data={homePage.bio} />
-//       <Projects data={homePage.projects} />
-//       <CVSection data={homePage.experiences} />
-//       <p className="quote">
-//         The only way to do great work is to love what you do.{' '}
-//         <span className="highlight"> — Steve Jobs</span>
-//       </p>
-//       <BlogList data={homePage.blogPosts} />
-//     </>
-//   );
-// };
 
 type Results = [Bio, Project[], BlogPost[], ExperienceItem[]];
+
 const Home: React.FC = () => {
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [homePage, setHomePage] = useState<HomeData>({
     bio: { name: 'loading', description: '...', links: [], title: '...' },
     blogPosts: [],
@@ -529,7 +439,7 @@ const Home: React.FC = () => {
   });
 
   // Memoize steps to prevent recreation on every render
-  const steps = useMemo<ProgressStep<[Bio, Project[], BlogPost[], ExperienceItem[]]>[]>(
+  const steps = useMemo<ProgressStep<Results>[]>(
     () => [
       {
         name: 'Loading bio...',
@@ -542,56 +452,40 @@ const Home: React.FC = () => {
       {
         name: 'Getting blog posts...',
         action: () =>
-          portfolioAPI.getBlogPosts({ limit: 3 }).then(({ data }) => data),
+          portfolioAPI.getBlogPosts({ limit: 7 }).then(({ data }) => data),
       },
       {
         name: 'Loading experience...',
         action: () => portfolioAPI.getExperience().then(({ data }) => data),
-      },
+      }
     ],
     []
   );
 
-  const handleComplete = (results: [Bio, Project[], BlogPost[], ExperienceItem[]]) => {
-    console.log('All steps completed!', results);
-
+  const handleComplete = (results: Results, state: ProgressLoaderState) => {
     // Safely destructure results with fallbacks
     const [bio, projects, blogPosts, experiences] = results;
-
-    setHomePage({
-      bio: bio || {
-        name: 'Error',
-        description: 'Failed to load',
-        links: [],
-        title: 'Error',
-      },
-      projects: projects || [],
-      blogPosts: blogPosts || [],
-      experiences: experiences || [],
-    });
+    setHomePage({ bio, projects, blogPosts, experiences });
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 500);
   };
 
   const handleStep = (index: number, step: ProgressStep, result: any) => {
     console.log(`Step ${index + 1} completed:`, step.name, result);
   };
 
-  const handleError = (error: Error, stepIndex: number) => {
-    console.error(`Error in step ${stepIndex + 1}:`, error);
-    // You can show error notifications here if needed
-  };
-
   // Use the custom hook
-  const progressState = useProgressLoader<[Bio, Project[], BlogPost[], ExperienceItem[]]>({
+  const progressState = useProgressLoader({
     steps,
     onComplete: handleComplete,
     onStep: handleStep,
-    onError: handleError,
     autoStart: true,
-    delay: 150,
+    delay: 40,
   });
 
   // Show loader while loading
-  if (progressState.isLoading || !progressState.isComplete) {
+  if (isLoading) {
     return (
       <ProgressLoader
         state={progressState}
@@ -616,7 +510,7 @@ const Home: React.FC = () => {
         }}
       >
         <h2>Something went wrong</h2>
-        <p>{progressState.error.message}</p>
+        <p>{progressState.error?.message}</p>
         <button
           onClick={progressState.reset}
           style={{
