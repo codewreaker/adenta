@@ -36,9 +36,9 @@ const tabProjects = [
 
 const experienceData = [
   {
-    period: '2024 — PRESENT',
-    title: 'Senior Frontend Engineer, Accessibility',
-    company: 'Klaviyo',
+    period: 'July 2023 — PRESENT',
+    title: 'Associate Director - Senior Software Engineer Core UI',
+    company: 'RBC Capital Markets, London',
     description:
       "Build and maintain critical components used to construct Klaviyo's frontend, across the whole product. Work closely with cross-functional teams, including developers, designers, and product managers, to implement and advocate for best practices in web accessibility.",
     techStack: ['JavaScript', 'TypeScript', 'React', 'Storybook'],

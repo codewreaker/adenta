@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo } from 'react';
+import { useMemo, useRef, useEffect } from 'react';
 import type React from 'react';
 import { useState } from 'react';
 import { motion } from 'framer-motion';
@@ -113,6 +113,54 @@ const SocialLinks: React.FC<SocialLinksProps> = ({ links }) => {
 
 // Hero Section Component
 const Hero: React.FC<{ data: Bio }> = ({ data }) => {
+  // Use useRef to track mounted state
+  const isMounted = useRef(true);
+
+  // Cleanup on unmount
+  useEffect(() => {
+    return () => {
+      isMounted.current = false;
+    };
+  }, []);
+
+  // Animation variants for better performance
+  const electronVariants = {
+    python: {
+      x: [-20, 40, -20],
+      transition: {
+        duration: 7,
+        repeat: Infinity,
+        ease: "easeInOut",
+      }
+    },
+    typescript: {
+      y: [0, -18, 0],
+      rotate: [0, 10, 0],
+      transition: {
+        duration: 6,
+        repeat: Infinity,
+        ease: "easeInOut",
+      }
+    },
+    rust: {
+      y: [0, 12, 0],
+      transition: {
+        duration: 5,
+        repeat: Infinity,
+        ease: "easeInOut",
+      }
+    },
+    avatar: {
+      y: [0, -10, 0],
+      scale: [1, 1.05, 1],
+      transition: {
+        duration: 8,
+        repeat: Infinity,
+        ease: "easeInOut",
+      }
+    }
+  };
+
   return (
     <div className="portfolio-hero">
       <div className="portfolio-intro">
@@ -149,37 +197,25 @@ const Hero: React.FC<{ data: Bio }> = ({ data }) => {
               src="assets/python.png"
               alt="Python Icon"
               className="portfolio-asset asset-python"
-              initial={{ x: -20 }}
-              animate={{ x: [-20, 40, -20] }}
-              transition={{
-                duration: 7,
-                repeat: Number.POSITIVE_INFINITY,
-                ease: 'easeInOut',
-              }}
+              variants={electronVariants}
+              animate="python"
+              layoutId="python-electron"
             />
             <motion.img
               src="assets/typescript.png"
               alt="TypeScript"
               className="portfolio-asset asset-typescript"
-              initial={{ y: 0, rotate: 0 }}
-              animate={{ y: [0, -18, 0], rotate: [0, 10, 0] }}
-              transition={{
-                duration: 6,
-                repeat: Number.POSITIVE_INFINITY,
-                ease: 'easeInOut',
-              }}
+              variants={electronVariants}
+              animate="typescript"
+              layoutId="typescript-electron"
             />
             <motion.img
               src="assets/rust.png"
               alt="Rust"
               className="portfolio-asset asset-rust"
-              initial={{ y: 0 }}
-              animate={{ y: [0, 12, 0] }}
-              transition={{
-                duration: 5,
-                repeat: Number.POSITIVE_INFINITY,
-                ease: 'easeInOut',
-              }}
+              variants={electronVariants}
+              animate="rust"
+              layoutId="rust-electron"
             />
           </div>
           <div className="circular-mask">
@@ -187,13 +223,9 @@ const Hero: React.FC<{ data: Bio }> = ({ data }) => {
               src="assets/bandw.jpeg"
               alt="avatar"
               height={'100%'}
-              initial={{ y: 0, scale: 1 }}
-              animate={{ y: [0, -10, 0], scale: [1, 1.05, 1] }}
-              transition={{
-                duration: 8,
-                repeat: Number.POSITIVE_INFINITY,
-                ease: 'easeInOut',
-              }}
+              variants={electronVariants}
+              animate="avatar"
+              layoutId="avatar-image"
             />
           </div>
         </div>
@@ -217,6 +249,7 @@ const Projects: React.FC<{ data: Project[] }> = ({ data }) => {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.7, delay: 0.3 }}
       className="portfolio-projects gradient-bg"
+      layoutId="projects-section"
     >
       <GeometricCard customStyle={{ width: 360 }} />
       <Terminal tabProjects={data} />
@@ -280,16 +313,27 @@ const CVSection: React.FC<{ data: ExperienceItem[] }> = ({ data }) => {
             <h1 className="name">Curriculum Vitae</h1>
             <h2 className="title">Front End Engineer</h2>
             <p className="subtitle">
-              In the past, I've had the opportunity to develop software across a
-              variety of settings — from{' '}
-              <span className="highlight">advertising agencies</span> and{' '}
-              <span className="highlight">large corporations</span> to{' '}
-              <span className="highlight">start-ups</span> and
-              <span className="highlight"> small digital product studios</span>.
-              Additionally, I also released a{' '}
-              <span className="highlight">comprehensive video course</span> a
-              few years ago, guiding learners through building a web app with
-              the Spotify API.
+              Versatile <span className="highlight">full-stack developer</span>
+              {' '}specialising in <span className="highlight">
+                front-end
+              </span>{' '}
+              technologies with added skill in{' '}
+              <span className="highlight">UI/UX</span> design. I have over{' '}
+              <span className="highlight">{calculateYearsOfExperience()} years</span>{' '}
+              experience in <span className="highlight">FinTech</span>,{' '}
+              <span className="highlight">Architecting</span> UIs that handle extensive,{' '}
+              <span className="highlight">high-frequency</span> data. Most of my
+              work is in <span className="highlight">JavaScript</span>,{' '}
+              <span className="highlight">Typescript</span>,{' '}
+              <span className="highlight">React</span> for the front-end and{' '}
+              <span className="highlight">Python</span> for the backend. A
+              curious learner willing to take on new challenges, and work within
+              high-functioning teams while bringing on my garnered expertise and delivering <br/> 
+              high-performance products to fulfil{' '}
+              <span className="highlight">business</span> needs.
+              <br/>
+              I am currently learning <span className="highlight">Rust</span> to expand my skill set in <span className="highlight">WebAssembly</span>
+
             </p>
           </div>
 
@@ -426,6 +470,14 @@ const BlogList: React.FC<{ data: BlogPost[] }> = ({ data }) => {
   );
 };
 
+// Calculate years of experience since July 2015
+const calculateYearsOfExperience = (start = '2015-07-01') => {
+  const startDate = new Date(start);
+  const currentDate = new Date();
+  const diffTime = Math.abs(currentDate.getTime() - startDate.getTime());
+  const diffYears = Math.floor(diffTime / (1000 * 60 * 60 * 24 * 365.25));
+  return diffYears;
+};
 
 type Results = [Bio, Project[], BlogPost[], ExperienceItem[]];
 
@@ -457,7 +509,7 @@ const Home: React.FC = () => {
       {
         name: 'Loading experience...',
         action: () => portfolioAPI.getExperience().then(({ data }) => data),
-      }
+      },
     ],
     []
   );

@@ -237,7 +237,6 @@
 /* ===== CV SECTION ===== */
 .cv-container {
   display: flex;
-  height: calc(100vh - 150px);
   background: var(--color-bg);
   border: 1px solid var(--color-shadow);
   margin: 5% 0;
@@ -246,7 +245,7 @@
 .sidebar {
   width: 42%;
   max-width: 500px;
-  padding: 96px 48px;
+  padding: 48px;
   border-right: 1px solid var(--color-shadow);
 }
 
@@ -338,7 +337,7 @@
 
 .main-content {
   width: 100%;
-  padding: 96px 48px 96px 48px;
+  padding: 48px;
   overflow-y: auto;
 }
 
