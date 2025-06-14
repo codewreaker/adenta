@@ -54,3 +54,7 @@ storybook-static/
 local.env
 # Husky
 .husky/_/
+
+# Next.js
+.next
+out
