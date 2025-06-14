@@ -1,10 +1,13 @@
-const IconWrapper = (IconComponent: React.ElementType) => (
-  <IconComponent
-    width={28}
-    height={28}
-    stroke="#ff6a1a"
-    style={{ marginBottom: 0 }}
-  />
-);
+const IconWrapper = (IconComponent?: React.ElementType, size = 28, color = '#ff6a1a') => {
+  if (!IconComponent) return null;
+  return (
+    <IconComponent
+      width={size}
+      height={size}
+      stroke={color}
+      style={{ marginBottom: 0 }}
+    />
+  );
+};
 
 export default IconWrapper

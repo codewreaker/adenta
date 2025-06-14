@@ -12,6 +12,7 @@
 .color-wheel-picker-container {
   opacity: 0;
   position: absolute;
+  transform: translate(45%, 45px);
 
   .color-wheel-picker {
     display: grid;

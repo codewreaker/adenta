@@ -4,10 +4,13 @@ import ColorPicker from '../../Components/ColorPicker';
 import {
   MoonIcon as DarkIcon,
   SunIcon as LightIcon,
+  PauseIcon,
+  PlayIcon
 } from '@heroicons/react/24/outline';
 import './header.css';
-import ThemeToggle from '../../Components/ThemeToggle';
+import ThemeToggle from './ThemeToggle';
 import { scrollToSection } from '../../utils/scrollToSection';
+import { useAnimation } from '../../context/AnimationContext';
 
 interface NavItem {
   label: string;
@@ -35,6 +38,20 @@ const navConfig: NavItem[] = [
     ),
   },
 ];
+
+const AnimationToggle: React.FC = () => {
+  const { skipAnimations, setSkipAnimations } = useAnimation();
+
+  return (
+      <ThemeToggle
+        onToggle={() => setSkipAnimations(!skipAnimations)}
+        isPrimary={skipAnimations}
+        primaryIcon={PlayIcon}
+        secondaryIcon={PauseIcon}
+        tooltip={skipAnimations ? 'Enable animations' : 'Disable animations'}
+      />
+  );
+};
 
 const Header = () => {
   const [isDark, setIsDark] = useState(false);
@@ -102,16 +119,13 @@ const Header = () => {
                 </a>
               </li>
             ))}
-            <li>
+            <li className="utility-toggle-container">
               <ThemeToggle
                 onToggle={toggleTheme}
-                isDark={isDark}
-                alternate={true}
-                darkIcon={<DarkIcon />}
-                lightIcon={<LightIcon />}
+                isPrimary={isDark}
+                primaryIcon={DarkIcon}
+                secondaryIcon={LightIcon}
               />
-            </li>
-            <li>
               <ColorPicker
                 onChange={(colors) => {
                   try {
@@ -124,6 +138,7 @@ const Header = () => {
                   }
                 }}
               />
+              <AnimationToggle />
             </li>
           </ul>
         </nav>

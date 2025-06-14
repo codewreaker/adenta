@@ -16,6 +16,19 @@ interface BlogPost {
   featured?: boolean;
 }
 
+interface ResumeProps {
+  education: EducationItem[];
+  experience: ExperienceItem[];
+}
+
+interface EducationItem {
+  period: string;
+  title: string;
+  school: string;
+  description: string;
+  fields: string[];
+  subtitles: string[];
+}
 
 interface ExperienceItem {
   period: string;
@@ -51,6 +64,6 @@ interface Project {
 interface HomeData {
   bio: Bio;
   projects: Project[];
-  experiences: ExperienceItem[];
+  experiences: ResumeProps;
   blogPosts: BlogPost[];
 }

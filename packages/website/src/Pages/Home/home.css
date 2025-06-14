@@ -153,6 +153,9 @@
   height: auto;
   width: 120px;
   z-index: 2;
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+  perspective: 1000px;
 }
 
 .asset-python {
@@ -239,6 +242,7 @@
   display: flex;
   background: var(--color-bg);
   border: 1px solid var(--color-shadow);
+  height: calc(100vh - 85px);
   margin: 5% 0;
 }
 
@@ -350,6 +354,7 @@
   margin-bottom: 16px;
   font-size: 16px;
   line-height: 1.7;
+  white-space: pre-line;
   color: var(--color-text-secondary);
 }
 
@@ -410,6 +415,10 @@
 
 .experience-item:hover .experience-title {
   color: var(--color-primary);
+}
+
+.experience-item:hover .experience-subtitle {
+  color: var(--color-text);
 }
 
 .external-link {
@@ -790,4 +799,94 @@
 ::selection {
   background: var(--color-primary);
   color: var(--color-bg);
+}
+
+
+/* Base animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes floatX {
+  0%, 100% {
+    transform: translateX(-20px);
+  }
+  50% {
+    transform: translateX(40px);
+  }
+}
+
+@keyframes floatY {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-18px);
+  }
+}
+
+@keyframes floatYRotate {
+  0%, 100% {
+    transform: translateY(0) rotate(0);
+  }
+  50% {
+    transform: translateY(-18px) rotate(10deg);
+  }
+}
+
+@keyframes floatYScale {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-10px) scale(1.05);
+  }
+}
+
+/* Animation classes */
+.fade-in {
+  animation: fadeIn 0.7s ease-out forwards;
+}
+
+.fade-in-up {
+  animation: fadeInUp 0.7s ease-out 0.3s forwards;
+  opacity: 0;
+}
+
+.animate-float-x {
+  animation: floatX 7s ease-in-out infinite;
+  will-change: transform;
+}
+
+.animate-float-y {
+  animation: floatY 5s ease-in-out infinite;
+  will-change: transform;
+}
+
+.animate-float-y-rotate {
+  animation: floatYRotate 6s ease-in-out infinite;
+  will-change: transform;
+}
+
+.animate-float-y-scale {
+  animation: floatYScale 8s ease-in-out infinite;
+  will-change: transform;
 }

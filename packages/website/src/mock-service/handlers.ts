@@ -135,9 +135,9 @@ export const handlers = [
     const stats = {
       totalProjects: tabProjects.length,
       totalBlogPosts: blogPosts.length,
-      totalExperience: experienceData.length,
+      totalExperience: experienceData.experience.length,
       categories: [...new Set(blogPosts.map((post) => post.category))].length,
-      techStack: [...new Set(experienceData.flatMap((exp) => exp.techStack))],
+      techStack: [...new Set(experienceData.experience.flatMap((exp) => exp.techStack))],
     };
 
     return HttpResponse.json({

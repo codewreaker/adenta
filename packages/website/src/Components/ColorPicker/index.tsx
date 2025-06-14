@@ -4,7 +4,7 @@ import ColorWheelComponent, { type ColorWheelProps } from './ColorWheel';
 import { EyeDropperIcon } from '@heroicons/react/24/outline';
 
 import './colorpicker.css';
-import ThemeToggle from '../ThemeToggle';
+import ThemeToggle from '../../Pages/Header/ThemeToggle';
 
 const ColorPicker: FC<ColorWheelProps> = (props) => {
   const cRef = useRef<HTMLDivElement>(null);
@@ -20,9 +20,9 @@ const ColorPicker: FC<ColorWheelProps> = (props) => {
     <>
       <ThemeToggle
         onToggle={onToggle}
-        isDark={isOpen}
-        alternate={false}
-        darkIcon={<EyeDropperIcon />}
+        isPrimary={isOpen}
+        primaryIcon={EyeDropperIcon}
+        secondaryIcon={EyeDropperIcon}
       />
       <ColorWheelComponent ref={cRef} {...props} />
     </>

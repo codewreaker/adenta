@@ -3,10 +3,8 @@ import Header from '../Header';
 import Footer from '../Footer';
 import Home from '../Home';
 import '../../styles.css';
-import { MotionGlobalConfig } from 'framer-motion';
 import { startMocking } from '../../mock-service/setup';
-
-MotionGlobalConfig.skipAnimations = false;
+import { AnimationProvider } from '../../context/AnimationContext';
 
 export default function Layout() {
   const [mockingStarted, setMockingStarted] = useState(false);
@@ -28,12 +26,14 @@ export default function Layout() {
   }
 
   return (
-    <div className="layout-root">
-      <Header />
-      <main className="layout-content">
-        <Home />
-      </main>
-      <Footer />
-    </div>
+    <AnimationProvider>
+      <div className="layout-root">
+        <Header />
+        <main className="layout-content">
+          <Home />
+        </main>
+        <Footer />
+      </div>
+    </AnimationProvider>
   );
 }

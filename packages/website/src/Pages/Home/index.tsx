@@ -1,9 +1,8 @@
 'use client';
 
-import { useMemo, useRef, useEffect } from 'react';
+import { useMemo } from 'react';
 import type React from 'react';
 import { useState } from 'react';
-import { motion } from 'framer-motion';
 import { EnvelopeIcon } from '@heroicons/react/24/outline';
 import { SpeechBubble } from '../../Components/SpeechBubble';
 import Terminal from '../../Components/Terminal';
@@ -20,6 +19,7 @@ import useProgressLoader, {
 import ProgressLoader from '../../Components/Loader/ProgressLoader';
 
 import './home.css';
+import { useAnimation } from '../../context/AnimationContext';
 
 // Icon Components
 const GitHubIcon = ({
@@ -111,54 +111,16 @@ const SocialLinks: React.FC<SocialLinksProps> = ({ links }) => {
   );
 };
 
+// Animation Toggle Component
+
 // Hero Section Component
 const Hero: React.FC<{ data: Bio }> = ({ data }) => {
-  // Use useRef to track mounted state
-  const isMounted = useRef(true);
+  const { skipAnimations } = useAnimation();
 
-  // Cleanup on unmount
-  useEffect(() => {
-    return () => {
-      isMounted.current = false;
-    };
-  }, []);
-
-  // Animation variants for better performance
-  const electronVariants = {
-    python: {
-      x: [-20, 40, -20],
-      transition: {
-        duration: 7,
-        repeat: Infinity,
-        ease: "easeInOut",
-      }
-    },
-    typescript: {
-      y: [0, -18, 0],
-      rotate: [0, 10, 0],
-      transition: {
-        duration: 6,
-        repeat: Infinity,
-        ease: "easeInOut",
-      }
-    },
-    rust: {
-      y: [0, 12, 0],
-      transition: {
-        duration: 5,
-        repeat: Infinity,
-        ease: "easeInOut",
-      }
-    },
-    avatar: {
-      y: [0, -10, 0],
-      scale: [1, 1.05, 1],
-      transition: {
-        duration: 8,
-        repeat: Infinity,
-        ease: "easeInOut",
-      }
-    }
+  const animClx = (baseClass: string) => {
+    return skipAnimations
+      ? baseClass.replace(/animate-|fade-in/g, '')
+      : baseClass;
   };
 
   return (
@@ -168,11 +130,8 @@ const Hero: React.FC<{ data: Bio }> = ({ data }) => {
         <h1 className="portfolio-name">{data.name}</h1>
       </div>
 
-      <motion.div
-        className="portfolio-hero-content gradient-bg"
-        initial={{ opacity: 0, y: -40 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.7 }}
+      <div
+        className={`portfolio-hero-content gradient-bg ${animClx('fade-in')}`}
       >
         <div className="portfolio-hero-main">
           <div className="portfolio-title">{data.title}</div>
@@ -193,43 +152,38 @@ const Hero: React.FC<{ data: Bio }> = ({ data }) => {
 
         <div className="portfolio-avatar">
           <div className="electrons">
-            <motion.img
+            <img
               src="assets/python.png"
               alt="Python Icon"
-              className="portfolio-asset asset-python"
-              variants={electronVariants}
-              animate="python"
-              layoutId="python-electron"
+              className={`portfolio-asset asset-python ${animClx(
+                'animate-float-x'
+              )}`}
             />
-            <motion.img
+            <img
               src="assets/typescript.png"
               alt="TypeScript"
-              className="portfolio-asset asset-typescript"
-              variants={electronVariants}
-              animate="typescript"
-              layoutId="typescript-electron"
+              className={`portfolio-asset asset-typescript ${animClx(
+                'animate-float-y-rotate'
+              )}`}
             />
-            <motion.img
+            <img
               src="assets/rust.png"
               alt="Rust"
-              className="portfolio-asset asset-rust"
-              variants={electronVariants}
-              animate="rust"
-              layoutId="rust-electron"
+              className={`portfolio-asset asset-rust ${animClx(
+                'animate-float-y'
+              )}`}
             />
           </div>
           <div className="circular-mask">
-            <motion.img
+            <img
               src="assets/bandw.jpeg"
               alt="avatar"
               height={'100%'}
-              variants={electronVariants}
-              animate="avatar"
-              layoutId="avatar-image"
+              className={animClx('animate-float-y-scale')}
             />
           </div>
         </div>
-      </motion.div>
+      </div>
       <div
         className="scroll-indicator"
         onClick={scrollToSection('projects', null, 100)}
@@ -242,18 +196,18 @@ const Hero: React.FC<{ data: Bio }> = ({ data }) => {
 
 // Projects Section Component
 const Projects: React.FC<{ data: Project[] }> = ({ data }) => {
+  const { skipAnimations } = useAnimation();
+
   return (
-    <motion.div
+    <div
       id="projects"
-      initial={{ opacity: 0, y: 40 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.7, delay: 0.3 }}
-      className="portfolio-projects gradient-bg"
-      layoutId="projects-section"
+      className={`portfolio-projects gradient-bg ${
+        skipAnimations ? '' : 'fade-in-up'
+      }`}
     >
       <GeometricCard customStyle={{ width: 360 }} />
       <Terminal tabProjects={data} />
-    </motion.div>
+    </div>
   );
 };
 
@@ -302,7 +256,8 @@ const ExperienceItemComponent: React.FC<ExperienceItem> = ({
 );
 
 // CV Section Component
-const CVSection: React.FC<{ data: ExperienceItem[] }> = ({ data }) => {
+const CVSection: React.FC<{ data: ResumeProps }> = ({ data }) => {
+  const { education, experience } = data;
   const [activeSection, setActiveSection] = useState('about');
 
   return (
@@ -313,43 +268,34 @@ const CVSection: React.FC<{ data: ExperienceItem[] }> = ({ data }) => {
             <h1 className="name">Curriculum Vitae</h1>
             <h2 className="title">Front End Engineer</h2>
             <p className="subtitle">
-              Versatile <span className="highlight">full-stack developer</span>
-              {' '}specialising in <span className="highlight">
-                front-end
-              </span>{' '}
+              Versatile <span className="highlight">full-stack developer</span>{' '}
+              specialising in <span className="highlight">front-end</span>{' '}
               technologies with added skill in{' '}
               <span className="highlight">UI/UX</span> design. I have over{' '}
-              <span className="highlight">{calculateYearsOfExperience()} years</span>{' '}
+              <span className="highlight">
+                {calculateYearsOfExperience()} years
+              </span>{' '}
               experience in <span className="highlight">FinTech</span>,{' '}
-              <span className="highlight">Architecting</span> UIs that handle extensive,{' '}
-              <span className="highlight">high-frequency</span> data. Most of my
-              work is in <span className="highlight">JavaScript</span>,{' '}
+              <span className="highlight">Architecting</span> UIs that handle
+              extensive, <span className="highlight">high-frequency</span> data.
+              Most of my work is in{' '}
+              <span className="highlight">JavaScript</span>,{' '}
               <span className="highlight">Typescript</span>,{' '}
               <span className="highlight">React</span> for the front-end and{' '}
               <span className="highlight">Python</span> for the backend. A
               curious learner willing to take on new challenges, and work within
-              high-functioning teams while bringing on my garnered expertise and delivering <br/> 
+              high-functioning teams while bringing on my garnered expertise and
+              delivering <br />
               high-performance products to fulfil{' '}
               <span className="highlight">business</span> needs.
-              <br/>
-              I am currently learning <span className="highlight">Rust</span> to expand my skill set in <span className="highlight">WebAssembly</span>
-
+              <br />I am currently learning{' '}
+              <span className="highlight">Rust</span> to expand my skill set in{' '}
+              <span className="highlight">WebAssembly</span>
             </p>
           </div>
 
           <nav className="navigation">
             <ul>
-              <li>
-                <button
-                  className={`nav-link ${
-                    activeSection === 'about' ? 'active' : ''
-                  }`}
-                  onClick={scrollToSection('about', setActiveSection)}
-                >
-                  <span className="nav-indicator"></span>
-                  <span className="nav-text">ABOUT</span>
-                </button>
-              </li>
               <li>
                 <button
                   className={`nav-link ${
@@ -361,17 +307,28 @@ const CVSection: React.FC<{ data: ExperienceItem[] }> = ({ data }) => {
                   <span className="nav-text">EXPERIENCE</span>
                 </button>
               </li>
-              <li>
-                <button
-                  className={`nav-link ${
-                    activeSection === 'cvprojects' ? 'active' : ''
-                  }`}
-                  onClick={scrollToSection('cvprojects', setActiveSection)}
-                >
-                  <span className="nav-indicator"></span>
-                  <span className="nav-text">PROJECTS</span>
-                </button>
-              </li>
+                <li>
+                    <button
+                      className={`nav-link ${
+                        activeSection === 'education' ? 'active' : ''
+                      }`}
+                      onClick={scrollToSection('education', setActiveSection)}
+                    >
+                      <span className="nav-indicator"></span>
+                      <span className="nav-text">EDUCATION</span>
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      className={`nav-link ${
+                        activeSection === 'volunteering' ? 'active' : ''
+                      }`}
+                      onClick={scrollToSection('volunteering', setActiveSection)}
+                    >
+                      <span className="nav-indicator"></span>
+                      <span className="nav-text">Volunteering</span>
+                    </button>
+                  </li>
             </ul>
           </nav>
 
@@ -381,7 +338,7 @@ const CVSection: React.FC<{ data: ExperienceItem[] }> = ({ data }) => {
 
       <div className="main-content">
         <section id="experience" className="content-section">
-          {data.map((item, index) => (
+          {experience.map((item, index) => (
             <ExperienceItemComponent
               key={index}
               period={item.period}
@@ -394,8 +351,35 @@ const CVSection: React.FC<{ data: ExperienceItem[] }> = ({ data }) => {
           ))}
         </section>
 
-        <section id="cvprojects" className="content-section">
-          <p>Coming soon...</p>
+        <section id="education" className="content-section">
+          <h2 className="experience-title">Education</h2>
+          {education?.map((item, index) => (
+            <ExperienceItemComponent
+              key={index}
+              period={item.period}
+              title={item.title}
+              company={item.school}
+              description={item.description}
+              techStack={item.fields}
+              subtitles={item.subtitles}
+            />
+          ))}
+        </section>
+
+        <section id="volunteering" className="content-section">
+          <h2 className="experience-title">Volunteering</h2>
+          <ExperienceItemComponent
+              key={0}
+              period={''}
+              title={'Africa and Campus Recruitment Program - Bank of America'}
+              company={''}
+              description={`
+Mentored and helped coordinate campus recruitment efforts within Bank of America technology with a focus on
+African and London university candidates. This program was overseen by the CTO.
+`}
+              techStack={['Ghana', 'London', 'Nigeria']}
+              subtitles={[]}
+            />
         </section>
       </div>
     </div>
@@ -479,14 +463,14 @@ const calculateYearsOfExperience = (start = '2015-07-01') => {
   return diffYears;
 };
 
-type Results = [Bio, Project[], BlogPost[], ExperienceItem[]];
+type Results = [Bio, Project[], BlogPost[], ResumeProps];
 
 const Home: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [homePage, setHomePage] = useState<HomeData>({
     bio: { name: 'loading', description: '...', links: [], title: '...' },
     blogPosts: [],
-    experiences: [],
+    experiences: { education: [], experience: [] },
     projects: [],
   });
 

@@ -34,26 +34,67 @@ const tabProjects = [
   },
 ];
 
-const experienceData = [
-  {
-    period: 'July 2023 — PRESENT',
-    title: 'Associate Director - Senior Software Engineer Core UI',
-    company: 'RBC Capital Markets, London',
-    description:
-      "Build and maintain critical components used to construct Klaviyo's frontend, across the whole product. Work closely with cross-functional teams, including developers, designers, and product managers, to implement and advocate for best practices in web accessibility.",
-    techStack: ['JavaScript', 'TypeScript', 'React', 'Storybook'],
-    subtitles: [],
-  },
-  {
-    period: '2022 — 2024',
-    title: 'Senior Frontend Engineer',
-    company: 'Upstatement',
-    description:
-      'Build, style, and ship high-quality websites, design systems, mobile apps, and digital experiences for a diverse array of projects for clients including Harvard Business School, Everytown for Gun Safety, Pratt Institute, Koala Health, Vanderbilt University, The 19th News, and more. Provide leadership within engineering department through close collaboration, knowledge shares, and mentorship.',
-    techStack: ['JavaScript', 'TypeScript', 'React', 'Node.js', 'WordPress'],
-    subtitles: ['Lead Engineer', 'Engineer'],
-  },
-];
+const experienceData = {
+  education: [
+    {
+      period: '2012-2016',
+      title: 'BSc. Computer Science',
+      school: 'Ashesi University College, Berekuso',
+      description: 'BSc. Computer Science',
+      fields: ['Computer Science', 'Algorithms', 'Data Structures', 'Discrete Math'],
+      subtitles: ['3.58/4.0 (Cum Laude)'],
+    },
+  ],
+  experience: [
+    {
+      period: 'July 2023 — PRESENT',
+      title: 'Associate Director',
+      company: 'RBC Capital Markets, London',
+      description:`
+  • Global UI Lead driving the development and maintenance of RBC Capital Markets’ core UI libraries, all widely adopted across the organization, and architecting a roadmap to modernize UI libraries.
+  
+  • Implemented high-quality CLI tools for building, testing, templating, and module federation, leveraging Rspack, Nx, and SWC to abstract complex configurations and accelerated development.
+  
+  • Overhauled dependency management using Nx, streamled CI/CD pipelines with Docker and integrating firm-wide DevOps strategies via GitHub Actions and Jenkins for semanticversioning compliance.
+  
+  • Built a Dev portal to reduce the barrier of entry to from idea to prototype with developer experience at thefore-front
+      `,
+      techStack: ['Nx', 'RsPack', 'SWC', 'TypeScript', 'Docker', 'MUI', 'AG Grid', 'Apache ECharts'],
+      subtitles: ['Senior Software Engineer Core UI'],
+    },
+    
+    {
+      period: 'July 2022 — July 2023',
+      title: 'Vice President - Rates Flow Technology',
+      company: 'Bank of America, London',
+      description:`
+  •  Designed, architected, and implemented performant UI handling thousands of live-ticking data used bytraders and middle-office, using efficient paradigms in JavaScript; web workers, WebSockets and Typescript
+  
+  •  UI Lead on unified trading and trade-blotter application used by sales and traders. Work included RFQterminals with live risk and market data
+  
+  •  Spearheaded UI reconstruction of legacy python application, leading a team of engineers
+  
+  •  Handled releases SDLC and CI/CD pipelines as an additional role while managing releases and interfacingwith senior leadership on state of production
+      `,
+      techStack: ['React', 'TypeScript', 'Python', 'Node.js', 'Cassandra', 'WebSockets', 'Web Workers'],
+      subtitles: ['Senior Software Engineer'],
+    },
+    {
+      period: 'July 2016 — July 2022',
+      title: 'Assistant Vice President - Rates Flow Technology',
+      company: 'Bank of America, London',
+      description:`
+  •  Led the transformation of a legacy supervisory tool by rebuilding its UI from Python to a modern, React-based application.
+  
+  •  Designed and developed intuitive UI/UX wireframes and implemented robust RESTful and WebSocket APIs using Tornado.
+  
+  •  The revamped application’s success drove its global adoption, consolidating all supervisory tools into a unified platform and establishing it as the bank’s primary supervisory solution.
+      `,
+      techStack: ['React', 'TypeScript', 'Python', 'Tornado', 'WebSockets', 'Web Workers'],
+      subtitles: ['Software Engineer'],
+    },
+  ]
+};
 
 const blogPosts = [
   {
