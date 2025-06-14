@@ -1,0 +1,27 @@
+{
+    "name": "cms",
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
+    "sourceRoot": "packages/cms/src",
+    "projectType": "application",
+    "tags": [],
+    "targets": {
+        "generate-importmap": {
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "NODE_OPTIONS=--no-deprecation payload generate:importmap"
+            }
+        },
+        "generate-types": {
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "NODE_OPTIONS=--no-deprecation payload generate:types"
+            }
+        },
+        "payload": {
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "NODE_OPTIONS=--no-deprecation payload"
+            }
+        }
+    }
+}

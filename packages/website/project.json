@@ -5,6 +5,15 @@
   "projectType": "application",
   "tags": [],
   "targets": {
+    "dev":{
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "pnpm exec nx run cms:next:dev -p 4201",
+          "pnpm exec nx run website:serve"
+        ]
+      }
+    },
     "build": {
       "executor": "@nx/rspack:rspack",
       "outputs": [

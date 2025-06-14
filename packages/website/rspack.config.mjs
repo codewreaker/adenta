@@ -8,8 +8,6 @@ export default composePlugins(withNx(), withReact(), (config) => {
       ...config.plugins,
       tanstackRouter({
         target: 'react',
-        routesDirectory: './src/routes',
-        generatedRouteTree: './src/routeTree.gen.ts',
         autoCodeSplitting: true,
       })
     ],
