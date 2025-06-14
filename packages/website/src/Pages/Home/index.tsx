@@ -307,28 +307,28 @@ const CVSection: React.FC<{ data: ResumeProps }> = ({ data }) => {
                   <span className="nav-text">EXPERIENCE</span>
                 </button>
               </li>
-                <li>
-                    <button
-                      className={`nav-link ${
-                        activeSection === 'education' ? 'active' : ''
-                      }`}
-                      onClick={scrollToSection('education', setActiveSection)}
-                    >
-                      <span className="nav-indicator"></span>
-                      <span className="nav-text">EDUCATION</span>
-                    </button>
-                  </li>
-                  <li>
-                    <button
-                      className={`nav-link ${
-                        activeSection === 'volunteering' ? 'active' : ''
-                      }`}
-                      onClick={scrollToSection('volunteering', setActiveSection)}
-                    >
-                      <span className="nav-indicator"></span>
-                      <span className="nav-text">Volunteering</span>
-                    </button>
-                  </li>
+              <li>
+                <button
+                  className={`nav-link ${
+                    activeSection === 'education' ? 'active' : ''
+                  }`}
+                  onClick={scrollToSection('education', setActiveSection)}
+                >
+                  <span className="nav-indicator"></span>
+                  <span className="nav-text">EDUCATION</span>
+                </button>
+              </li>
+              <li>
+                <button
+                  className={`nav-link ${
+                    activeSection === 'volunteering' ? 'active' : ''
+                  }`}
+                  onClick={scrollToSection('volunteering', setActiveSection)}
+                >
+                  <span className="nav-indicator"></span>
+                  <span className="nav-text">Volunteering</span>
+                </button>
+              </li>
             </ul>
           </nav>
 
@@ -369,17 +369,17 @@ const CVSection: React.FC<{ data: ResumeProps }> = ({ data }) => {
         <section id="volunteering" className="content-section">
           <h2 className="experience-title">Volunteering</h2>
           <ExperienceItemComponent
-              key={0}
-              period={''}
-              title={'Africa and Campus Recruitment Program - Bank of America'}
-              company={''}
-              description={`
+            key={0}
+            period={''}
+            title={'Africa and Campus Recruitment Program - Bank of America'}
+            company={''}
+            description={`
 Mentored and helped coordinate campus recruitment efforts within Bank of America technology with a focus on
 African and London university candidates. This program was overseen by the CTO.
 `}
-              techStack={['Ghana', 'London', 'Nigeria']}
-              subtitles={[]}
-            />
+            techStack={['Ghana', 'London', 'Nigeria']}
+            subtitles={[]}
+          />
         </section>
       </div>
     </div>
@@ -571,9 +571,9 @@ const Home: React.FC = () => {
       <Projects data={homePage.projects} />
       <CVSection data={homePage.experiences} />
       <p className="quote">
-        The only way to do great work is to love what you do.{' '}
-        <span className="highlight"> — Steve Jobs</span>
-      </p>
+          The only way to do great work is to love what you do.{' '}
+          <span className="highlight"> — Steve Jobs</span>
+        </p>
       <BlogList data={homePage.blogPosts} />
     </>
   );
