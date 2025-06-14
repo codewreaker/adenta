@@ -1,8 +1,18 @@
 import { composePlugins, withNx, withReact } from '@nx/rspack';
+import { tanstackRouter } from '@tanstack/router-plugin/rspack'
 
 export default composePlugins(withNx(), withReact(), (config) => {
   return {
     ...config,
+    plugins: [
+      ...config.plugins,
+      tanstackRouter({
+        target: 'react',
+        routesDirectory: './src/routes',
+        generatedRouteTree: './src/routeTree.gen.ts',
+        autoCodeSplitting: true,
+      })
+    ],
     output: {
       ...config.output,
       publicPath: '/',
