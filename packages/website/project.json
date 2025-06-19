@@ -5,13 +5,10 @@
   "projectType": "application",
   "tags": [],
   "targets": {
-    "dev":{
+    "start-all": {
       "executor": "nx:run-commands",
       "options": {
-        "commands": [
-          "pnpm exec nx run cms:next:dev -p 4201",
-          "pnpm exec nx run website:serve"
-        ]
+        "command": "nx run-many --target=dev --projects=cms,website"
       }
     },
     "build": {
@@ -43,7 +40,7 @@
         }
       }
     },
-    "serve": {
+    "dev": {
       "executor": "@nx/rspack:dev-server",
       "options": {
         "buildTarget": "website:build:development"

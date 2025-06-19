@@ -127,16 +127,16 @@ const Hero: React.FC<{ data: Bio }> = ({ data }) => {
     <div className="portfolio-hero">
       <div className="portfolio-intro">
         <SpeechBubble direction="bottom">Hello I'm</SpeechBubble>
-        <h1 className="portfolio-name">{data.name}</h1>
+        <h1 className="portfolio-name">{data?.name}</h1>
       </div>
 
       <div
         className={`portfolio-hero-content gradient-bg ${animClx('fade-in')}`}
       >
         <div className="portfolio-hero-main">
-          <div className="portfolio-title">{data.title}</div>
-          <div className="portfolio-description">{data.description}</div>
-          <SocialLinks links={data.links} />
+          <div className="portfolio-title">{data?.title}</div>
+          <div className="portfolio-description">{data?.description}</div>
+          <SocialLinks links={data?.links} />
           <div className="portfolio-hero-actions">
             <button
               className="portfolio-btn"
