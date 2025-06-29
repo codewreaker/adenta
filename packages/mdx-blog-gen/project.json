@@ -1,0 +1,31 @@
+{
+  "name": "mdx-blog-gen",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/mdx-blog-gen/src",
+  "projectType": "library",
+  "release": {
+    "version": {
+      "manifestRootsToUpdate": ["dist/{projectRoot}"],
+      "currentVersionResolver": "git-tag",
+      "fallbackCurrentVersionResolver": "disk"
+    }
+  },
+  "tags": ["mdx", "md", "blog", "headless blog"],
+  "targets": {
+    "build": {
+      "executor": "@nx/js:swc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/mdx-blog-gen",
+        "main": "packages/mdx-blog-gen/src/index.ts",
+        "tsConfig": "packages/mdx-blog-gen/tsconfig.lib.json",
+        "assets": ["packages/mdx-blog-gen/*.md"]
+      }
+    },
+    "nx-release-publish": {
+      "options": {
+        "packageRoot": "dist/{projectRoot}"
+      }
+    }
+  }
+}

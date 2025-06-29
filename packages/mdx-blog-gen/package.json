@@ -1,0 +1,67 @@
+{
+  "name": "@adenta/mdx-blog-gen",
+  "version": "0.0.1",
+  "type": "module",
+  "types": "./src/index.d.ts",
+  "description": "A lightweight static site generator based on RSPress, optimized for remote GitHub repositories with TanStack Router and Drizzle ORM",
+  "module": "src/index.js",
+  "keywords": [
+    "static-site-generator",
+    "blog",
+    "mdx",
+    "markdown",
+    "tanstack-router",
+    "drizzle-orm",
+    "rspress",
+    "github"
+  ],
+  "dependencies": {
+    "@clack/prompts": "^0.11.0",
+    "@rspress/mdx-rs": "0.6.6",
+    "@swc/helpers": "~0.5.11",
+    "@tanstack/db": "^0.0.13",
+    "chalk": "^5.4.1"
+  },
+  "exports": {
+    ".": {
+      "import": "./dist/index.esm.js",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./config": {
+      "import": "./dist/config.esm.js",
+      "require": "./dist/config.js",
+      "types": "./dist/config.d.ts"
+    }
+  },
+  "bin": {
+    "static-blog-gen": "./bin/cli.js"
+  },
+  "files": [
+    "bin",
+    "README.md"
+  ],
+  "scripts": {
+    "test": "vitest",
+    "prepublishOnly": "npm run build"
+  },
+  "author": "Israel Agyeman-Prempeh",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/static-blog-generator.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yourusername/static-blog-generator/issues"
+  },
+  "homepage": "https://github.com/yourusername/static-blog-generator#readme",
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "tsup": "^8.0.0",
+    "typescript": "^5.0.0",
+    "vitest": "^1.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import ColorPicker from '../../Components/ColorPicker';
-
 import {
   MoonIcon as DarkIcon,
   SunIcon as LightIcon,
@@ -9,8 +8,8 @@ import {
 } from '@heroicons/react/24/outline';
 import './header.css';
 import ThemeToggle from './ThemeToggle';
-import { scrollToSection } from '../../utils/scrollToSection';
 import { useAnimation } from '../../context/AnimationContext';
+import { Link } from '@tanstack/react-router';
 
 interface NavItem {
   label: string;
@@ -20,10 +19,10 @@ interface NavItem {
 }
 
 const navConfig: NavItem[] = [
-  { label: 'Projects', href: 'projects' },
-  { label: 'CV', href: 'cv' },
-  { label: 'Blog', href: 'blog' },
-  { label: 'Dev', href: 'playground' },
+  { label: 'Projects', href: '#projects' },
+  { label: 'CV', href: '#cv' },
+  { label: 'Blog', href: '/blog' },
+  { label: 'Dev', href: '/playground' },
   {
     label: 'GitHub',
     href: 'https://github.com/codewreaker',
@@ -37,6 +36,7 @@ const navConfig: NavItem[] = [
       </svg>
     ),
   },
+  { label: 'Admin', href: '/admin' },
 ];
 
 const AnimationToggle: React.FC = () => {
@@ -108,15 +108,24 @@ const Header = () => {
           <ul>
             {navConfig.map((item) => (
               <li key={item.label}>
-                <a
-                  href={item.href}
-                  onClick={scrollToSection(item.href, null)}
-                  target={item.external ? '_blank' : undefined}
-                  rel={item.external ? 'noopener noreferrer' : undefined}
-                >
-                  {item.icon && <span className="nav-icon">{item.icon}</span>}
-                  <span className="nav-label">{item.label}</span>
-                </a>
+                {item.external ? (
+                  <a
+                    href={item.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {item.icon && <span className="nav-icon">{item.icon}</span>}
+                    <span className="nav-label">{item.label}</span>
+                  </a>
+                ) : (
+                  <Link
+                    to={item.href}
+                    className="nav-label"
+                  >
+                    {item.icon && <span className="nav-icon">{item.icon}</span>}
+                    <span className="nav-label">{item.label}</span>
+                  </Link>
+                )}
               </li>
             ))}
             <li className="utility-toggle-container">

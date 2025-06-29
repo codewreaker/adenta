@@ -1,10 +1,70 @@
-import { useEffect, useState } from 'react';
+import { RouterProvider, createRouter, createRootRoute, createRoute, Outlet } from '@tanstack/react-router';
 import Header from '../Header';
 import Footer from '../Footer';
-import Home from '../Home';
 import '../../styles.css';
 import { startMocking } from '../../mock-service/setup';
 import { AnimationProvider } from '../../context/AnimationContext';
+import { lazy, Suspense, useEffect, useState } from 'react';
+
+const Home = lazy(() => import('../Home'));
+const Blog = lazy(() => import('../Blog'));
+
+const adminUrl = 'http://localhost:4201/admin'; // Change to your admin port
+
+function AdminRedirect() {
+  useEffect(() => {
+    window.location.replace(adminUrl);
+  }, []);
+  return <div>Redirecting to admin...</div>;
+}
+
+const RootComponent = () => (
+  <>
+    <Header />
+    <main className="layout-content">
+      <Suspense fallback={<div>Loading...</div>}>
+        <Outlet />
+      </Suspense>
+    </main>
+    <Footer />
+  </>
+);
+
+const rootRoute = createRootRoute({
+  component: RootComponent,
+});
+
+const indexRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/',
+  component: Home,
+});
+
+const blogRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/blog',
+  component: Blog,
+});
+
+const adminRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/admin',
+  component: AdminRedirect,
+});
+
+const routeTree = rootRoute.addChildren([
+  indexRoute,
+  blogRoute,
+  adminRoute,
+]);
+
+const router = createRouter({ routeTree });
+
+declare module '@tanstack/react-router' {
+  interface Register {
+    router: typeof router;
+  }
+}
 
 export default function Layout() {
   const [mockingStarted, setMockingStarted] = useState(false);
@@ -27,13 +87,7 @@ export default function Layout() {
 
   return (
     <AnimationProvider>
-      <div className="layout-root">
-        <Header />
-        <main className="layout-content">
-          <Home />
-        </main>
-        <Footer />
-      </div>
+      <RouterProvider router={router} />
     </AnimationProvider>
   );
 }
