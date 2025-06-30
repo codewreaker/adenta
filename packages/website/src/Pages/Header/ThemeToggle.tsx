@@ -1,4 +1,4 @@
-import IconWrapper from "../../Components/IconWrapper";
+import IconWrapper from "../../Components/IconWrapper.js";
 
 export interface ThemeToggleProps {
   onToggle: () => void;

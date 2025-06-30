@@ -4,22 +4,22 @@ import { useMemo } from 'react';
 import type React from 'react';
 import { useState } from 'react';
 import { EnvelopeIcon } from '@heroicons/react/24/outline';
-import { SpeechBubble } from '../../Components/SpeechBubble';
-import Terminal from '../../Components/Terminal';
-import GeometricCard from '../../Components/GeometricCard';
-import { scrollToSection } from '../../utils/scrollToSection';
-import { formatDate } from '../../utils/formatDate';
+import { SpeechBubble } from '../../Components/SpeechBubble/index.js';
+import Terminal from '../../Components/Terminal/index.js';
+import GeometricCard from '../../Components/GeometricCard/index.js';
+import { scrollToSection } from '../../utils/scrollToSection.js';
+import { formatDate } from '../../utils/formatDate.js';
 
-import { portfolioAPI } from '../../mock-service/api';
+import { portfolioAPI } from '../../mock-service/api.js';
 
 import useProgressLoader, {
   ProgressLoaderState,
   ProgressStep,
-} from '../../Components/Loader/useProgressLoader';
-import ProgressLoader from '../../Components/Loader/ProgressLoader';
+} from '../../Components/Loader/useProgressLoader.js';
+import ProgressLoader from '../../Components/Loader/ProgressLoader.js';
 
 import './home.css';
-import { useAnimation } from '../../context/AnimationContext';
+import { useAnimation } from '../../context/AnimationContext.js';
 
 // Icon Components
 const GitHubIcon = ({

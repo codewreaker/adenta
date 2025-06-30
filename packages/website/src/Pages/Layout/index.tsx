@@ -1,13 +1,13 @@
 import { RouterProvider, createRouter, createRootRoute, createRoute, Outlet } from '@tanstack/react-router';
-import Header from '../Header';
-import Footer from '../Footer';
+import Header from '../Header/index.js';
+import Footer from '../Footer/index.js';
 import '../../styles.css';
-import { startMocking } from '../../mock-service/setup';
-import { AnimationProvider } from '../../context/AnimationContext';
+import { startMocking } from '../../mock-service/setup.js';
+import { AnimationProvider } from '../../context/AnimationContext.js';
 import { lazy, Suspense, useEffect, useState } from 'react';
 
-const Home = lazy(() => import('../Home'));
-const Blog = lazy(() => import('../Blog'));
+const Home = lazy(() => import('../Home/index.js'));
+const Blog = lazy(() => import('../Blog/index.js'));
 
 const adminUrl = 'http://localhost:4201/admin'; // Change to your admin port
 

@@ -4,7 +4,7 @@ import  {
     tabProjects,
     experienceData,
     blogPosts
-} from './mock-data'
+} from './mock-data.js'
 
 // MSW Handlers
 export const handlers = [

@@ -1,5 +1,5 @@
 import React from 'react';
-import { ProgressLoaderState } from './useProgressLoader';
+import { ProgressLoaderState } from './useProgressLoader.js';
 
 export interface ProgressLoaderProps {
   state: ProgressLoaderState;

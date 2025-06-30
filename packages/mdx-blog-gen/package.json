@@ -24,18 +24,15 @@
   },
   "exports": {
     ".": {
-      "import": "./dist/index.esm.js",
-      "require": "./dist/index.js",
-      "types": "./dist/index.d.ts"
+      "import": "./src/index.js",
+      "types": "./src/index.d.ts"
     },
     "./config": {
-      "import": "./dist/config.esm.js",
-      "require": "./dist/config.js",
-      "types": "./dist/config.d.ts"
+      "import": "./src/lib/config.js"
     }
   },
   "bin": {
-    "static-blog-gen": "./bin/cli.js"
+    "adenta-blog-gen": "./bin/cli.js"
   },
   "files": [
     "bin",

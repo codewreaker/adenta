@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import ColorPicker from '../../Components/ColorPicker';
+import ColorPicker from '../../Components/ColorPicker/index.js';
 import {
   MoonIcon as DarkIcon,
   SunIcon as LightIcon,
@@ -7,8 +7,8 @@ import {
   PlayIcon
 } from '@heroicons/react/24/outline';
 import './header.css';
-import ThemeToggle from './ThemeToggle';
-import { useAnimation } from '../../context/AnimationContext';
+import ThemeToggle from './ThemeToggle.js';
+import { useAnimation } from '../../context/AnimationContext.js';
 import { Link } from '@tanstack/react-router';
 
 interface NavItem {
@@ -136,7 +136,7 @@ const Header = () => {
                 secondaryIcon={LightIcon}
               />
               <ColorPicker
-                onChange={(colors) => {
+                onChange={(colors:any) => {
                   try {
                     localStorage.setItem('theme-color', JSON.stringify(colors));
                   } catch (error) {

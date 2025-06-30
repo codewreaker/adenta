@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { portfolioAPI } from '../../mock-service/api';
-import { formatDate } from '../../utils/formatDate';
+import { portfolioAPI } from '../../mock-service/api.js';
+import { formatDate } from '../../utils/formatDate.js';
+import blogGenConfig from './.adenta/mdx-blog-gen/config.js';
+import { createDBInstance, createGenerator } from '@adenta/mdx-blog-gen';
 import '../Home/home.css';
 
 // Define BlogPost type (replace with import if available)
@@ -15,10 +17,21 @@ type BlogPost = {
   featured?: boolean;
 };
 
+const db = createDBInstance();
+const gen = createGenerator(blogGenConfig, db);
+
 // BlogList component logic from Home
 const BlogList: React.FC<{ data: BlogPost[] }> = ({ data }) => {
   const featuredPost = data.find((post) => post.featured) || data[0];
   const allPosts = data.filter((post) => post.id !== featuredPost.id);
+  const [mdxBlog, setMdxBlog] = useState<string>();
+
+  useEffect(()=>{
+    gen.build((content)=>{
+      console.log(content);
+      setMdxBlog(content);
+    })
+  },[])
 
   return (
     <div id="blog" className="blog-container">

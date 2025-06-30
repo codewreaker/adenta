@@ -4,7 +4,7 @@ import {
   RectangleStackIcon,
   CommandLineIcon,
 } from '@heroicons/react/24/outline';
-import IconWrapper from '../IconWrapper';
+import IconWrapper from '../IconWrapper.js';
 import './terminal.css';
 
 // Types for props

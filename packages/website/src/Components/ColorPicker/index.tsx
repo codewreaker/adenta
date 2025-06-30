@@ -1,10 +1,10 @@
 import { FC, useRef, useState } from 'react';
 
-import ColorWheelComponent, { type ColorWheelProps } from './ColorWheel';
+import ColorWheelComponent, { type ColorWheelProps } from './ColorWheel.js';
 import { EyeDropperIcon } from '@heroicons/react/24/outline';
 
 import './colorpicker.css';
-import ThemeToggle from '../../Pages/Header/ThemeToggle';
+import ThemeToggle from '../../Pages/Header/ThemeToggle.js';
 
 const ColorPicker: FC<ColorWheelProps> = (props) => {
   const cRef = useRef<HTMLDivElement>(null);
