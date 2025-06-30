@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { portfolioAPI } from '../../mock-service/api.js';
 import { formatDate } from '../../utils/formatDate.js';
-import blogGenConfig from './.adenta/mdx-blog-gen/config.js';
 import { createDBInstance, createGenerator } from '@adenta/mdx-blog-gen';
 import '../Home/home.css';
 
@@ -18,7 +17,39 @@ type BlogPost = {
 };
 
 const db = createDBInstance();
-const gen = createGenerator(blogGenConfig, db);
+const gen = createGenerator({
+  // GitHub repository configuration
+  remote: {
+    owner: 'codewreaker',           // GitHub username or organization
+    repo: 'docs',        // Repository name containing your .md/.mdx files
+    branch: 'main',                   // Branch to pull from (optional, defaults to 'main')
+    docsPath: 'blogs',                // Path to your markdown files in the repo (optional)
+    //token: process.env.GITHUB_TOKEN   // GitHub token for private repos (optional)
+  },
+  
+  // Output configuration
+  outputDir: 'dist',                  // Where to build the static site
+  tempDir: '.temp',                   // Temporary directory for downloaded content
+  
+  // Database configuration (for metadata storage)
+  database: {
+    connectionString: process.env.DATABASE_URL || 'postgresql://localhost:5432/blog'
+  },
+  
+  // Build options
+  buildOptions: {
+    minify: true,
+    sourceMaps: false,
+    publicPath: '/'
+  },
+  
+  // MDX compilation options
+  mdx: {
+    development: false,
+    remarkPlugins: [],
+    rehypePlugins: []
+  }
+}, db);
 
 // BlogList component logic from Home
 const BlogList: React.FC<{ data: BlogPost[] }> = ({ data }) => {

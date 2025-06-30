@@ -83,36 +83,11 @@ class NodeFileSystem implements FileSystem {
 }
 
 // Browser implementation (in-memory, metadata via @tanstack/db)
-import { createCollection } from '@tanstack/db';
+import { getMDXCollection } from './api.js';
 
-const fsCollection = createCollection({
-  id: 'fs',
-  getKey: (item) => item['slug'] as string,
-  sync: {
-    sync: ({ collection }) => {
-      const key = 'fs';
-      // Load from localStorage on startup
-      const saved =
-        typeof localStorage !== 'undefined'
-          ? localStorage.getItem(key)
-          : null;
-      if (saved) {
-        try {
-          const arr = JSON.parse(saved);
-          arr.forEach((item:any) => collection.insert(item));
-        } catch (e) {
-          // Ignore JSON parse errors
-        }
-      }
-      // Save to localStorage on every change
-      collection.subscribeChanges(() => {
-        const all = Array.from(collection.values());
-        if (typeof localStorage !== 'undefined') {
-          localStorage.setItem(key, JSON.stringify(all));
-        }
-      });
-    },
-  }});
+const fsCollection = getMDXCollection({
+  getKey: (item) => item['path'] as string,
+});
 
 class BrowserFileSystem implements FileSystem {
   async mkdir(path: string, opts?: { recursive?: boolean }) {
@@ -185,7 +160,7 @@ export class StaticSiteGenerator {
   }
 
   async build(cb?: (content: string) => void): Promise<void> {
-    console.log('🚀 Starting static site generation...');
+    console.debug('🚀 Starting static site generation...');
 
     // Step 1: Download remote content
     const contentDir = await this.downloadRemoteContent();
@@ -199,7 +174,7 @@ export class StaticSiteGenerator {
     // Step 4: Build static site
     await this.buildStaticSite(processedFiles, cb);
 
-    console.log('✅ Static site generation completed!');
+    console.debug('✅ Static site generation completed!');
   }
 
   private async downloadRemoteContent(): Promise<string> {
@@ -660,9 +635,10 @@ interface ProcessedFile {
   metadata: BlogMetadata;
 }
 
+
 // Utility functions
 export const createGenerator = (
-  config: import('./define-config.js').GeneratorConfig,
+  config: GeneratorConfig,
   dbInstance: Database
 ) => {
   return new StaticSiteGenerator(config, dbInstance);
