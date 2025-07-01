@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { portfolioAPI } from '../../mock-service/api.js';
 import { formatDate } from '../../utils/formatDate.js';
-import { createDBInstance, createGenerator } from '@adenta/mdx-blog-gen';
+import { createGenerator } from '@adenta/mdx-blog-gen';
+import { useLiveQuery } from '@tanstack/react-db'
 import '../Home/home.css';
 
 // Define BlogPost type (replace with import if available)
@@ -16,7 +17,6 @@ type BlogPost = {
   featured?: boolean;
 };
 
-const db = createDBInstance();
 const gen = createGenerator({
   // GitHub repository configuration
   remote: {
@@ -26,44 +26,35 @@ const gen = createGenerator({
     docsPath: 'blogs',                // Path to your markdown files in the repo (optional)
     //token: process.env.GITHUB_TOKEN   // GitHub token for private repos (optional)
   },
-  
-  // Output configuration
-  outputDir: 'dist',                  // Where to build the static site
-  tempDir: '.temp',                   // Temporary directory for downloaded content
-  
-  // Database configuration (for metadata storage)
-  database: {
-    connectionString: process.env.DATABASE_URL || 'postgresql://localhost:5432/blog'
-  },
-  
   // Build options
   buildOptions: {
     minify: true,
     sourceMaps: false,
-    publicPath: '/'
-  },
-  
-  // MDX compilation options
-  mdx: {
-    development: false,
-    remarkPlugins: [],
-    rehypePlugins: []
+    publicPath: '/',
+    mdx: {
+      development: false,
+      remarkPlugins: [],
+      rehypePlugins: []
+    }
   }
-}, db);
+});
 
 // BlogList component logic from Home
 const BlogList: React.FC<{ data: BlogPost[] }> = ({ data }) => {
   const featuredPost = data.find((post) => post.featured) || data[0];
   const allPosts = data.filter((post) => post.id !== featuredPost.id);
-  const [mdxBlog, setMdxBlog] = useState<string>();
+  const collection = gen.collection;
+
+  const { data: mdxBlog } = useLiveQuery(query =>
+    query.from({ collection })
+  )
+
 
   useEffect(()=>{
-    gen.build((content)=>{
-      console.log(content);
-      setMdxBlog(content);
-    })
-  },[])
+    gen.load()
+  },[]);
 
+  console.log(mdxBlog[0]?.content);
   return (
     <div id="blog" className="blog-container">
       <div className="blog-header">
