@@ -17,7 +17,7 @@
     "paths": {
       "@adenta/cli": ["packages/cli/src/index.ts"],
       "@adenta/core": ["packages/core/src/index.ts"],
-      "@adenta/mdx-blog-gen": ["packages/mdx-blog-gen/src/index.ts"],
+      "@adenta/mdx-bundler": ["packages/mdx-bundler/src/index.ts"],
       "@adenta/ui": ["packages/ui/src/index.ts"]
     }
   },

@@ -1,7 +1,7 @@
 {
-  "name": "mdx-blog-gen",
+  "name": "mdx-bundler",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "packages/mdx-blog-gen/src",
+  "sourceRoot": "packages/mdx-bundler/src",
   "projectType": "library",
   "release": {
     "version": {
@@ -16,10 +16,10 @@
       "executor": "@nx/js:swc",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/packages/mdx-blog-gen",
-        "main": "packages/mdx-blog-gen/src/index.ts",
-        "tsConfig": "packages/mdx-blog-gen/tsconfig.lib.json",
-        "assets": ["packages/mdx-blog-gen/*.md"]
+        "outputPath": "dist/packages/mdx-bundler",
+        "main": "packages/mdx-bundler/src/index.ts",
+        "tsConfig": "packages/mdx-bundler/tsconfig.lib.json",
+        "assets": ["packages/mdx-bundler/*.md"]
       }
     },
     "nx-release-publish": {

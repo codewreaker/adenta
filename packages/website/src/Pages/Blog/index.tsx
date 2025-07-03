@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { portfolioAPI } from '../../mock-service/api.js';
 import { formatDate } from '../../utils/formatDate.js';
-import { createGenerator } from '@adenta/mdx-blog-gen';
+import { createMdxBundler } from '@adenta/mdx-bundler';
 import { useLiveQuery } from '@tanstack/react-db'
 import '../Home/home.css';
 
@@ -17,7 +17,7 @@ type BlogPost = {
   featured?: boolean;
 };
 
-const gen = createGenerator({
+const gen = createMdxBundler({
   // GitHub repository configuration
   remote: {
     owner: 'codewreaker',           // GitHub username or organization

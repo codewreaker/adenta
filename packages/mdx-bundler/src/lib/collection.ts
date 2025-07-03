@@ -6,7 +6,7 @@ let blogCollection: ReturnType<typeof createCollection<ParsedDoc>>;
 
 /**
  * Singleton helper for the MDX collection.
- * Usage: import { getMDXCollection } from './mdx-blog-gen'
+ * Usage: import { getMDXCollection } from './mdx-bundler'
  */
 export const getMDXCollection = ({
   onDelete = async ({ transaction }) => {
