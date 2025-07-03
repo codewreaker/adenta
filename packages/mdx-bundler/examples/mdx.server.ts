@@ -41,6 +41,8 @@ app.get('/client.js', c =>
 // Main API endpoint
 app.post('/api/mdx', async c => {
   const body = await c.req.json();
+  
+
   try {
     let source = '';
     if (body.type === 'local') {

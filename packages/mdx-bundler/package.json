@@ -47,7 +47,7 @@
   "scripts": {
     "test": "vitest",
     "prepublishOnly": "npm run build",
-    "examples:build": "vite build examples --outDir ../dist",
+    "examples:build": "vite build examples --outDir ./dist",
     "examples:start": "node examples/mdx.server.ts",
     "examples:run": "npm run examples:build && npm run examples:start"
   },
