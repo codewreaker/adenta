@@ -1,9 +1,16 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "module": "commonjs",
+    "outDir": "../dist/out-tsc",
+    "declaration": true,
+    "types": [
+      "node"
+    ],
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
     "forceConsistentCasingInFileNames": true,
     "strict": true,
+    "jsx":"react-jsx",
     "importHelpers": true,
     "noImplicitOverride": true,
     "noImplicitReturns": true,
@@ -11,11 +18,24 @@
     "noPropertyAccessFromIndexSignature": true
   },
   "files": [],
-  "include": [],
+  "include": [
+    "src/**/*.ts"
+  ],
+  "exclude": [
+    "vite.config.ts",
+    "vite.config.mts",
+    "vitest.config.ts",
+    "vitest.config.mts",
+    "src/**/*.test.ts",
+    "src/**/*.spec.ts",
+    "src/**/*.test.tsx",
+    "src/**/*.spec.tsx",
+    "src/**/*.test.js",
+    "src/**/*.spec.js",
+    "src/**/*.test.jsx",
+    "src/**/*.spec.jsx"
+  ],
   "references": [
-    {
-      "path": "./tsconfig.lib.json"
-    },
     {
       "path": "./tsconfig.spec.json"
     }

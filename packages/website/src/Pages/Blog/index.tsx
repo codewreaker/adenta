@@ -20,10 +20,10 @@ type BlogPost = {
 const gen = createMdxBundler({
   // GitHub repository configuration
   remote: {
-    owner: 'codewreaker',           // GitHub username or organization
+    owner: 'kentcdodds',           // GitHub username or organization
     repo: 'docs',        // Repository name containing your .md/.mdx files
     branch: 'main',                   // Branch to pull from (optional, defaults to 'main')
-    docsPath: 'blogs',                // Path to your markdown files in the repo (optional)
+    docsPath: 'blogs/aha-testing/index.mdx',                // Path to your markdown files in the repo (optional)
     //token: process.env.GITHUB_TOKEN   // GitHub token for private repos (optional)
   },
   // Build options

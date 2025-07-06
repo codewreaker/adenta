@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { getMDXComponent } from 'mdx-bundler/client';
+import { getMDXComponent } from '../../src/mdx-bundler/lib/client';
 
 const API_URL = 'http://localhost:4000/api/mdx';
 

@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { getMDXComponent } from 'mdx-bundler/client';
+import { getMDXComponent } from '../../src/mdx-bundler/lib/client';
 
 const API_URL = 'http://localhost:4000/api/mdx';
 
 export function LocalFilesExample() {
-  const [Component, setComponent] = useState<React.ComponentType | null>(null);
-  const [error, setError] = useState<string | null>(null);
+  const [Component, setComponent] = useState<ReturnType<typeof getMDXComponent> | null>(null);
+  const [error, setError] = useState<string | Error | null>(null);
 
   useEffect(() => {
     async function load() {
@@ -22,20 +22,21 @@ export function LocalFilesExample() {
           setComponent(null);
           return;
         }
+
         setComponent(() => getMDXComponent(code));
       } catch (e: any) {
         setError(e.message);
         setComponent(null);
       }
     }
+    
     load();
   }, []);
-
   return (
     <div>
       <h2>Local MDX File</h2>
-      {error && <pre style={{ color: 'red' }}>{error}</pre>}
-      {Component ? <Component /> : <div>Loading...</div>}
+      {error && <pre style={{ color: 'red' }}>{String(error)}</pre>}
+      {Component ? <Component onError={setError}/> : <div>Loading...</div>}
     </div>
   );
 } 

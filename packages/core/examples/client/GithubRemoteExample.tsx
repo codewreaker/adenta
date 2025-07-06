@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { getMDXComponent } from 'mdx-bundler/client';
+import { getMDXComponent } from '../../src/mdx-bundler/lib/client';
 
 const API_URL = 'http://localhost:4000/api/mdx';
 
 export function GithubRemoteExample() {
-  const [Component, setComponent] = useState<React.ComponentType | null>(null);
-  const [error, setError] = useState<string | null>(null);
-
+  const [Component, setComponent] = useState<ReturnType<typeof getMDXComponent> | null>(null);
+  const [error, setError] = useState<string | Error | null>(null);
+  
   useEffect(() => {
     async function load() {
       setError(null);
@@ -16,9 +16,9 @@ export function GithubRemoteExample() {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             type: 'github',
-            owner: 'codewreaker',
-            repo: 'docs',
-            path: 'blogs/building-my-website.mdx'
+            owner: 'kentcdodds',
+            repo: 'kentcdodds.com',
+            path: 'content/blog'
           })
         });
         const { code, error } = await res.json();
@@ -39,8 +39,7 @@ export function GithubRemoteExample() {
   return (
     <div>
       <h2>GitHub Remote MDX</h2>
-      {error && <pre style={{ color: 'red' }}>{error}</pre>}
-      {Component ? <Component /> : <div>Loading...</div>}
+      {Component ? <Component error={error} onError={console.log} /> : <div>Loading...</div>}
     </div>
   );
 } 

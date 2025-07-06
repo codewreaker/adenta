@@ -4,6 +4,9 @@ export default [
   ...baseConfig,
   {
     files: ['**/*.json'],
+    ignores: [
+      '{projectRoot}/examples'
+    ],
     rules: {
       '@nx/dependency-checks': [
         'error',
@@ -12,6 +15,14 @@ export default [
             '{projectRoot}/eslint.config.{js,cjs,mjs}',
             '{projectRoot}/vite.config.{js,ts,mjs,mts}',
           ],
+          ignoredDependencies:[
+            "react-dom",
+            "react",
+            "hono",
+            "@hono/node-server",
+            "vite",
+          ]
+          
         },
       ],
     },

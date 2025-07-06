@@ -1,1 +1,1 @@
-export * from './lib/core';
+export * from './mdx-bundler/lib/index.js';
