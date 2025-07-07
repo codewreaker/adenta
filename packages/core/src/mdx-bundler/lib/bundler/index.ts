@@ -4,12 +4,12 @@ import { bundleMDX } from 'mdx-bundler';
 import { loadMdxFiles } from './loaders.js';
 import {errorContent, CollatedErrors} from './error-render.js'
 import { BundleMDXOptions, StandardSourceOutput, AdentaBundleMDxOptions, BundledMdxResult, MdxSourceInput } from '../types.js';
-import { basename, resolve } from 'path';
+import { dirname } from 'path';
 
 
 
 const mdxOptions: BundleMDXOptions['mdxOptions'] = (options) => {
-  // options.rehypePlugins = [...(options.rehypePlugins ?? []), rehypeShiki];
+  //options.rehypePlugins = [...(options.rehypePlugins ?? []), rehypeShiki];
   return options;
 };
 
@@ -22,7 +22,7 @@ export async function bundleMdxFiles(
     files.map(async ({ filepath, content, type }) => {
       try {
         if(type === 'local'){
-          const cwd =  basename(filepath);
+          const cwd =  dirname(filepath);
           options = {...options, cwd};
         }
         const { code, frontmatter } = await bundleMDX({
