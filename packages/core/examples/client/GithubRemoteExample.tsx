@@ -18,7 +18,8 @@ export function GithubRemoteExample() {
             type: 'github',
             owner: 'kentcdodds',
             repo: 'kentcdodds.com',
-            path: 'content/blog'
+            path: 'content/blog',
+            slug: 'avoid-the-test-user'
           })
         });
         const { code, error } = await res.json();

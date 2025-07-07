@@ -4,8 +4,8 @@ import { GithubRemoteExample } from './GithubRemoteExample';
 import { LiveEditorExample } from './LiveEditorExample';
 
 const EXAMPLES = [
-  { name: 'Local Files', component: <LocalFilesExample /> },
   { name: 'GitHub Remote', component: <GithubRemoteExample /> },
+  { name: 'Local Files', component: <LocalFilesExample /> },
   { name: 'Live Editor', component: <LiveEditorExample /> },
 ];
 

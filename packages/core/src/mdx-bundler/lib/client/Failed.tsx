@@ -56,4 +56,5 @@ function Failed({ error, onError }: FailedProps) {
   );
 }
 
+
 export default Failed;

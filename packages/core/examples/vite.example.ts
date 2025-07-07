@@ -7,6 +7,7 @@ export default defineConfig({
   root: __dirname,
   plugins: [react()],
   build: {
+    sourcemap: true,
     outDir: path.resolve(__dirname, 'dist'),
     emptyOutDir: true,
     rollupOptions: {

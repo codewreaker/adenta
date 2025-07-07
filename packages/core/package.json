@@ -13,8 +13,6 @@
     "@swc/helpers": "~0.5.11",
     "mdx-bundler": "10.1.1",
     "@tanstack/db": "^0.0.14",
-    "shiki": "^3.7.0",
-    "unist-util-visit": "5.0.0",
     "@shikijs/rehype":"^3.7.0",
     "@vitejs/plugin-react": "^4.0.0"
   },

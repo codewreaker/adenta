@@ -1,4 +1,5 @@
 import { CollectionConfig, createCollection } from '@tanstack/db';
+import { ParsedDoc } from './types.js';
 
 
 let blogCollection: ReturnType<typeof createCollection<ParsedDoc>>;

@@ -3,6 +3,7 @@ import { getMDXComponent } from '../../src/mdx-bundler/lib/client';
 
 const API_URL = 'http://localhost:4000/api/mdx';
 
+
 export function LocalFilesExample() {
   const [Component, setComponent] = useState<ReturnType<typeof getMDXComponent> | null>(null);
   const [error, setError] = useState<string | Error | null>(null);
