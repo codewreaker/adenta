@@ -2,7 +2,7 @@ export const CollatedErrors: Record<string, Error> = {};
 
 // Dynamic error MDX template function
 export function errorContent(id: string) {
-  const error = CollatedErrors[id]
+  const error = CollatedErrors[id] || id as unknown as Error;
   const message =
     error && typeof error === 'object' && 'message' in error
       ? error.message

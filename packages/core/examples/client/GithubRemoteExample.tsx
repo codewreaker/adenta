@@ -18,8 +18,8 @@ export function GithubRemoteExample() {
             type: 'github',
             owner: 'kentcdodds',
             repo: 'kentcdodds.com',
-            path: 'content/blog',
-            slug: 'avoid-the-test-user'
+            path: 'content/blog/aha-testing',
+            // slugs: ['index']
           })
         });
         const { code, error } = await res.json();

@@ -51,7 +51,7 @@ export interface StandardSourceOutput {
 
 interface SourceInput {
   type: SourceInputType;
-  meta: {[key:string], any}
+  meta: { [key: string]; any };
   //paths?: StandardSourceOutput[];
 }
 export interface GithubMDXSource extends SourceInput {
@@ -62,21 +62,22 @@ export interface GithubMDXSource extends SourceInput {
     branch?: string;
     path: string;
     slugs?: string[];
-  }
+  };
 }
 
 export interface LocalMDXSource extends SourceInput {
   type: 'local';
   meta: {
-    filepaths: string[]
-  }
+    filepaths: { path; slug }[];
+    filePathDir:string
+  };
 } //{ type: 'local'; files: string[] } // absolute or relative paths
 
 export interface RawMDXSource extends SourceInput {
   type: 'raw';
   meta: {
     mdx: string[];
-  }
+  };
 } // { type: 'raw'; files: { filename: string; content: string }[] };
 
 export type MdxSourceInput = GithubMDXSource | LocalMDXSource | RawMDXSource;
@@ -101,6 +102,9 @@ export interface GitHubFileInfo {
 // ... rest of your existing code ...
 
 export type BundledMdxResult = {
-  filename: string;
-  metadata?: any;
-} & ReturnType<typeof bundleMDX>;
+  filepath: string;
+  code: string;
+  frontmatter: {
+    [key: string]: object;
+  };
+};

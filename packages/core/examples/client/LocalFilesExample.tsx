@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { getMDXComponent } from '../../src/mdx-bundler/lib/client';
 
+
 const API_URL = 'http://localhost:4000/api/mdx';
+
 
 
 export function LocalFilesExample() {
   const [Component, setComponent] = useState<ReturnType<typeof getMDXComponent> | null>(null);
   const [error, setError] = useState<string | Error | null>(null);
+
 
   useEffect(() => {
     async function load() {
@@ -15,7 +18,10 @@ export function LocalFilesExample() {
         const res = await fetch(API_URL, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ type: 'local', slug: 'hello' })
+          body: JSON.stringify({
+            type: 'local',
+            filepaths: [{ path: './posts', slug: 'hello' }]
+          })
         });
         const { code, error } = await res.json();
         if (error) {

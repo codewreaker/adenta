@@ -6,17 +6,13 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { loadAndBundleMdx } from '../src/mdx-bundler';
 import {
-  AdentaBundleMDxOptions,
-  GithubMDXSource,
   MdxSourceInput,
-  SourceInputType,
 } from '../src/mdx-bundler/lib/types';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = new Hono();
-const postsDir = path.join(__dirname, 'posts');
 const distDir = path.join(__dirname, 'dist');
 
 // Serve static files from dist (client build)
@@ -57,25 +53,25 @@ app.post('/api/mdx', async (c) => {
 
   try {
     let input: MdxSourceInput;
-    let options: AdentaBundleMDxOptions = {};
     if (body.type === 'local') {
-      const filepath = path.join(postsDir, `${body.slug}.mdx`);
-      if (!fs.existsSync(filepath)) return c.json({ error: 'Not found' }, 404);
+      const {filepaths} = body
       input = {
         type: 'local',
         meta: {
-          filepaths:[filepath]
+          filepaths,
+          filePathDir: __dirname
         }
       };
-      options = { cwd: postsDir };
     } else if (body.type === 'github') {
-      const { owner, repo, branch = 'main' } = body;
+      const { owner, repo, path, branch = 'main', slugs } = body;
       input = {
         type: 'github',
         meta: {
           owner,
           repo,
-          branch
+          branch,
+          path,
+          slugs
         }
       };
     } else if (body.type === 'raw') {
@@ -84,12 +80,11 @@ app.post('/api/mdx', async (c) => {
         meta: {
          mdx:[body.mdx]
         }
-        // paths: [{ filepath: 'raw.mdx', type: body.type, content: body.mdx }],
       };
     } else {
       return c.json({ error: 'Invalid type' }, 400);
     }
-    const results = await loadAndBundleMdx(input, options);
+    const results = await loadAndBundleMdx(input);
     // For compatibility with old API, return the first result (single file)
     if (results.length === 1) {
       const { code, frontmatter } = results[0];
