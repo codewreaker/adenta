@@ -5,7 +5,7 @@ import '../../styles.css';
 import { startMocking } from '../../mock-service/setup.js';
 import { AnimationProvider } from '../../context/AnimationContext.js';
 import { lazy, Suspense, useEffect, useState } from 'react';
-import { isDev } from '../../utils/env-utils.js';
+import { isDev, logVercelEnvVars } from '../../utils/env-utils.js';
 
 const Home = lazy(() => import('../Home/index.js'));
 const Blog = lazy(() => import('../Blog/index.js'));
@@ -67,10 +67,13 @@ declare module '@tanstack/react-router' {
   }
 }
 
+
+
 export default function Layout() {
   const [mockingStarted, setMockingStarted] = useState(false);
   console.log(`======SETTING_UP=======`);
-  console.dir(JSON.stringify(process.env));
+  logVercelEnvVars();
+
   useEffect(() => {
     // Start MSW in development
     if (isDev) {
