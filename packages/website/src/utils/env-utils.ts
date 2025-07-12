@@ -1,7 +1,13 @@
-import {isDevelopment} from 'std-env'
+import { isDevelopment } from 'std-env';
 
-export const isDev = Boolean(isDevelopment || process.env?.PREPROD);
+// Safely check for Vite preprod environment variable in both Node and browser contexts
+const vitePreprod =
+  typeof (import.meta as any).env !== 'undefined'
+    ? (import.meta as any).env.VITE_PREPROD
+    : undefined;
 
+export const isDev = Boolean(isDevelopment || vitePreprod);
+console.log('IS_DEV', isDev)
 
 /**
  * Logs all Vercel system environment variables (as listed in the docs) using console.dir.
@@ -43,50 +49,16 @@ export function logVercelEnvVars() {
     'VERCEL_REGION',
     'VERCEL_ANALYTICS_ID',
     'VERCEL_STATIC_BUILD',
-    // Duplicates without VERCEL_ prefix
-    'ENV',
-    'URL',
-    'GIT_PROVIDER',
-    'GIT_REPO_ID',
-    'GIT_REPO_OWNER',
-    'GIT_REPO_SLUG',
-    'GIT_COMMIT_REF',
-    'GIT_COMMIT_SHA',
-    'GIT_COMMIT_MESSAGE',
-    'GIT_COMMIT_AUTHOR_LOGIN',
-    'GIT_COMMIT_AUTHOR_NAME',
-    'GIT_COMMIT_AUTHOR_EMAIL',
-    'GIT_PULL_REQUEST_ID',
-    'GIT_PULL_REQUEST_NUMBER',
-    'GIT_PULL_REQUEST_TITLE',
-    'GIT_PULL_REQUEST_BODY',
-    'GIT_PULL_REQUEST_HEAD_REF',
-    'GIT_PULL_REQUEST_BASE_REF',
-    'GIT_PREVIOUS_SHA',
-    'GIT_PREVIOUS_COMMIT_REF',
-    'GIT_PREVIOUS_COMMIT_SHA',
-    'GIT_PREVIOUS_COMMIT_MESSAGE',
-    'GIT_PREVIOUS_COMMIT_AUTHOR_LOGIN',
-    'GIT_PREVIOUS_COMMIT_AUTHOR_NAME',
-    'GIT_PREVIOUS_COMMIT_AUTHOR_EMAIL',
-    'PROJECT_ID',
-    'PREPROD',
+    'VITE_PREPROD',
     'PAYLOAD_SECRET',
-    'ORG_ID',
-    'BRANCH_URL',
-    'DEPLOYMENT_ID',
-    'TEAM_ID',
-    'REGION',
-    'ANALYTICS_ID',
-    'STATIC_BUILD'
   ];
 
   const values: Record<string, string | undefined> = {};
   const esm_values: Record<string, string | undefined> = {};
   for (const key of vercelEnvVars) {
-    values[key] = process.env?.[key];
+    values[`process.env.${key}`] = process.env?.[key];
     // Vite/ESM env vars are available via import.meta.env in supported environments
-    esm_values[key] = (typeof import.meta !== 'undefined' && (import.meta as any).env) ? (import.meta as any).env[key] : undefined;
+    esm_values[`import.meta.env.${key}`] = (typeof import.meta !== 'undefined' && (import.meta as any).env) ? (import.meta as any).env[key] : undefined;
   }
   console.dir(values, { depth: null });
   console.dir(esm_values, { depth: null });
