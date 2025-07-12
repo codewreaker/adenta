@@ -80,9 +80,13 @@ export function logVercelEnvVars() {
   ];
 
   const values: Record<string, string | undefined> = {};
+  const esm_values: Record<string, string | undefined> = {};
   for (const key of vercelEnvVars) {
     values[key] = process.env?.[key];
+    // Vite/ESM env vars are available via import.meta.env in supported environments
+    esm_values[key] = (typeof import.meta !== 'undefined' && (import.meta as any).env) ? (import.meta as any).env[key] : undefined;
   }
   console.dir(values, { depth: null });
+  console.dir(esm_values, { depth: null });
 }
 
