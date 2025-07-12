@@ -70,6 +70,8 @@ export function logVercelEnvVars() {
     'GIT_PREVIOUS_COMMIT_AUTHOR_NAME',
     'GIT_PREVIOUS_COMMIT_AUTHOR_EMAIL',
     'PROJECT_ID',
+    'PREPROD',
+    'PAYLOAD_SECRET',
     'ORG_ID',
     'BRANCH_URL',
     'DEPLOYMENT_ID',
