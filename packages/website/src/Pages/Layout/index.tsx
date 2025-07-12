@@ -5,6 +5,7 @@ import '../../styles.css';
 import { startMocking } from '../../mock-service/setup.js';
 import { AnimationProvider } from '../../context/AnimationContext.js';
 import { lazy, Suspense, useEffect, useState } from 'react';
+import { isDev } from '../../utils/env-utils.js';
 
 const Home = lazy(() => import('../Home/index.js'));
 const Blog = lazy(() => import('../Blog/index.js'));
@@ -71,7 +72,7 @@ export default function Layout() {
 
   useEffect(() => {
     // Start MSW in development
-    if (process.env.NODE_ENV === 'development') {
+    if (isDev) {
       startMocking().then(() => {
         setMockingStarted(true);
         console.log('MSW mocking started');
@@ -81,7 +82,7 @@ export default function Layout() {
     }
   }, []);
 
-  if (process.env.NODE_ENV === 'development' && !mockingStarted) {
+  if (isDev && !mockingStarted) {
     return <div>Setting Up MSW...</div>;
   }
 
