@@ -27,6 +27,5 @@
     "./mdx-bundler/client": {
       "import": "./mdx-bundler/lib/client/index.js"
     }
-
   }
 }

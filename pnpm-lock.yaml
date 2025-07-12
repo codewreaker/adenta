@@ -345,18 +345,9 @@ importers:
       '@vitejs/plugin-react':
         specifier: ^4.0.0
         version: 4.6.0(vite@4.5.14(@types/node@22.15.31)(less@4.1.3)(sass@1.89.0)(stylus@0.64.0)(terser@5.39.2))
-      http-proxy:
-        specifier: ^1.18.1
-        version: 1.18.1(debug@4.4.1)
       mdx-bundler:
         specifier: 10.1.1
         version: 10.1.1(acorn@8.14.1)(esbuild@0.25.4)
-      shiki:
-        specifier: ^3.7.0
-        version: 3.7.0
-      unist-util-visit:
-        specifier: 5.0.0
-        version: 5.0.0
     devDependencies:
       concurrently:
         specifier: ^8.0.0

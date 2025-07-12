@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { portfolioAPI } from '../../mock-service/api.js';
 import { formatDate } from '../../utils/formatDate.js';
-import { createMdxBundler } from '@adenta/mdx-bundler';
-import { useLiveQuery } from '@tanstack/react-db'
 import '../Home/home.css';
 
 // Define BlogPost type (replace with import if available)
@@ -17,44 +15,14 @@ type BlogPost = {
   featured?: boolean;
 };
 
-const gen = createMdxBundler({
-  // GitHub repository configuration
-  remote: {
-    owner: 'kentcdodds',           // GitHub username or organization
-    repo: 'docs',        // Repository name containing your .md/.mdx files
-    branch: 'main',                   // Branch to pull from (optional, defaults to 'main')
-    docsPath: 'blogs/',                // Path to your markdown files in the repo (optional)
-    //token: process.env.GITHUB_TOKEN   // GitHub token for private repos (optional)
-  },
-  // Build options
-  buildOptions: {
-    minify: true,
-    sourceMaps: false,
-    publicPath: '/',
-    mdx: {
-      development: false,
-      remarkPlugins: [],
-      rehypePlugins: []
-    }
-  }
-});
 
 // BlogList component logic from Home
 const BlogList: React.FC<{ data: BlogPost[] }> = ({ data }) => {
   const featuredPost = data.find((post) => post.featured) || data[0];
   const allPosts = data.filter((post) => post.id !== featuredPost.id);
-  const collection = gen.collection;
-
-  const { data: mdxBlog } = useLiveQuery(query =>
-    query.from({ collection })
-  )
 
 
-  useEffect(()=>{
-    gen.load()
-  },[]);
 
-  console.log(mdxBlog[0]?.content);
   return (
     <div id="blog" className="blog-container">
       <div className="blog-header">

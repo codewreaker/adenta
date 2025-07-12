@@ -140,7 +140,7 @@ function handleDev() {
 }
 
 function generateConfigTemplate(template: string): string {
-  return `import { defineConfig } from '@adenta/mdx-bundler'
+  return `import { defineConfig } from '@adenta/core/mdx-bundler'
 
 export default defineConfig({
   // GitHub repository configuration
