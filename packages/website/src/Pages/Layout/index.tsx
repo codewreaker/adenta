@@ -69,7 +69,8 @@ declare module '@tanstack/react-router' {
 
 export default function Layout() {
   const [mockingStarted, setMockingStarted] = useState(false);
-
+  console.log(`======SETTING_UP=======`);
+  console.dir(JSON.stringify(process.env));
   useEffect(() => {
     // Start MSW in development
     if (isDev) {
