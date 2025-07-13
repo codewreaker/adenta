@@ -115,3 +115,19 @@
     }
   }
 }
+
+@media (max-width: 430px) {
+  .terminal {
+    min-width: unset;
+    font-size: 1em;
+  }
+  .terminal-header {
+    padding: 0 8px;
+    height: 40px;
+    gap: 6px;
+  }
+  .portfolio-tab-content {
+    padding: 12px 8px 10px 8px;
+    font-size: 0.95em;
+  }
+}

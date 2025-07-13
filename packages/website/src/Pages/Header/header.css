@@ -263,3 +263,23 @@
     }
   }
 }
+
+@media (max-width: 430px) {
+  .header {
+    margin-inline: 0;
+    & .header-content {
+      min-width: unset;
+      padding: 0.5rem 0.5rem;
+    }
+    & .logo {
+      font-size: 1.1rem;
+      & span {
+        font-size: 1.3rem;
+      }
+    }
+    & .nav-menu {
+      width: 90vw;
+      padding: 4rem 0.5rem 1rem;
+    }
+  }
+}

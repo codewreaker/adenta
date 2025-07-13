@@ -62,3 +62,22 @@
     }
   }
 }
+
+@media (max-width: 430px) {
+  .color-picker-launcher {
+    width: 16px;
+    height: 16px;
+    gap: 0.2rem;
+  }
+  .color-wheel-picker-container {
+    transform: translate(0, 35px);
+    .color-wheel-picker {
+      gap: 2px;
+      padding: 4px;
+    }
+    .color-input {
+      width: 18px;
+      height: 18px;
+    }
+  }
+}

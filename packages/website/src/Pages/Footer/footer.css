@@ -31,3 +31,13 @@
     text-align: center;
   }
 }
+
+@media (max-width: 430px) {
+  .terminal-footer {
+    padding: 0.5rem 0.5rem;
+    font-size: 0.95rem;
+  }
+  .footer-content {
+    gap: 0.3rem;
+  }
+}
