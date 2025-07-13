@@ -1,8 +1,7 @@
 'use client';
 
-import { useMemo } from 'react';
+import { useMemo, useEffect, useState } from 'react';
 import type React from 'react';
-import { useState } from 'react';
 import { EnvelopeIcon } from '@heroicons/react/24/outline';
 import { SpeechBubble } from '../../Components/SpeechBubble/index.js';
 import Terminal from '../../Components/Terminal/index.js';
@@ -259,82 +258,141 @@ const ExperienceItemComponent: React.FC<ExperienceItem> = ({
 const CVSection: React.FC<{ data: ResumeProps }> = ({ data }) => {
   const { education, experience } = data;
   const [activeSection, setActiveSection] = useState('about');
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const [seeMore, setSeeMore] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth <= 430);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  // Helper to render subtitle with See More
+  const renderSubtitle = () => (
+    <>
+      <p className={`subtitle${seeMore ? ' see-more' : ''}`}>
+        Versatile <span className="highlight">full-stack developer</span> specialising in <span className="highlight">front-end</span> technologies with added skill in <span className="highlight">UI/UX</span> design. I have over <span className="highlight">{calculateYearsOfExperience()} years</span> experience in <span className="highlight">FinTech</span>, <span className="highlight">Architecting</span> UIs that handle extensive, <span className="highlight">high-frequency</span> data. Most of my work is in <span className="highlight">JavaScript</span>, <span className="highlight">Typescript</span>, <span className="highlight">React</span> for the front-end and <span className="highlight">Python</span> for the backend. A curious learner willing to take on new challenges, and work within high-functioning teams while bringing on my garnered expertise and delivering <br />high-performance products to fulfil <span className="highlight">business</span> needs.<br />I am currently learning <span className="highlight">Rust</span> to expand my skill set in <span className="highlight">WebAssembly</span>
+      </p>
+      {isMobile && (
+        <button
+          className="see-more-btn"
+          onClick={() => setSeeMore((v) => !v)}
+          aria-expanded={seeMore}
+        >
+          {seeMore ? 'See Less' : 'See More'}
+        </button>
+      )}
+    </>
+  );
 
   return (
     <div id="cv" className="cv-container">
-      <div className="sidebar">
-        <div className="sidebar-content">
-          <div className="header-section">
-            <h1 className="name">Curriculum Vitae</h1>
-            <h2 className="title">Front End Engineer</h2>
-            <p className="subtitle">
-              Versatile <span className="highlight">full-stack developer</span>{' '}
-              specialising in <span className="highlight">front-end</span>{' '}
-              technologies with added skill in{' '}
-              <span className="highlight">UI/UX</span> design. I have over{' '}
-              <span className="highlight">
-                {calculateYearsOfExperience()} years
-              </span>{' '}
-              experience in <span className="highlight">FinTech</span>,{' '}
-              <span className="highlight">Architecting</span> UIs that handle
-              extensive, <span className="highlight">high-frequency</span> data.
-              Most of my work is in{' '}
-              <span className="highlight">JavaScript</span>,{' '}
-              <span className="highlight">Typescript</span>,{' '}
-              <span className="highlight">React</span> for the front-end and{' '}
-              <span className="highlight">Python</span> for the backend. A
-              curious learner willing to take on new challenges, and work within
-              high-functioning teams while bringing on my garnered expertise and
-              delivering <br />
-              high-performance products to fulfil{' '}
-              <span className="highlight">business</span> needs.
-              <br />I am currently learning{' '}
-              <span className="highlight">Rust</span> to expand my skill set in{' '}
-              <span className="highlight">WebAssembly</span>
-            </p>
+      {isMobile && sidebarOpen && (
+        <div className="sidebar-overlay" onClick={() => setSidebarOpen(false)}>
+          <div className="sidebar open" onClick={e => e.stopPropagation()}>
+            <div className="sidebar-content">
+              <div className="header-section">
+                <h1 className="name">Curriculum Vitae</h1>
+                <h2 className="title">Front End Engineer</h2>
+                {renderSubtitle()}
+              </div>
+
+              <nav className="navigation">
+                <ul>
+                  <li>
+                    <button
+                      className={`nav-link ${
+                        activeSection === 'experience' ? 'active' : ''
+                      }`}
+                      onClick={scrollToSection('experience', setActiveSection)}
+                    >
+                      <span className="nav-indicator"></span>
+                      <span className="nav-text">EXPERIENCE</span>
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      className={`nav-link ${
+                        activeSection === 'education' ? 'active' : ''
+                      }`}
+                      onClick={scrollToSection('education', setActiveSection)}
+                    >
+                      <span className="nav-indicator"></span>
+                      <span className="nav-text">EDUCATION</span>
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      className={`nav-link ${
+                        activeSection === 'volunteering' ? 'active' : ''
+                      }`}
+                      onClick={scrollToSection('volunteering', setActiveSection)}
+                    >
+                      <span className="nav-indicator"></span>
+                      <span className="nav-text">Volunteering</span>
+                    </button>
+                  </li>
+                </ul>
+              </nav>
+
+              <button className="portfolio-btn">Download CV</button>
+            </div>
           </div>
-
-          <nav className="navigation">
-            <ul>
-              <li>
-                <button
-                  className={`nav-link ${
-                    activeSection === 'experience' ? 'active' : ''
-                  }`}
-                  onClick={scrollToSection('experience', setActiveSection)}
-                >
-                  <span className="nav-indicator"></span>
-                  <span className="nav-text">EXPERIENCE</span>
-                </button>
-              </li>
-              <li>
-                <button
-                  className={`nav-link ${
-                    activeSection === 'education' ? 'active' : ''
-                  }`}
-                  onClick={scrollToSection('education', setActiveSection)}
-                >
-                  <span className="nav-indicator"></span>
-                  <span className="nav-text">EDUCATION</span>
-                </button>
-              </li>
-              <li>
-                <button
-                  className={`nav-link ${
-                    activeSection === 'volunteering' ? 'active' : ''
-                  }`}
-                  onClick={scrollToSection('volunteering', setActiveSection)}
-                >
-                  <span className="nav-indicator"></span>
-                  <span className="nav-text">Volunteering</span>
-                </button>
-              </li>
-            </ul>
-          </nav>
-
-          <button className="portfolio-btn">Download CV</button>
         </div>
-      </div>
+      )}
+      {(!isMobile || !sidebarOpen) && (
+        <div className="sidebar">
+          <div className="sidebar-content">
+            <div className="header-section">
+              <h1 className="name">Curriculum Vitae</h1>
+              <h2 className="title">Front End Engineer</h2>
+              {renderSubtitle()}
+            </div>
+
+            <nav className="navigation">
+              <ul>
+                <li>
+                  <button
+                    className={`nav-link ${
+                      activeSection === 'experience' ? 'active' : ''
+                    }`}
+                    onClick={scrollToSection('experience', setActiveSection)}
+                  >
+                    <span className="nav-indicator"></span>
+                    <span className="nav-text">EXPERIENCE</span>
+                  </button>
+                </li>
+                <li>
+                  <button
+                    className={`nav-link ${
+                      activeSection === 'education' ? 'active' : ''
+                    }`}
+                    onClick={scrollToSection('education', setActiveSection)}
+                  >
+                    <span className="nav-indicator"></span>
+                    <span className="nav-text">EDUCATION</span>
+                  </button>
+                </li>
+                <li>
+                  <button
+                    className={`nav-link ${
+                      activeSection === 'volunteering' ? 'active' : ''
+                    }`}
+                    onClick={scrollToSection('volunteering', setActiveSection)}
+                  >
+                    <span className="nav-indicator"></span>
+                    <span className="nav-text">Volunteering</span>
+                  </button>
+                </li>
+              </ul>
+            </nav>
+
+            <button className="portfolio-btn">Download CV</button>
+          </div>
+        </div>
+      )}
 
       <div className="main-content">
         <section id="experience" className="content-section">

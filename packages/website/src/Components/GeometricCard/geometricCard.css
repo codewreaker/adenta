@@ -85,8 +85,7 @@
 
 @media (max-width: 430px) {
   .info-card {
-    min-width: unset;
-    padding: 12px;
+    box-sizing: border-box;
   }
   .heading {
     font-size: 2.2rem;

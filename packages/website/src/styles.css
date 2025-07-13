@@ -63,7 +63,7 @@ html {
 }
 
 .layout-content {
-  margin-inline: 10vw;
+  margin-inline: 2vw;
   margin-top: 5%;
 }
 
@@ -78,24 +78,4 @@ html {
   );
   background-size: 10px 10px;
   background-attachment: fixed;
-}
-
-.quote {
-    font-style: italic;
-    font-size: 1.2rem;
-    line-height: 1.6;
-    margin: 34px 0;
-    text-align: center;
-    padding: 10px 20px;
-}
-
-@media (max-width: 430px) {
-  .layout-content {
-    margin-inline: 2vw;
-    margin-top: 2%;
-  }
-  .quote {
-    font-size: 1rem;
-    padding: 6px 8px;
-  }
 }
