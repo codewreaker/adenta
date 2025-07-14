@@ -446,9 +446,17 @@ African and London university candidates. This program was overseen by the CTO.
 
 // Blog Section Component
 const BlogList: React.FC<{ data: BlogPost[] }> = ({ data }) => {
-  console.log('D', data);
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth <= 480);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
   const featuredPost = data.find((post) => post.featured) || data[0];
   const allPosts = data.filter((post) => post.id !== featuredPost.id);
+  const previewPosts = allPosts.slice(0, 4);
 
   return (
     <div id="blog" className="blog-container">
@@ -481,6 +489,22 @@ const BlogList: React.FC<{ data: BlogPost[] }> = ({ data }) => {
             <h2 className="featured-title">{featuredPost?.title}</h2>
             <p className="featured-excerpt">{featuredPost?.excerpt}</p>
             <button className="portfolio-btn">Read Article</button>
+            {isMobile && (
+              <div className="blog-preview-scroll">
+                {previewPosts.map((post) => (
+                  <div className="blog-preview-item" key={post.id}>
+                    <div className="blog-preview-image">
+                      <img
+                        src={post.image || './assets/placeholder.svg'}
+                        alt={post.title}
+                      />
+                    </div>
+                    <div className="blog-preview-title">{post.title}</div>
+                  </div>
+                ))}
+                <button className="see-more-blogs-btn">See more blog posts <span className="see-more-icon">→</span></button>
+              </div>
+            )}
           </div>
         </article>
 
@@ -523,8 +547,16 @@ const calculateYearsOfExperience = (start = '2015-07-01') => {
 
 type Results = [Bio, Project[], BlogPost[], ResumeProps];
 
+const getLocalState=() => {
+  const stored = localStorage.getItem('isLoading');
+  if (stored === null) return false;
+  if (stored === 'true') return true;
+  if (stored === 'false') return false;
+  return false;
+}
+
 const Home: React.FC = () => {
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isLoading, setIsLoading] = useState<boolean>(getLocalState());
   const [homePage, setHomePage] = useState<HomeData>({
     bio: { name: 'loading', description: '...', links: [], title: '...' },
     blogPosts: [],
@@ -561,8 +593,9 @@ const Home: React.FC = () => {
     const [bio, projects, blogPosts, experiences] = results;
     setHomePage({ bio, projects, blogPosts, experiences });
     setTimeout(() => {
+      localStorage.setItem('isLoading', JSON.stringify(false));
       setIsLoading(false);
-    }, 500);
+    }, 0);
   };
 
   const handleStep = (index: number, step: ProgressStep, result: any) => {
