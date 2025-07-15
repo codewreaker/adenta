@@ -5,32 +5,40 @@ const bio = {
   description:
     'I am a passionate developer with experience in building scalable web applications, modern UI libraries, and developer tooling. I love working with monorepos, automation, and delivering delightful user experiences.',
   links: [
-    { label: 'GitHub', url: 'https://github.com/your-github' },
-    { label: 'LinkedIn', url: 'https://linkedin.com/in/your-linkedin' },
-    { label: 'Email', url: 'mailto:your@email.com' },
-    { label: 'Instagram', url: 'https://instagram.com/your-instagram' },
+    { label: 'GitHub', url: 'https://github.com/codewreaker' },
+    { label: 'LinkedIn', url: 'https://linkedin.com/in/israelprempeh' },
+    { label: 'Email', url: 'mailto:developer.prempeh@gmail.com' },
+    { label: 'Instagram', url: 'https://instagram.com/israel.prempeh' },
   ],
 };
+
+const githubMono = 'https://github.com/codewreaker/adenta/tree/main/packages';
 
 const tabProjects = [
   {
     name: '@adenta/core',
     description:
       'Core utilities and shared functionality for the @adenta ecosystem',
-    path: '/core',
+    path: `${githubMono}/core`,
     key: 'core',
   },
   {
     name: '@adenta/ui',
     description: 'A beautiful and modern UI component library',
-    path: '/ui',
+    path: `${githubMono}/ui`,
     key: 'ui',
   },
   {
     name: '@adenta/cli',
     description: 'Command line tools for @adenta projects',
-    path: '/cli',
+    path: `${githubMono}/cli`,
     key: 'cli',
+  },
+  {
+    name: '@adenta/cms',
+    description: 'A ready to go CMS built on payloadcms',
+    path: `${githubMono}/cms`,
+    key: 'cms',
   },
 ];
 

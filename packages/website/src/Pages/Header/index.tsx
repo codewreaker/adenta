@@ -4,7 +4,7 @@ import {
   MoonIcon as DarkIcon,
   SunIcon as LightIcon,
   PauseIcon,
-  PlayIcon
+  PlayIcon,
 } from '@heroicons/react/24/outline';
 import './header.css';
 import ThemeToggle from './ThemeToggle.js';
@@ -43,13 +43,13 @@ const AnimationToggle: React.FC = () => {
   const { skipAnimations, setSkipAnimations } = useAnimation();
 
   return (
-      <ThemeToggle
-        onToggle={() => setSkipAnimations(!skipAnimations)}
-        isPrimary={skipAnimations}
-        primaryIcon={PlayIcon}
-        secondaryIcon={PauseIcon}
-        tooltip={skipAnimations ? 'Enable animations' : 'Disable animations'}
-      />
+    <ThemeToggle
+      onToggle={() => setSkipAnimations(!skipAnimations)}
+      isPrimary={skipAnimations}
+      primaryIcon={PlayIcon}
+      secondaryIcon={PauseIcon}
+      tooltip={skipAnimations ? 'Enable animations' : 'Disable animations'}
+    />
   );
 };
 
@@ -90,10 +90,11 @@ const Header = () => {
   return (
     <header className="header" data-theme={isDark ? 'dark' : 'light'}>
       <div className="header-content">
-        <div className="logo">
-          <span>IP</span>
-        </div>
-
+        <a href="/" style={{textDecoration: 'none'}}>
+          <div className="logo">
+            <span>IP</span>
+          </div>
+        </a>
         <button
           className="mobile-menu-button"
           onClick={toggleMobileMenu}
@@ -109,19 +110,12 @@ const Header = () => {
             {navConfig.map((item) => (
               <li key={item.label}>
                 {item.external ? (
-                  <a
-                    href={item.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
+                  <a href={item.href} target="_blank" rel="noopener noreferrer">
                     {item.icon && <span className="nav-icon">{item.icon}</span>}
                     <span className="nav-label">{item.label}</span>
                   </a>
                 ) : (
-                  <Link
-                    to={item.href}
-                    className="nav-label"
-                  >
+                  <Link to={item.href} className="nav-label">
                     {item.icon && <span className="nav-icon">{item.icon}</span>}
                     <span className="nav-label">{item.label}</span>
                   </Link>
@@ -136,7 +130,7 @@ const Header = () => {
                 secondaryIcon={LightIcon}
               />
               <ColorPicker
-                onChange={(colors:any) => {
+                onChange={(colors: any) => {
                   try {
                     localStorage.setItem('theme-color', JSON.stringify(colors));
                   } catch (error) {

@@ -27,11 +27,6 @@ const BlogList: React.FC<{ data: BlogPost[] }> = ({ data }) => {
     <div id="blog" className="blog-container">
       <div className="blog-header">
         <h1 className="blog-title">Blog</h1>
-        <p className="blog-subtitle">
-          Thoughts on development, design, and technology. Sharing insights from
-          building scalable web applications, working with modern frameworks,
-          and navigating the ever-evolving landscape of frontend engineering.
-        </p>
       </div>
       <div className="blog-content">
         <article className="featured-post">

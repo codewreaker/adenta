@@ -34,11 +34,10 @@ const Terminal = ({
   onTabChange,
 }: TerminalProps) => {
   // Internal state if not controlled
-  const [internalActiveTab, setInternalActiveTab] = useState(
-    tabProjects[0]?.key
-  );
+  const [internalActiveTab, setInternalActiveTab] = useState<string>();
 
-  const activeTab = activeTabKey ?? internalActiveTab;
+  const activeTab = activeTabKey || internalActiveTab || tabProjects[0]?.key;
+
   const setActiveTab = (key: string) => {
     setInternalActiveTab(key);
     onTabChange?.(key);
@@ -85,7 +84,7 @@ const Terminal = ({
               {activeProject.description}
             </div>
             <div className="project-link">
-              <a href={activeProject.path}>Open Project &rarr;</a>
+              <a target='__blank' href={activeProject.path}>Open Project &rarr;</a>
             </div>
           </>
         ) : null}

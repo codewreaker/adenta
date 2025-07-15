@@ -68,7 +68,7 @@ const ProgressLoader: React.FC<ProgressLoaderProps> = ({
         {/* Title */}
         <h1
           style={{
-            fontSize: '8.6rem',
+            fontSize: '6.6rem',
             fontWeight: 100,
             margin: '0 0 0.5rem 0',
             background: 'var(--color-primary-two)',

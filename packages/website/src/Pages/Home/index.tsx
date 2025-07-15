@@ -204,7 +204,14 @@ const Projects: React.FC<{ data: Project[] }> = ({ data }) => {
         skipAnimations ? '' : 'fade-in-up'
       }`}
     >
-      <GeometricCard customStyle={{ width: 360 }} />
+      <GeometricCard
+        heading={'Developer'}
+        title={'Projects'}
+        action={'See All'}
+        tagline={'by Me'}
+        customStyle={{ width: 360 }}
+        onClick={() => window.open('https://github.com/codewreaker/', '_blank')}
+      />
       <Terminal tabProjects={data} />
     </div>
   );
@@ -273,7 +280,25 @@ const CVSection: React.FC<{ data: ResumeProps }> = ({ data }) => {
   const renderSubtitle = () => (
     <>
       <p className={`subtitle${seeMore ? ' see-more' : ''}`}>
-        Versatile <span className="highlight">full-stack developer</span> specialising in <span className="highlight">front-end</span> technologies with added skill in <span className="highlight">UI/UX</span> design. I have over <span className="highlight">{calculateYearsOfExperience()} years</span> experience in <span className="highlight">FinTech</span>, <span className="highlight">Architecting</span> UIs that handle extensive, <span className="highlight">high-frequency</span> data. Most of my work is in <span className="highlight">JavaScript</span>, <span className="highlight">Typescript</span>, <span className="highlight">React</span> for the front-end and <span className="highlight">Python</span> for the backend. A curious learner willing to take on new challenges, and work within high-functioning teams while bringing on my garnered expertise and delivering <br />high-performance products to fulfil <span className="highlight">business</span> needs.<br />I am currently learning <span className="highlight">Rust</span> to expand my skill set in <span className="highlight">WebAssembly</span>
+        Versatile <span className="highlight">full-stack developer</span>{' '}
+        specialising in <span className="highlight">front-end</span>{' '}
+        technologies with added skill in{' '}
+        <span className="highlight">UI/UX</span> design. I have over{' '}
+        <span className="highlight">{calculateYearsOfExperience()} years</span>{' '}
+        experience in <span className="highlight">FinTech</span>,{' '}
+        <span className="highlight">Architecting</span> UIs that handle
+        extensive, <span className="highlight">high-frequency</span> data. Most
+        of my work is in <span className="highlight">JavaScript</span>,{' '}
+        <span className="highlight">Typescript</span>,{' '}
+        <span className="highlight">React</span> for the front-end and{' '}
+        <span className="highlight">Python</span> for the backend. A curious
+        learner willing to take on new challenges, and work within
+        high-functioning teams while bringing on my garnered expertise and
+        delivering <br />
+        high-performance products to fulfil{' '}
+        <span className="highlight">business</span> needs.
+        <br />I am currently learning <span className="highlight">Rust</span> to
+        expand my skill set in <span className="highlight">WebAssembly</span>
       </p>
       {isMobile && (
         <button
@@ -291,7 +316,7 @@ const CVSection: React.FC<{ data: ResumeProps }> = ({ data }) => {
     <div id="cv" className="cv-container">
       {isMobile && sidebarOpen && (
         <div className="sidebar-overlay" onClick={() => setSidebarOpen(false)}>
-          <div className="sidebar open" onClick={e => e.stopPropagation()}>
+          <div className="sidebar open" onClick={(e) => e.stopPropagation()}>
             <div className="sidebar-content">
               <div className="header-section">
                 <h1 className="name">Curriculum Vitae</h1>
@@ -328,7 +353,10 @@ const CVSection: React.FC<{ data: ResumeProps }> = ({ data }) => {
                       className={`nav-link ${
                         activeSection === 'volunteering' ? 'active' : ''
                       }`}
-                      onClick={scrollToSection('volunteering', setActiveSection)}
+                      onClick={scrollToSection(
+                        'volunteering',
+                        setActiveSection
+                      )}
                     >
                       <span className="nav-indicator"></span>
                       <span className="nav-text">Volunteering</span>
@@ -462,11 +490,6 @@ const BlogList: React.FC<{ data: BlogPost[] }> = ({ data }) => {
     <div id="blog" className="blog-container">
       <div className="blog-header">
         <h1 className="blog-title">Blog</h1>
-        <p className="blog-subtitle">
-          Thoughts on development, design, and technology. Sharing insights from
-          building scalable web applications, working with modern frameworks,
-          and navigating the ever-evolving landscape of frontend engineering.
-        </p>
       </div>
 
       <div className="blog-content">
@@ -502,7 +525,9 @@ const BlogList: React.FC<{ data: BlogPost[] }> = ({ data }) => {
                     <div className="blog-preview-title">{post.title}</div>
                   </div>
                 ))}
-                <button className="see-more-blogs-btn">See more blog posts <span className="see-more-icon">→</span></button>
+                <button className="see-more-blogs-btn">
+                  See more blog posts <span className="see-more-icon">→</span>
+                </button>
               </div>
             )}
           </div>
@@ -547,13 +572,13 @@ const calculateYearsOfExperience = (start = '2015-07-01') => {
 
 type Results = [Bio, Project[], BlogPost[], ResumeProps];
 
-const getLocalState=() => {
+const getLocalState = () => {
   const stored = localStorage.getItem('isLoading');
   if (stored === null) return false;
   if (stored === 'true') return true;
   if (stored === 'false') return false;
   return false;
-}
+};
 
 const Home: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(getLocalState());
@@ -662,9 +687,9 @@ const Home: React.FC = () => {
       <Projects data={homePage.projects} />
       <CVSection data={homePage.experiences} />
       <p className="quote">
-          The only way to do great work is to love what you do.{' '}
-          <span className="highlight"> — Steve Jobs</span>
-        </p>
+        The only way to do great work is to love what you do.{' '}
+        <span className="highlight"> — Steve Jobs</span>
+      </p>
       <BlogList data={homePage.blogPosts} />
     </>
   );

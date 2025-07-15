@@ -35,7 +35,7 @@ export function SpeechBubble({
       case 'bottom':
         return {
           ...baseStyle,
-          bottom: '-12px',
+          bottom: '-11px',
           left: '50%',
           transform: 'translateX(-50%)',
           borderLeft: '12px solid transparent',
@@ -45,7 +45,7 @@ export function SpeechBubble({
       case 'top':
         return {
           ...baseStyle,
-          top: '-12px',
+          top: '-11px',
           left: '50%',
           transform: 'translateX(-50%)',
           borderLeft: '12px solid transparent',
@@ -55,7 +55,7 @@ export function SpeechBubble({
       case 'left':
         return {
           ...baseStyle,
-          left: '-12px',
+          left: '-11px',
           top: '50%',
           transform: 'translateY(-50%)',
           borderTop: '12px solid transparent',
@@ -65,7 +65,7 @@ export function SpeechBubble({
       case 'right':
         return {
           ...baseStyle,
-          right: '-12px',
+          right: '-11px',
           top: '50%',
           transform: 'translateY(-50%)',
           borderTop: '12px solid transparent',

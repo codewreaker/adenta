@@ -5,6 +5,7 @@ interface GeometricCardProps {
   heading?: string;
   currency?: string;
   title?: string;
+  tagline?:string;
   description?: string;
   action: string;
   onClick?: () => void;
@@ -20,7 +21,8 @@ interface GeometricCardProps {
 const GeometricCard: React.FC<Partial<GeometricCardProps>> = ({
   heading = 'Lorem',
   title = 'Ipsum',
-  action = 'Sit Amet',
+  action = 'Dit Dolore',
+  tagline='Iadeleum',
   onClick = () => {
     /** */
   },
@@ -42,12 +44,12 @@ const GeometricCard: React.FC<Partial<GeometricCardProps>> = ({
       className="info-card"
       style={{ width, height, '--before-tmp-bg': bg } as React.CSSProperties}
     >
-      <h1 className="heading">{heading}</h1>
-      <h2 className="title">{title}</h2>
+      <p className="heading">{heading}</p>
+      <p className="title">{title}</p>
 
       <div className="content">{children}</div>
 
-      <div className="presented-by">PRESENTED BY</div>
+      <div className="presented-by">{tagline}</div>
       <button
         onClick={onClick}
         className="portfolio-btn"

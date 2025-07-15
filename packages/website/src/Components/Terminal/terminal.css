@@ -67,6 +67,26 @@
     border-bottom: 2px solid #232329;
     padding: 4px 12px 0px 12px; /* 2px/6px * 2 */
     gap: 4px; /* 2px * 2 */
+    overflow-x: auto !important;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch; /* enables momentum scroll on iOS */
+    scrollbar-width: thin; /* Firefox: show thin scrollbar */
+    -ms-overflow-style: auto;  /* IE and Edge: show scrollbar */
+    cursor: grab;
+    user-select: none;
+    touch-action: pan-x;
+  }
+  .terminal-tabs::-webkit-scrollbar {
+    display: block;
+    height: 6px;
+    background: transparent;
+  }
+  .terminal-tabs::-webkit-scrollbar-thumb {
+    background: #232329;
+    border-radius: 4px;
+  }
+  .terminal-tabs::-webkit-scrollbar-track {
+    background: transparent;
   }
 
   .terminal-tab {
