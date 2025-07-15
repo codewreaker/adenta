@@ -27,7 +27,7 @@ const RootComponent = () => (
         <Outlet />
       </Suspense>
     </main>
-    <Footer />
+    {/* <Footer /> */}
   </>
 );
 

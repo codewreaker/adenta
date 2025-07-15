@@ -996,7 +996,7 @@
     color: var(--color-primary-two);
   }
   .sidebar .subtitle {
-    max-height: 8.2em;
+    max-height: 4.2em;
     overflow: hidden;
     position: relative;
     display: block;

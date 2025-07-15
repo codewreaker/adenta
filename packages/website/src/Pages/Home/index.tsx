@@ -417,7 +417,12 @@ const CVSection: React.FC<{ data: ResumeProps }> = ({ data }) => {
                 </li>
               </ul>
             </nav>
-            <a href="/cv-2025.pdf" target="_blank" rel="noopener noreferrer">
+            <a
+              href="/cv-2025.pdf"
+              style={{ alignSelf: 'center' }}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <button className="portfolio-btn">Download CV</button>
             </a>
           </div>
@@ -531,33 +536,37 @@ const BlogList: React.FC<{ data: BlogPost[] }> = ({ data }) => {
                 </button>
               </div>
             )}
-            <button className="portfolio-btn">Read Article</button>
+            {!isMobile && (
+              <button className="portfolio-btn">Read Article</button>
+            )}
           </div>
         </article>
 
-        {!isMobile && <div className="related-posts">
-          <div className="related-grid">
-            <div className="featured-badge">Latest</div>
-            {allPosts.map((post) => (
-              <article key={post.id} className="related-post">
-                <div className="related-image">
-                  <img
-                    src={post.image || './assets/placeholder.svg'}
-                    alt={post.title}
-                  />
-                </div>
-                <div className="related-content">
-                  <div className="post-meta">
-                    <span className="category">{post.category}</span>
-                    <span className="read-time">{post.readTime}</span>
+        {!isMobile && (
+          <div className="related-posts">
+            <div className="related-grid">
+              <div className="featured-badge">Latest</div>
+              {allPosts.map((post) => (
+                <article key={post.id} className="related-post">
+                  <div className="related-image">
+                    <img
+                      src={post.image || './assets/placeholder.svg'}
+                      alt={post.title}
+                    />
                   </div>
-                  <h4 className="related-post-title">{post.title}</h4>
-                  <p className="related-excerpt">{post.excerpt}</p>
-                </div>
-              </article>
-            ))}
+                  <div className="related-content">
+                    <div className="post-meta">
+                      <span className="category">{post.category}</span>
+                      <span className="read-time">{post.readTime}</span>
+                    </div>
+                    <h4 className="related-post-title">{post.title}</h4>
+                    <p className="related-excerpt">{post.excerpt}</p>
+                  </div>
+                </article>
+              ))}
+            </div>
           </div>
-        </div>}
+        )}
       </div>
     </div>
   );
