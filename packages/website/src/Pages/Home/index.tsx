@@ -364,8 +364,9 @@ const CVSection: React.FC<{ data: ResumeProps }> = ({ data }) => {
                   </li>
                 </ul>
               </nav>
-
-              <button className="portfolio-btn">Download CV</button>
+              <a className="portfolio-btn" href="/cv-2025.pdf" download>
+                Download CV
+              </a>
             </div>
           </div>
         </div>
@@ -416,8 +417,9 @@ const CVSection: React.FC<{ data: ResumeProps }> = ({ data }) => {
                 </li>
               </ul>
             </nav>
-
-            <button className="portfolio-btn">Download CV</button>
+            <a href="/cv-2025.pdf" target="_blank" rel="noopener noreferrer">
+              <button className="portfolio-btn">Download CV</button>
+            </a>
           </div>
         </div>
       )}
