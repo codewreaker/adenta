@@ -513,7 +513,6 @@ const BlogList: React.FC<{ data: BlogPost[] }> = ({ data }) => {
             </div>
             <h2 className="featured-title">{featuredPost?.title}</h2>
             <p className="featured-excerpt">{featuredPost?.excerpt}</p>
-            <button className="portfolio-btn">Read Article</button>
             {isMobile && (
               <div className="blog-preview-scroll">
                 {previewPosts.map((post) => (
@@ -528,14 +527,15 @@ const BlogList: React.FC<{ data: BlogPost[] }> = ({ data }) => {
                   </div>
                 ))}
                 <button className="see-more-blogs-btn">
-                  See more blog posts <span className="see-more-icon">→</span>
+                  <span className="see-more-icon">→</span>
                 </button>
               </div>
             )}
+            <button className="portfolio-btn">Read Article</button>
           </div>
         </article>
 
-        <div className="related-posts">
+        {!isMobile && <div className="related-posts">
           <div className="related-grid">
             <div className="featured-badge">Latest</div>
             {allPosts.map((post) => (
@@ -557,7 +557,7 @@ const BlogList: React.FC<{ data: BlogPost[] }> = ({ data }) => {
               </article>
             ))}
           </div>
-        </div>
+        </div>}
       </div>
     </div>
   );

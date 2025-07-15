@@ -139,7 +139,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  filter: drop-shadow(0 2px 8px #ff6a1a22);
+  background: var(--color-bg);
+  border-radius: 5px;
 }
 
 .portfolio-asset {
@@ -572,6 +573,39 @@
   line-height: 1.7;
   color: var(--color-text-secondary);
   margin: 0 0 2rem 0;
+  max-height: 3.4em; /* ~2 lines */
+  overflow: hidden;
+  position: relative;
+  transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s;
+  opacity: 0.95;
+}
+
+.featured-excerpt.see-more {
+  max-height: 100vh;
+  opacity: 1;
+  transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s;
+}
+
+.featured-excerpt::after {
+  content: '';
+  display: block;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1.2em;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0),
+    var(--color-bg) 90%
+  );
+  pointer-events: none;
+  transition: opacity 0.3s;
+  opacity: 1;
+}
+
+.featured-excerpt.see-more::after {
+  opacity: 0;
 }
 
 .related-posts {
@@ -832,10 +866,8 @@
     width: 100%;
   }
   .see-more-blogs-btn {
-    flex: 0 0 150px;
-    min-width: 130px;
-    max-width: 180px;
-    margin-left: 0.5rem;
+    flex: 0 0 30px;
+    margin-left: 0.1rem;
     background: linear-gradient(
       90deg,
       var(--color-primary) 70%,
@@ -843,12 +875,13 @@
     );
     color: var(--color-bg);
     border: none;
-    border-radius: 12px;
+    border-radius: 5px;
     font-size: 1.08rem;
     font-weight: 700;
     padding: 1.1rem 0.5rem;
     cursor: pointer;
-    align-self: center;
+    height: 90px;
+    align-self: baseline;
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
     display: flex;
     align-items: center;
