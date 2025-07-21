@@ -1,0 +1,44 @@
+# lib.autoExtension
+
+* **Type:** `boolean`
+* **Default:** `true`
+
+Whether to automatically set the file extension based on the [`format`](/config/lib/format.md) option in the JavaScript output files.
+
+## Default extension
+
+By default that when `autoExtension` is set to `true`, the file extension will be:
+
+* `.js` with `esm` format and `.cjs` with `cjs` format when `type: module` in `package.json`.
+
+* `.js` with `cjs` format and `.mjs` with `esm` format when `type: commonjs` or no `type` field in `package.json`.
+
+When `autoExtension` is set to `false`, the file extension will be default to `.js`.
+
+## Customize extension
+
+You can set `autoExtension` to `false` and use [output.filename](https://rsbuild.rs/config/output/filename) to customize the JavaScript output files.
+
+```ts title="rslib.config.ts"
+export default defineConfig({
+  lib: [
+    {
+      format: 'cjs',
+      autoExtension: false,
+      output: {
+        filename: {
+          js: '[name].cjs',
+        },
+      },
+    },
+    {
+      format: 'esm',
+      output: {
+        filename: {
+          js: '[name].mjs',
+        },
+      },
+    },
+  ],
+});
+```

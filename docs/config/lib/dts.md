@@ -1,0 +1,214 @@
+# lib.dts
+
+* **Type:**
+
+```ts
+type Dts =
+  | {
+      bundle?: boolean | { bundledPackages?: string[] };
+      distPath?: string;
+      build?: boolean;
+      abortOnError?: boolean;
+      autoExtension?: boolean;
+    }
+  | boolean;
+```
+
+* **Default:** `undefined`
+
+Configure the generation of the TypeScript declaration files.
+
+## Boolean type
+
+Declaration files generation is an optional feature, you can set `dts: true` to enable [bundleless declaration files](/guide/advanced/dts.md#bundleless-declaration-files) generation.
+
+```ts title="rslib.config.ts"
+export default {
+  lib: [
+    {
+      format: 'esm',
+      dts: true, // [!code highlight]
+    },
+  ],
+};
+```
+
+If you want to disable declaration files generation, you can set `dts: false` or do not specify the `dts` option.
+
+```ts title="rslib.config.ts"
+export default {
+  lib: [
+    {
+      format: 'esm',
+      dts: false, // [!code highlight]
+    },
+  ],
+};
+```
+
+## Object type
+
+If you want to customize the declaration files generation, you can set the `dts` option to an object.
+
+### dts.bundle
+
+* **Type:** `boolean | { bundledPackages?: string[] }`
+* **Default:** `false`
+
+Whether to bundle the declaration files.
+
+If you want to [bundle declaration files](/guide/advanced/dts.md#bundle-declaration-files) files, you should:
+
+1. Install [@microsoft/api-extractor](https://www.npmjs.com/package/@microsoft/api-extractor) as a development dependency, which is the underlying tool used for bundling declaration files.
+
+
+
+2. Set `dts.bundle` to `true`.
+
+```ts title="rslib.config.ts"
+export default {
+  lib: [
+    {
+      format: 'esm',
+      // [!code highlight:3]
+      dts: {
+        bundle: true,
+      },
+    },
+  ],
+};
+```
+
+#### dts.bundle.bundledPackages
+
+* **Type:** `string[]`
+
+Specifies the dependencies whose declaration files should be bundled. This configuration is passed to the [bundledPackages](https://api-extractor.com/pages/configs/api-extractor_json/#bundledpackages) option of `@microsoft/api-extractor`.
+
+By default, Rslib determines externalized dependencies based on the following configurations. For details, refer to [Handle third-party dependencies](/guide/advanced/third-party-deps.md).
+
+* [autoExternal](/config/lib/auto-external.md) configuration
+* [output.externals](/config/rsbuild/output.md#outputexternals) configuration
+
+Direct dependencies (declared in `package.json`) that are not externalized will be automatically added to `bundledPackages`, and their declaration files will be bundled into the final output.
+
+When the default behavior does not meet the requirements, you can explicitly specify the dependencies whose declaration files need to be bundled through `dts.bundle.bundledPackages`. After setting this configuration, the above default behavior will be completely overwritten.
+
+This is typically used for bundling transitive dependencies (dependencies of direct dependencies). For example, if the project directly depends on `foo`, and `foo` depends on `bar`, you can bundle both `foo` and `bar`'s declaration files as follows:
+
+```ts title="rslib.config.ts"
+export default {
+  lib: [
+    {
+      format: 'esm',
+      dts: {
+        // [!code highlight:3]
+        bundle: {
+          bundledPackages: ['foo', 'bar'],
+        },
+      },
+    },
+  ],
+};
+```
+
+::: note
+`bundledPackages` can be specified with the [minimatch](https://www.npmjs.com/package/minimatch) syntax, but will only match the declared direct dependencies in `package.json`.
+:::
+
+### dts.distPath
+
+* **Type:** `string`
+
+The output directory of declaration files.
+
+#### Default value
+
+The default value follows the priority below:
+
+1. The `dts.distPath` value in the current lib configuration.
+2. The `declarationDir` value in the `tsconfig.json` file.
+3. The [output.distPath.root](/config/rsbuild/output.md#outputdistpath) value in the current lib configuration.
+
+#### Example
+
+```ts title="rslib.config.ts"
+export default {
+  lib: [
+    {
+      format: 'esm',
+      // [!code highlight:3]
+      dts: {
+        distPath: './dist-types',
+      },
+    },
+  ],
+};
+```
+
+### dts.build
+
+* **Type:** `boolean`
+* **Default:** `false`
+
+Whether to generate declaration files with building the project references. This is equivalent to using the `--build` flag with the `tsc` command. See [Project References](https://www.typescriptlang.org/docs/handbook/project-references.html) for more details.
+
+::: note
+
+When this option is enabled, you must explicitly set `declarationDir` or `outDir` in `tsconfig.json` in order to meet the build requirements.
+
+:::
+
+### dts.abortOnError
+
+* **Type:** `boolean`
+* **Default:** `true`
+
+Whether to abort the build process when an error occurs during declaration files generation.
+
+By default, type errors will cause the build to fail.
+
+When `abortOnError` is set to `false` like below, the build will still succeed even if there are type issues in the code.
+
+```ts title="rslib.config.ts"
+export default {
+  lib: [
+    {
+      format: 'esm',
+      // [!code highlight:3]
+      dts: {
+        abortOnError: false,
+      },
+    },
+  ],
+};
+```
+
+::: warning
+
+When this configuration is disabled, there is no guarantee that the type files will be generated correctly.
+
+:::
+
+### dts.autoExtension
+
+* **Type:** `boolean`
+* **Default:** `false`
+
+Whether to automatically set the declaration file extension based on the [format](/config/lib/format.md) option.
+
+#### Default extension
+
+By default that when `dts.autoExtension` is `false`, the declaration file extension will be `.d.ts`.
+
+When `dts.autoExtension` is set to `true`, the declaration file extension will be:
+
+* `.d.ts` with `esm` format and `.d.cts` with `cjs` format when `type: module` in `package.json`.
+
+* `.d.ts` with `cjs` format and `.d.mts` with `esm` format when `type: commonjs` or no `type` field in `package.json`.
+
+::: note
+
+It follows the same logic as [lib.autoExtension](/config/lib/auto-extension.md), but the default value is different since the declaration file extension may cause some issues with different module resolution strategies.
+
+:::

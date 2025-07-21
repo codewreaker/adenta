@@ -1,0 +1,11 @@
+[
+  "resolve",
+  "source",
+  "output",
+  "tools",
+  {
+    "type": "file",
+    "name": "plugins",
+    "label": "plugins"
+  }
+]

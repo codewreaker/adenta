@@ -1,0 +1,254 @@
+# Features FAQ
+
+## Style processing
+
+### How to skip the preprocessing of Less / Sass files in bundleless mode?
+
+Bundleless means that each source file is compiled and built separately, which can be understood as the process of code transformation of source files only. To skip the preprocessing of `.less/.scss` files, you need to:
+
+1. Set `source.entry` to remove `.less/.scss` files from the entry.
+2. Set `output.copy` to copy `.less/.scss` files to the output directory.
+3. Set `redirect.style.extension` to `false` to disable the redirect behavior for the import path of `.less/.scss` files.
+
+Below is an example of skipping the `.scss` file processing. All `.scss` files in `src` will be copied to the output directory and retained with consistent relative paths.
+
+```ts title="rslib.config.ts"
+export default defineConfig({
+  lib: [
+    {
+      // ...
+      source: {
+        entry: {
+          index: ['./src/**', '!src/**/*.scss'],
+        },
+      },
+      output: {
+        copy: [{ from: '**/*.scss', context: path.join(__dirname, 'src') }],
+      },
+      redirect: {
+        style: {
+          extension: false,
+        },
+      },
+    },
+  ],
+});
+```
+
+## Static assets processing
+
+### How to skip the processing of static asset files in bundleless mode?
+
+In bundleless mode, Rslib transforms the source static asset file into a JavaScript file and a static asset file that is emitted according to [output.distPath](/config/rsbuild/output.md#outputdistpath) by default with preserving the `import` or `require` statements for static assets. To skip the above processing of static asset files, you need to:
+
+1. Set `source.entry` to remove static asset files from the entry.
+2. Set `output.copy` to copy static asset files to the output directory.
+3. Set `redirect.asset.extension` to `false` to disable the redirect behavior for the import path of static asset files.
+
+Below is an example of skipping the `.png` file processing. All `.png` files in `src` will be copied to the output directory and retained with consistent relative paths.
+
+```ts title="rslib.config.ts"
+export default defineConfig({
+  lib: [
+    {
+      // ...
+      source: {
+        entry: {
+          index: ['./src/**', '!src/**/*.png'],
+        },
+      },
+      output: {
+        copy: [{ from: '**/*.png', context: path.join(__dirname, 'src') }],
+      },
+      redirect: {
+        asset: {
+          extension: false,
+        },
+      },
+    },
+  ],
+});
+```
+
+## Code minification
+
+### How to preserve all comments in the output files?
+
+By default, Rslib uses SWC to remove comments. The corresponding SWC [jsc.minify.format](https://swc.rs/docs/configuration/minification#jscminifyformat) configuration is
+
+```js
+{
+    comments: 'some',
+    preserveAnnotations: true,
+}
+```
+
+This will only preserve some legal comments and annotations. If you want to preserve all comments, you can refer to the following configuration:
+
+```ts title="rslib.config.ts"
+export default {
+  lib: [
+    // ...
+  ],
+  output: {
+    minify: {
+      jsOptions: {
+        minimizerOptions: {
+          format: {
+            comments: 'all', // This will preserve all comments
+          },
+        },
+      },
+    },
+  },
+};
+```
+
+### How to compress the output size while preserving code readability?
+
+Compressing code can reduce the output size and improve loading speed, but the compressed code is less readable and harder to debug. If you want to preserve code readability, you can keep variable names and disable compression to facilitate debugging. Refer to [web-infra-dev/rsbuild#966](https://github.com/web-infra-dev/rsbuild/pull/3966).
+
+```ts title="rslib.config.ts"
+export default {
+  lib: [
+    // ...
+  ],
+  output: {
+    minify: {
+      jsOptions: {
+        minimizerOptions: {
+          // preserve variable name and disable minify for easier debugging
+          mangle: false,
+          minify: false,
+          compress: true,
+        },
+      },
+    },
+  },
+};
+```
+
+## Declaration files generation
+
+### How to avoid generating declaration files for certain files?
+
+As shown below, Rslib ignores the files under the `src/tests` directory when emitting JavaScript outputs, but these files still generate corresponding declaration files.
+
+```ts title="rslib.config.ts"
+export default {
+  lib: [
+    source: {
+      entry: {
+        index: ['src/**/*', '!src/tests/**/*'],
+      }
+    }
+  ],
+};
+```
+
+The entry set by [source.entry](/config/lib/bundle.md#bundle-false) can exclude some files that do not generate corresponding JavaScript outputs, but cannot exclude the generation of corresponding declaration files. This needs to be achieved by setting [include](https://www.typescriptlang.org/tsconfig/#include) and [exclude](https://www.typescriptlang.org/tsconfig/#exclude) in `tsconfig.json`, as shown below:
+
+```json title="tsconfig.json"
+{
+  "compilerOptions": {
+    // ...
+  },
+  "include": ["src/**/*"],
+  "exclude": ["src/tests/**/*"]
+}
+```
+
+If you want to keep type prompts and checking for these files, but do not generate corresponding declaration files, you can inherit a basic `tsconfig.json` by [extends](https://www.typescriptlang.org/tsconfig/#extends) and then override the `include` and `exclude` options as follows:
+
+```json title="tsconfig.json"
+{
+  "compilerOptions": {
+    // ...
+  },
+  "include": ["src/**/*", "rslib.config.ts"]
+}
+```
+
+```json title="tsconfig.build.json"
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    // ...
+  },
+  "include": ["src/**/*"],
+  "exclude": ["src/tests/**/*"]
+}
+```
+
+The newly added `tsconfig.build.json` needs to be configured in the [source.tsconfigPath](/config/rsbuild/source.md#sourcetsconfigpath) option in `rslib.config.ts`:
+
+```ts title="rslib.config.ts"
+export default {
+  lib: [
+    source: {
+      entry: {
+        index: ['src/**/*', '!src/tests/**/*'],
+      }
+    }
+  ],
+  source: {
+    tsconfigPath: 'tsconfig.build.json',
+  },
+};
+```
+
+### How to additionally exclude specified dependencies when `dts.bundle` is `true`?
+
+Rslib uses [rsbuild-plugin-dts](https://github.com/web-infra-dev/rslib/blob/main/packages/plugin-dts/README.md) to generate declaration files, which supports configuration via [output.externals](/config/rsbuild/output.md#outputtarget) for excluding certain dependencies from bundled declaration files.
+
+For example, a typical React component library often does not declare `@types/react` in `peerDependencies` but only in `devDependencies`. Following the [autoExternal](/config/lib/auto-external.md) logic for dependency handling, Rslib will attempt to bundle `@types/react` into the declaration output files during the build. However, in practice, a component library should not bundle `@types/react`.
+
+In this scenario, you can configure [output.externals](/config/rsbuild/output.md#outputtarget) to exclude `@types/react`.
+
+```ts title="rslib.config.ts"
+export default {
+  lib: [
+    // ...
+  ],
+  output: {
+    externals: ['@types/react'],
+  },
+};
+```
+
+## Rsbuild plugin
+
+### Why does using `modifyRsbuildConfig` to modify the configuration does not take effect?
+
+Rslib internally generates Rsbuild's environments configurations, and each configuration item in the [lib](/config/lib/index.md) array corresponds to a specific environment configuration.
+
+[modifyRsbuildConfig](https://rsbuild.rs/plugins/dev/hooks#modifyrsbuildconfig) is a global hook that cannot be effective for configurations under a specific environment. It is usually used in Rslib to modify globally effective plugins, etc. Therefore, you need to use [modifyEnvironmentConfig](https://rsbuild.rs/plugins/dev/hooks#modifyenvironmentconfig) instead to modify the configuration of a specific environment.
+
+Refer to [Environment Plugin](https://rsbuild.rs/plugins/dev/#environment-plugin) to learn how to develop an Environment Plugin.
+
+## Miscellaneous
+
+### How to preserve module variables such as `__webpack_hash__` in the source code when generating outputs?
+
+Rslib based on Rspack will transform [module variables](https://rspack.rs/api/runtime-api/module-variables) like `__webpack_hash__`, `__webpack_nonce__`, `__webpack_public_path__`, etc. to runtime code containing `__webpack_require__` by default during build process. If you need to preserve these module variables in the outputs, you can configure [source.define](/config/rsbuild/source.md#sourcedefine) as follows:
+
+1. Replace the module variables that need to be preserved in the source code with a unique name, such as `__webpack_hash__` with `WEBPACK_HASH`, `__webpack_nonce__` with `WEBPACK_NONCE`, `__webpack_public_path__` with `WEBPACK_PUBLIC_PATH`, etc.
+
+```ts
+const isUpdateAvailable = () => lastCompilationHash !== __webpack_hash__; // [!code --]
+const isUpdateAvailable = () => lastCompilationHash !== WEBPACK_HASH; // [!code ++]
+```
+
+2. Add the module variables that need to be preserved in `source.define`. The key of the passed configuration object is the replaced variable name in the source code, and the value is the module variable that needs to be preserved in the outputs.
+
+```ts title="rslib.config.ts"
+export default defineConfig({
+  source: {
+    define: {
+      WEBPACK_HASH: '__webpack_hash__',
+      WEBPACK_NONCE: '__webpack_nonce__',
+      WEBPACK_PUBLIC_PATH: '__webpack_public_path__',
+    },
+  },
+});
+```

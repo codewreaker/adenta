@@ -1,0 +1,9 @@
+# Rslib blogs
+
+Check here for the latest articles and release announcements about Rslib.
+
+## [Rslib: Build library with Rspack](/blog/introducing-rslib.md)
+
+> May 14, 2025
+
+We are excited to introduce Rslib — **a library development tool based on Rspack**. Developed by ByteDance Web Infra Team, Rslib helps developers create JavaScript libraries and UI component libraries in a simple and intuitive way while enjoying the ultimate development experience brought by [Rspack](https://rspack.rs/) and [Rsbuild](https://rsbuild.rs/).

@@ -1,0 +1,17 @@
+[
+  {
+    "type": "file",
+    "name": "index",
+    "label": "Config Overview"
+  },
+  {
+    "type": "dir",
+    "name": "lib",
+    "label": "Lib Configurations"
+  },
+  {
+    "type": "dir",
+    "name": "rsbuild",
+    "label": "Rsbuild Configurations"
+  }
+]

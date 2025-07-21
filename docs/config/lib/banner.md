@@ -1,0 +1,74 @@
+# lib.banner
+
+* **Type:**
+
+```ts
+type Banner = {
+  js?: string;
+  css?: string;
+  dts?: string;
+};
+```
+
+* **Default:** `{}`
+
+Inject content into the top of each JavaScript, CSS or declaration output file.
+
+## Object type
+
+### banner.js
+
+* **Type:** `string`
+* **Default:** `undefined`
+
+Inject content into the top of each JavaScript output file.
+
+### banner.css
+
+* **Type:** `string`
+* **Default:** `undefined`
+
+Inject content into the top of each CSS output file.
+
+### banner.dts
+
+* **Type:** `string`
+* **Default:** `undefined`
+
+Inject content into the top of each declaration output file.
+
+## Notice
+
+The banner content in JavaScript and CSS file is based on the [BannerPlugin](https://rspack.rs/plugins/webpack/banner-plugin) of Rspack. You should notice the following points:
+
+* `raw: true` is enabled by default, so the banner content will be injected as a raw string instead of wrapping in a comment. So if you want to inject a comment, you should add `/*` and `*/` or other comment syntax by yourself.
+* The `stage` option is set to the stage after the JavaScript and CSS files are optimized, thus preventing the banner content from being optimized away.
+
+## Customize banner content
+
+If the above default settings cannot meet your requirements, you can customize the banner content through `tools.rspack.plugins` to add a [BannerPlugin](https://rspack.rs/plugins/webpack/banner-plugin) instance with the corresponding options.
+
+```ts title="rslib.config.ts"
+export default {
+  lib: [
+    {
+      // ...
+      tools: {
+        rspack: {
+          plugins: [
+            new rspack.BannerPlugin({
+              // ... options
+            }),
+          ],
+        },
+      },
+    },
+  ],
+};
+```
+
+:::warning
+
+The banner content in declaration files is handled differently from JavaScript and CSS output files. It is written directly using the file system API, so setting `BannerPlugin` will not affect it.
+
+:::

@@ -1,0 +1,89 @@
+# Declaration files
+
+This chapter introduces what [TypeScript Declaration Files](https://www.typescriptlang.org/docs/handbook/declaration-files/introduction.html) are and how to generate declaration files in Rslib.
+
+## What is declaration files
+
+TypeScript Declaration Files provide type information for JavaScript code. Declaration files typically have a `.d.ts` extension. They allow the TypeScript compiler to understand the type structure of JavaScript code, enabling features like:
+
+1. **Type Checking**: Provide type information for JavaScript code, helping developers catch potential type errors at compile time.
+2. **Code Completion**: Enhance code editor features like autocomplete and code navigation.
+3. **Documentation Generation**: Generate documentation for JavaScript code, providing better developer experience.
+4. **IDE Support**: Improve the developer experience in IDEs like Visual Studio Code, WebStorm, and others.
+5. **Library Consumption**: Make it easier for users to use and understand your library.
+
+## What are bundle declaration files and bundleless declaration files
+
+### Bundle declaration files
+
+Bundle declaration files involves bundling multiple TypeScript declaration files into a single declaration file.
+
+- **Pros:**
+  - **Simplified Management**: Simplifies the management and referencing of type files.
+  - **Easy Distribution**: Reduces the number of files users need to handle when using the library.
+
+- **Cons:**
+  - **Complex Generation**: Generating and maintaining a single bundle file can become complex in large projects.
+  - **Debugging Challenges**: Debugging type issues may not be as intuitive as with separate files.
+
+### Bundleless declaration files
+
+Bundleless declaration files involves generating a separate declaration file for each module in the library, just like `tsc` does.
+
+- **Pros:**
+  - **Modular**: Each module has its own type definitions, making maintenance and debugging easier.
+  - **Flexibility**: Suitable for large projects, avoiding the complexity of a single file.
+
+- **Cons:**
+  - **Multiple Files**: Users may need to handle multiple declaration files when using the library.
+  - **Complex Management**: May require additional configuration to correctly reference all files.
+
+## How to generate declaration files in Rslib
+
+Rslib defaults to generating bundleless declaration files, which using [TypeScript Compiler API](https://github.com/microsoft/TypeScript/wiki/Using-the-Compiler-API) and bundle declaration files is also supported by [API Extractor](https://api-extractor.com/).
+
+If you want to generate bundleless declaration files, you can:
+
+- Set `dts: true` or `dts: { bundle: false }` in the Rslib configuration file.
+
+If you want to generate bundle declaration files, you can:
+
+1. Install `@microsoft/api-extractor` as `devDependencies`, which is the underlying tool used for bundling declaration files.
+
+import { PackageManagerTabs } from '@theme';
+
+<PackageManagerTabs command="add @microsoft/api-extractor -D" />
+
+2. Set `dts: { bundle: true }` in the Rslib configuration file.
+
+It should be noted that during the generation of declaration files, Rslib will automatically enforce some configuration options in `tsconfig.json` to ensure that the [TypeScript Compiler API](https://github.com/microsoft/TypeScript/wiki/Using-the-Compiler-API) generates only declaration files.
+
+```json
+{
+  "compilerOptions": {
+    "noEmit": false,
+    "declaration": true,
+    "emitDeclarationOnly": true
+  }
+}
+```
+
+The priority from highest to lowest of final output directory of declaration files:
+
+- The configuration option [dts.distPath](/config/lib/dts#dtsdistpath)
+- The configuration option `declarationDir` in `tsconfig.json`
+- The configuration option [output.distPath.root](/config/rsbuild/output#outputdistpath)
+
+## Related configuration of declaration files
+
+| Configuration item                                                  | Description                                                                                                            |
+| ------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| [dts.bundle](/config/lib/dts#dtsbundle)                             | Whether to bundle the declaration files.                                                                               |
+| [dts.distPath](/config/lib/dts#dtsdistpath)                         | The output directory of declaration files.                                                                             |
+| [dts.build](/config/lib/dts#dtsbuild)                               | Whether to generate declaration files with building the project references.                                            |
+| [dts.abortOnError](/config/lib/dts#dtsabortonerror)                 | Whether to abort the build process when an error occurs during declaration files generation.                           |
+| [dts.autoExtension](/config/lib/dts#dtsautoextension)               | Whether to automatically set the declaration file extension based on the [format](/config/lib/format) option.          |
+| [banner.dts](/config/lib/banner#bannerdts)                          | Inject content into the top of each declaration output file.                                                           |
+| [footer.dts](/config/lib/footer#footerdts)                          | Inject content into the bottom of each declaration file.                                                               |
+| [redirect.dts.path](/config/lib/redirect#redirectdtspath)           | Whether to automatically redirect the import paths of TypeScript declaration output files.                             |
+| [redirect.dts.extension](/config/lib/redirect#redirectdtsextension) | Whether to automatically redirect the file extension to import paths based on the TypeScript declaration output files. |

@@ -1,0 +1,79 @@
+---
+overviewHeaders: [2, 3]
+---
+
+# lib.footer
+
+- **Type:**
+
+```ts
+type Footer = {
+  js?: string;
+  css?: string;
+  dts?: string;
+};
+```
+
+- **Default:** `{}`
+
+Inject content into the bottom of each JavaScript, CSS or declaration file.
+
+## Object type
+
+### footer.js
+
+- **Type:** `string`
+- **Default:** `undefined`
+
+Inject content into the bottom of each JavaScript output file.
+
+### footer.css
+
+- **Type:** `string`
+- **Default:** `undefined`
+
+Inject content into the bottom of each CSS output file.
+
+### footer.dts
+
+- **Type:** `string`
+- **Default:** `undefined`
+
+Inject content into the bottom of each declaration output file.
+
+## Notice
+
+The footer content in JavaScript and CSS file is based on the [BannerPlugin](https://rspack.rs/plugins/webpack/banner-plugin) of Rspack. You should notice the following points:
+
+- `raw: true` is enabled by default, so the footer content will be injected as a raw string instead of wrapping in a comment. So if you want to inject a comment, you should add `/*` and `*/` or other comment syntax by yourself.
+- The `stage` option is set to the stage after the JavaScript and CSS files are optimized, thus preventing the footer content from being optimized away.
+
+## Customize footer content
+
+If the above default settings cannot meet your requirements, you can customize the footer content through `tools.rspack.plugins` to add a [BannerPlugin](https://rspack.rs/plugins/webpack/banner-plugin) instance with the corresponding options.
+
+```ts title="rslib.config.ts"
+export default {
+  lib: [
+    {
+      // ...
+      tools: {
+        rspack: {
+          plugins: [
+            new rspack.BannerPlugin({
+              footer: true,
+              // ... options
+            }),
+          ],
+        },
+      },
+    },
+  ],
+};
+```
+
+:::warning
+
+The footer content in declaration files is handled differently from JavaScript and CSS files. It is written directly using the file system API, so setting `BannerPlugin` will not affect it.
+
+:::

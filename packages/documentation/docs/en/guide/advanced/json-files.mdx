@@ -1,0 +1,274 @@
+# Import JSON files
+
+Rslib supports importing JSON files in code, and also supports importing [YAML](https://yaml.org/) and [TOML](https://toml.io/en/) files and converting them to JSON format.
+
+## JSON file
+
+You can directly import JSON files in JavaScript files.
+
+:::warning
+
+In bundle mode, JSON files support both default and named import.
+
+In bundleless mode, JSON files only support named import.
+
+:::
+
+### Default import
+
+```json title="example.json"
+{
+  "name": "foo",
+  "items": [1, 2]
+}
+```
+
+```js title="index.js"
+import example from './example.json';
+
+console.log(example.name); // 'foo';
+console.log(example.items); // [1, 2];
+```
+
+### Named import
+
+Rslib also supports importing JSON files through named import.
+
+Here is an example, assuming the source code is as follows:
+
+import { Tabs, Tab } from '@theme';
+
+<Tabs>
+  <Tab label="src/index.ts">
+
+```js
+import { name } from './example.json';
+
+console.log(name); // 'foo';
+```
+
+  </Tab>
+  <Tab label="src/example.json">
+
+```json
+{
+  "name": "foo",
+  "items": [1, 2]
+}
+```
+
+  </Tab>
+</Tabs>
+
+Based on the configuration in the [output structure](/guide/basic/output-structure) specified in the configuration file, the following outputs will be emitted:
+
+<Tabs>
+<Tab label="bundle">
+<Tabs>
+  <Tab label="dist/index.js">
+
+```tsx
+var example_namespaceObject = {
+  u: 'foo',
+};
+console.log(example_namespaceObject.u);
+```
+
+  </Tab>
+</Tabs>
+</Tab>
+
+<Tab label="bundleless">
+
+<Tabs>
+  <Tab label="dist/index.js">
+
+```tsx
+import * as example from './example.js';
+
+console.log(example.name);
+```
+
+  </Tab>
+  <Tab label="dist/example.js">
+
+```tsx
+var example_namespaceObject = JSON.parse('{"name":"foo","items":[1,2]}');
+var __webpack_exports__items = example_namespaceObject.items;
+var __webpack_exports__name = example_namespaceObject.name;
+export { __webpack_exports__items as items, __webpack_exports__name as name };
+```
+
+  </Tab>
+</Tabs>
+</Tab>
+
+</Tabs>
+
+### Use import attributes
+
+In bundle mode, Rslib supports [import attributes](https://github.com/tc39/proposal-import-attributes), and you can import JSON files through import attributes:
+
+```js title="index.js"
+import json from './example.json' with { type: 'json' };
+```
+
+In bundleless mode, when importing JSON files through import attributes, you need to ensure that references to the JSON files are preserved in the output, refer to [document](#bundleless) for configuration.
+
+## YAML file
+
+[YAML](https://yaml.org/) is a data serialization language commonly used for writing configuration files.
+
+By adding the [@rsbuild/plugin-yaml](https://github.com/rspack-contrib/rsbuild-plugin-yaml) plugin, you can import `.yaml` or `.yml` files in JavaScript and they will be automatically converted to JavaScript objects.
+
+import { PackageManagerTabs } from '@theme';
+
+<PackageManagerTabs command="add @rsbuild/plugin-yaml -D" />
+
+### Register plugin
+
+You can register the plugin in the `rslib.config.ts` file:
+
+```ts title="rslib.config.ts"
+import { pluginYaml } from '@rsbuild/plugin-yaml';
+
+export default {
+  plugins: [pluginYaml()],
+};
+```
+
+### Example
+
+<Tabs>
+  <Tab label="src/index.ts">
+
+```ts
+import example from './example.yaml';
+
+console.log(example.hello); // 'world';
+console.log(example.foo); // { bar: 'baz' };
+```
+
+  </Tab>
+  <Tab label="src/example.yaml">
+
+```yaml
+hello: world
+foo:
+  bar: baz
+```
+
+  </Tab>
+</Tabs>
+
+## TOML file
+
+[TOML](https://toml.io/) is a semantically explicit, easy-to-read configuration file format.
+
+By adding the [@rsbuild/plugin-toml](https://github.com/rspack-contrib/rsbuild-plugin-toml) plugin, you can import `.toml` files in JavaScript and it will be automatically converted to JavaScript objects.
+
+<PackageManagerTabs command="add @rsbuild/plugin-toml -D" />
+
+### Register plugin
+
+You can register the plugin in the `rslib.config.ts` file:
+
+```ts title="rslib.config.ts"
+import { pluginToml } from '@rsbuild/plugin-toml';
+
+export default {
+  plugins: [pluginToml()],
+};
+```
+
+### Example
+
+<Tabs>
+  <Tab label="src/index.ts">
+
+```ts
+import example from './example.toml';
+
+console.log(example.hello); // 'world';
+console.log(example.foo); // { bar: 'baz' };
+```
+
+  </Tab>
+  <Tab label="src/example.toml">
+
+```toml
+hello = "world"
+
+[foo]
+bar = "baz"
+```
+
+  </Tab>
+</Tabs>
+
+## Type declaration
+
+When you import YAML or TOML files in TypeScript code, please create a `src/env.d.ts` file in your project and add the corresponding type declarations.
+
+- Method 1: If the `@rslib/core` package is installed, you can reference the [preset types](/guide/basic/typescript#preset-types) provided by `@rslib/core`:
+
+```ts title="src/env.d.ts"
+/// <reference types="@rslib/core/types" />
+```
+
+- Method 2: Manually add the required type declarations:
+
+```ts title="src/env.d.ts"
+declare module '*.yaml' {
+  const content: Record<string, any>;
+  export default content;
+}
+declare module '*.yml' {
+  const content: Record<string, any>;
+  export default content;
+}
+declare module '*.toml' {
+  const content: Record<string, any>;
+  export default content;
+}
+```
+
+## Bundle mode and output
+
+Rslib supports outputting JSON / YAML / TOML files in different forms under different bundle modes.
+
+### bundle
+
+In bundle mode ([`bundle: true`](/config/lib/bundle)), JSON files will be directly bundled into JavaScript output, and unused keys in JSON files will be tree-shaken. The same applies to TOML and YAML files.
+
+### bundleless
+
+In bundleless mode ([`bundle: false`](/config/lib/bundle)), each JSON / YAML / TOML file will be converted into a corresponding JavaScript output file. JSON files will be converted to `JSON.parse` form and exported, while YAML and TOML files will be converted to JavaScript objects and exported.
+
+If you want JSON / YAML / TOML files to be output to the distribution directory as-is, and keep the reference paths to these files in the output JavaScript files, you can achieve this through the following steps:
+
+1. Exclude JSON / YAML / TOML files from the [bundleless](/config/rsbuild/source#sourceentry) entry file glob pattern.
+2. Reserve request paths for JSON / YAML / TOML files in [output.externals](/config/rsbuild/output#outputexternals).
+3. Add [output.copy](/config/rsbuild/output#outputcopy) option to the output configuration, specifying the output path for JSON / YAML / TOML files.
+
+For example, the following configuration will output all JSON files in the `src` directory as-is:
+
+```ts title="rslib.config.ts"
+export default defineConfig({
+  lib: [
+    {
+      bundle: false,
+      source: {
+        entry: {
+          index: ['./src/**', '!./src/**/*.json'], // [!code highlight]
+        },
+      },
+      output: {
+        // [!code highlight:2]
+        copy: [{ from: './**/*.json', context: './src' }],
+        externals: [/.*\.json$/],
+      },
+    },
+  ],
+});
+```
