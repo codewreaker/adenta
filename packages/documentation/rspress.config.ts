@@ -17,7 +17,7 @@ const siteUrl = 'https://israelprempeh.com';
 const description = 'The Rsbuild-based library development tool';
 
 export default defineConfig({
-  outDir: '../../docs',
+  outDir: '../../dist/packages/documentation',
   plugins: [
     pluginAlgolia(),
     pluginFontOpenSans(),
