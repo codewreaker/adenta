@@ -15,7 +15,7 @@ import { pluginFontOpenSans } from 'rspress-plugin-font-open-sans';
 import pluginSitemap from 'rspress-plugin-sitemap';
 
 const siteUrl = 'https://israelprempeh.com';
-const description = 'The Rsbuild-based library development tool';
+const description = 'The Documentation site for @adenta';
 
 export default defineConfig({
   outDir: '../../dist/packages/documentation',

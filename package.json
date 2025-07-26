@@ -115,11 +115,6 @@
   "nx": {
     "includedScripts": []
   },
-  "msw": {
-    "workerDirectory": [
-      "packages/website/public"
-    ]
-  },
   "pnpm": {
     "onlyBuiltDependencies": [
       "sharp"
