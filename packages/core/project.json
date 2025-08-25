@@ -17,8 +17,8 @@
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/core",
-        "main": "core/src/index.ts",
-        "tsConfig": "core/tsconfig.json",
+        "main": "{projectRoot}/src/index.ts",
+        "tsConfig": "{projectRoot}/tsconfig.json",
         "assets": ["core/*.md"]
       }
     },

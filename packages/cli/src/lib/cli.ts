@@ -10,10 +10,8 @@ import {
   note,
 } from '@clack/prompts';
 import chalk from 'chalk';
-import { createGenerator } from '../src/index.js';
-import { promises as fs } from 'fs';
-import { createDBInstance, loadConfig } from '../src/lib/api.js';
-import path from 'path';
+import { promises as fs } from 'node:fs';
+import path from 'node:path';
 
 const sourceDir = '.adenta/mdx-bundler/';
 async function main() {
@@ -181,3 +179,31 @@ export default defineConfig({
 function generateSchemaExample(): string {
   return `// ${sourceDir}db/schema.ts\n// Example schema\nexport const posts = []\n`;
 }
+
+/**
+ * @todo
+ * @returns 
+ */
+async function createDBInstance() {
+  try {
+    const connectionString = process.env['DATABASE_URL'] || 'postgresql://localhost:5432/blog';
+    const client = { connectionString };
+    return client
+  } catch (error) {
+    throw new Error(`Failed to initialize database: ${(error as Error)?.message}`);
+  }
+}
+
+/**
+ * 
+ * @param arg0 
+ * @returns
+ */
+const loadConfig = (arg0: string) => {
+  return { outputDir: 'somestring' }
+}
+
+function createGenerator(config: { outputDir: string }, dbInstance?: { connectionString: string; }) {
+  return { build: console.log }
+}
+
