@@ -6,7 +6,6 @@
   "type": "module",
   "scripts": {
     "start": "pnpm exec nx run cms:start",
-    "build": "pnpm exec nx run cms:build",
     "publish": "npm publish --access public"
   },
   "dependencies": {

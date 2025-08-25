@@ -18,7 +18,7 @@
       "options": {
         "outputPath": "dist/ui",
         "main": "ui/src/index.ts",
-        "tsConfig": "ui/tsconfig.lib.json",
+        "tsConfig": "{projectRoot}/tsconfig.json",
         "assets": ["ui/*.md"]
       }
     },

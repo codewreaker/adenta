@@ -6,6 +6,20 @@
     "tags": [],
     "targets": {
         "build": {
+            "executor": "@nx/js:swc",
+            "outputs": [
+                "{options.outputPath}"
+            ],
+            "options": {
+                "outputPath": "dist/cms",
+                "main": "{projectRoot}/src/index.ts",
+                "tsConfig": "{projectRoot}/tsconfig.json",
+                "assets": [
+                    "cms/*.md"
+                ]
+            }
+        },
+        "build-admin": {
             "executor": "nx:run-commands",
             "options": {
                 "command": "NODE_OPTIONS=\"--no-deprecation --max-old-space-size=8000\" next build",
@@ -58,7 +72,7 @@
             "executor": "nx:run-commands",
             "options": {
                 "commands": [
-                    "pnpm exec nx run cms:build",
+                    "pnpm exec nx run cms:build-admin",
                     "NODE_OPTIONS=--no-deprecation next start"
                 ],
                 "parallel": false,
