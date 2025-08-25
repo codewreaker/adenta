@@ -18,7 +18,9 @@
       "@adenta/cli": ["packages/cli/src/index.ts"],
       "@adenta/core": ["packages/core/src/index.ts"],
       "@adenta/core/*": ["packages/core/src/*"],
-      "@adenta/ui": ["packages/ui/src/index.ts"]
+      "@adenta/ui": ["packages/ui/src/index.ts"],
+      "@adenta/cms/*": ["packages/cms/src/*"],
+      "@adenta/cms": ["packages/cms/src/index.ts"],
     }
   },
   "exclude": ["node_modules", "tmp"]

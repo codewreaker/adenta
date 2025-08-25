@@ -1,0 +1,36 @@
+{
+  "name": "@adenta/cms",
+  "version": "1.0.0",
+  "description": "A blank template to get started with Payload 3.0",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "build": "nx run cms:build",
+    "dev": "nx run cms:dev",
+    "payload": "nx run cms:payload",
+    "start": "nx run cms:serve-prod"
+  },
+  "dependencies": {
+    "@payloadcms/next": "3.53.0",
+    "@payloadcms/payload-cloud": "3.53.0",
+    "@payloadcms/richtext-lexical": "3.53.0",
+    "@payloadcms/db-postgres": "3.53.0",
+    "@payloadcms/ui": "3.53.0",
+    "dotenv": "16.4.7",
+    "next": "15.4.4",
+    "payload": "3.53.0",
+    "react": "19.1.0",
+    "sharp": "0.34.3"
+  },
+  "engines": {
+    "node": "^18.20.2 || >=20.9.0",
+    "pnpm": "^9 || ^10"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "sharp",
+      "esbuild",
+      "unrs-resolver"
+    ]
+  }
+}

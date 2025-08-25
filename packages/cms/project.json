@@ -5,28 +5,84 @@
     "projectType": "application",
     "tags": [],
     "targets": {
+        "build": {
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "NODE_OPTIONS=\"--no-deprecation --max-old-space-size=8000\" next build",
+                "cwd": "packages/cms"
+            }
+        },
         "dev": {
             "executor": "nx:run-commands",
             "options": {
-                "command": "nx run cms:next:dev -p 4201"
+                "command": "NODE_OPTIONS=--no-deprecation next dev",
+                "cwd": "packages/cms"
             }
         },
-        "generate-importmap": {
+        "devsafe": {
             "executor": "nx:run-commands",
             "options": {
-                "command": "NODE_OPTIONS=--no-deprecation payload generate:importmap"
+                "command": "rm -rf .next && NODE_OPTIONS=--no-deprecation next dev",
+                "cwd": "packages/cms"
             }
         },
-        "generate-types": {
+        "generate:importmap": {
             "executor": "nx:run-commands",
             "options": {
-                "command": "NODE_OPTIONS=--no-deprecation payload generate:types"
+                "command": "NODE_OPTIONS=--no-deprecation payload generate:importmap",
+                "cwd": "packages/cms"
+            }
+        },
+        "generate:types": {
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "NODE_OPTIONS=--no-deprecation payload generate:types",
+                "cwd": "packages/cms"
+            }
+        },
+        "lint": {
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "NODE_OPTIONS=--no-deprecation next lint",
+                "cwd": "packages/cms"
             }
         },
         "payload": {
             "executor": "nx:run-commands",
             "options": {
-                "command": "NODE_OPTIONS=--no-deprecation payload"
+                "command": "NODE_OPTIONS=--no-deprecation payload",
+                "cwd": "packages/cms"
+            }
+        },
+        "start": {
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "NODE_OPTIONS=--no-deprecation next start",
+                "cwd": "packages/cms"
+            }
+        },
+        "test": {
+            "executor": "nx:run-commands",
+            "options": {
+                "commands": [
+                    "nx run cms:test:int",
+                    "nx run cms:test:e2e"
+                ],
+                "parallel": false
+            }
+        },
+        "test:e2e": {
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "NODE_OPTIONS=\"--no-deprecation --no-experimental-strip-types\" playwright test",
+                "cwd": "packages/cms"
+            }
+        },
+        "test:int": {
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "NODE_OPTIONS=--no-deprecation vitest run --config ./vitest.config.mts",
+                "cwd": "packages/cms"
             }
         }
     }
