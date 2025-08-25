@@ -89,6 +89,8 @@
     "next": "15.4.4",
     "nx": "21.1.0",
     "payload": "3.53.0",
+    "playwright": "1.54.1",
+    "playwright-core": "1.54.1",
     "prettier": "^3.4.2",
     "react": "19.1.0",
     "react-dom": "19.1.0",
@@ -100,9 +102,10 @@
     "rspress-plugin-sitemap": "^1.2.0",
     "scheduler": "^0.26.0",
     "sharp": "0.34.3",
+    "shiki": "^3.7.0",
     "state-local": "1.0.7",
     "style-loader": "^4.0.0",
-    "supabase": "^2.26.9",
+    "supabase": "2.34.3",
     "swc-loader": "0.2.6",
     "ts-jest": "^29.1.0",
     "ts-node": "10.9.1",
@@ -112,10 +115,8 @@
     "typescript-eslint": "^8.19.0",
     "verdaccio": "^6.0.5",
     "vite": "^6.0.0",
-    "vitest": "3.2.3",
     "vite-tsconfig-paths": "5.1.4",
-    "playwright": "1.54.1",
-    "playwright-core": "1.54.1",
+    "vitest": "3.2.3",
     "webpack-dev-server": "5.2.1"
   },
   "nx": {
@@ -123,10 +124,9 @@
   },
   "pnpm": {
     "onlyBuiltDependencies": [
-      "sharp"
+      "sharp",
+      "esbuild",
+      "unrs-resolver"
     ]
-  },
-  "dependencies": {
-    "shiki": "^3.7.0"
   }
 }

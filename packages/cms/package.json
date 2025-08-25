@@ -5,10 +5,9 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "build": "nx run cms:build",
-    "dev": "nx run cms:dev",
-    "payload": "nx run cms:payload",
-    "start": "nx run cms:serve-prod"
+    "start": "pnpm exec nx run cms:start",
+    "build": "pnpm exec nx run cms:build",
+    "publish": "npm publish --access public"
   },
   "dependencies": {
     "@payloadcms/next": "3.53.0",
@@ -16,6 +15,7 @@
     "@payloadcms/richtext-lexical": "3.53.0",
     "@payloadcms/db-postgres": "3.53.0",
     "@payloadcms/ui": "3.53.0",
+    "supabase": "2.34.3",
     "dotenv": "16.4.7",
     "next": "15.4.4",
     "payload": "3.53.0",
@@ -25,12 +25,5 @@
   "engines": {
     "node": "^18.20.2 || >=20.9.0",
     "pnpm": "^9 || ^10"
-  },
-  "pnpm": {
-    "onlyBuiltDependencies": [
-      "sharp",
-      "esbuild",
-      "unrs-resolver"
-    ]
   }
 }

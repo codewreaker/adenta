@@ -57,7 +57,11 @@
         "start": {
             "executor": "nx:run-commands",
             "options": {
-                "command": "NODE_OPTIONS=--no-deprecation next start",
+                "commands": [
+                    "pnpm exec nx run cms:build",
+                    "NODE_OPTIONS=--no-deprecation next start"
+                ],
+                "parallel": false,
                 "cwd": "packages/cms"
             }
         },
