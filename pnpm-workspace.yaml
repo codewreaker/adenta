@@ -1,6 +1,9 @@
 packages:
   # all packages in subdirectories
-  - 'packages/*'
+  - 'packages/cli/*'
+  - 'packages/cms/*'
+  - 'packages/core/*'
+  - 'packages/ui/*'
   # exclude packages that are inside test directories
   - '!**/test/**'
   - '!**/tests/**'
