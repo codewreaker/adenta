@@ -4,6 +4,10 @@
   "type": "module",
   "main": "./src/index.js",
   "types": "./src/index.d.ts",
+  "files": [
+    "dist/core",
+    "dist/core/README.md"
+  ],
   "dependencies": {
     "@swc/helpers": "~0.5.11",
     "@vitejs/plugin-react": "^4.0.0"
@@ -13,11 +17,6 @@
     "concurrently": "^8.0.0"
   },
   "exports": {
-    "./mdx-bundler": {
-      "import": "./mdx-bundler/index.js"
-    },
-    "./mdx-bundler/client": {
-      "import": "./mdx-bundler/lib/client/index.js"
-    }
+    "./*": "./*"
   }
 }

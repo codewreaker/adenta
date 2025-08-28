@@ -16,7 +16,7 @@
       "executor": "@nx/js:swc",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/core",
+        "outputPath": "dist/{projectRoot}",
         "main": "{projectRoot}/src/index.ts",
         "tsConfig": "{projectRoot}/tsconfig.json",
         "assets": ["core/*.md"]
