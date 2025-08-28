@@ -102,6 +102,14 @@
                 "command": "NODE_OPTIONS=--no-deprecation vitest run --config ./vitest.config.mts",
                 "cwd": "packages/cms"
             }
+        },
+        "nx-release-publish": {
+            "dependsOn": [
+                "build"
+            ],
+            "options": {
+                "packageRoot": "dist/{projectRoot}"
+            }
         }
     }
 }

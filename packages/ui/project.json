@@ -5,7 +5,9 @@
   "projectType": "library",
   "release": {
     "version": {
-      "manifestRootsToUpdate": ["dist/{projectRoot}"],
+      "manifestRootsToUpdate": [
+        "dist/{projectRoot}"
+      ],
       "currentVersionResolver": "git-tag",
       "fallbackCurrentVersionResolver": "disk"
     }
@@ -14,15 +16,22 @@
   "targets": {
     "build": {
       "executor": "@nx/js:swc",
-      "outputs": ["{options.outputPath}"],
+      "outputs": [
+        "{options.outputPath}"
+      ],
       "options": {
         "outputPath": "dist/{projectRoot}",
         "main": "ui/src/index.ts",
         "tsConfig": "{projectRoot}/tsconfig.json",
-        "assets": ["ui/*.md"]
+        "assets": [
+          "ui/*.md"
+        ]
       }
     },
     "nx-release-publish": {
+      "dependsOn": [
+        "build"
+      ],
       "options": {
         "packageRoot": "dist/{projectRoot}"
       }
