@@ -4,11 +4,13 @@
 name: Npm Publish
 
 on:
-  release:
-    types: [created]
   push:
+    branches:
+      - main    # Triggers when code is pushed to main branch
     tags:
-       v*.*.*
+      - 'v*.*.*'   # Triggers when version tags are pushed
+  release:
+    types: [created]   # Triggers when a new release is created
 
 jobs:
   build:
