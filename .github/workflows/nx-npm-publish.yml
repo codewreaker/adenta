@@ -17,9 +17,11 @@ jobs:
       contents: read
       id-token: write # needed for provenance data generation
     steps:
-      - name: Checkout Repository and Setup Node
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
         with:
           node-version: 20
           registry-url: https://registry.npmjs.org/
@@ -40,6 +42,11 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          
       - name: Publish packages
         run: npx nx release publish
         shell: bash
