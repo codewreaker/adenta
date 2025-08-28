@@ -44,7 +44,7 @@ jobs:
         shell: bash
 
       - name: Print Environment Info
-        run: nx report
+        run: pnpm exec nx report
         shell: bash
 
       - name: Run Tests
@@ -52,7 +52,7 @@ jobs:
         shell: bash
           
       - name: Publish packages
-        run: nx release publish
+        run: pnpm exec nx release publish
         shell: bash
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
