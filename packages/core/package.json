@@ -17,5 +17,8 @@
   },
   "exports": {
     "./*": "./*"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
