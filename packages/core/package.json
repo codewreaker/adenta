@@ -8,10 +8,7 @@
     "dist/core",
     "dist/core/README.md"
   ],
-  "dependencies": {
-    "@swc/helpers": "~0.5.11",
-    "@vitejs/plugin-react": "^4.0.0"
-  },
+  "dependencies": {},
   "devDependencies": {
     "vite": "^4.0.0",
     "concurrently": "^8.0.0"
