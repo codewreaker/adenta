@@ -9,6 +9,16 @@
         "config": ".verdaccio/config.yml",
         "storage": "tmp/local-registry/storage"
       }
+    },
+    "pre-release": {
+      "executor": "nx:run-commands",
+      "options": {
+      "commands": [
+        "pnpm exec nx affected -t build",
+        "pnpm exec nx release -p cms cli core ui --skip-publish"
+      ],
+      "parallel": false
+      }
     }
   }
 }
