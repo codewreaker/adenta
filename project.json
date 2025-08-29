@@ -9,15 +9,6 @@
         "config": ".verdaccio/config.yml",
         "storage": "tmp/local-registry/storage"
       }
-    },
-    "pre-release": {
-      "executor": "nx:run-commands",
-      "options": {
-      "commands": [
-        "pnpm exec nx release --skip-publish"
-      ],
-      "parallel": false
-      }
     }
   }
 }
