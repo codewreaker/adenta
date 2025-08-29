@@ -3,6 +3,10 @@
   "version": "0.0.0",
   "license": "MIT",
   "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/codewreaker/adenta"
+  },
   "scripts": {},
   "private": true,
   "devDependencies": {
@@ -124,10 +128,10 @@
       "sharp",
       "esbuild",
       "unrs-resolver",
-      "@swc/core", 
+      "@swc/core",
       "core-js",
-      "core-js-pure", 
-      "nx", 
+      "core-js-pure",
+      "nx",
       "supabase"
     ]
   }
