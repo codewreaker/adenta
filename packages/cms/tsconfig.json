@@ -1,4 +1,5 @@
 {
+  "extends":"../../tsconfig.base.json",
   "compilerOptions": {
     "baseUrl": ".",
     "lib": [
@@ -39,6 +40,6 @@
     ".next/types/**/*.ts"
   ],
   "exclude": [
-    "node_modules"
+    "node_modules", "tests/"
   ],
 }

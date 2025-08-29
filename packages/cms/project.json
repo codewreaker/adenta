@@ -22,10 +22,20 @@
             ],
             "options": {
                 "outputPath": "dist/{projectRoot}",
-                "main": "{projectRoot}/src/index.ts",
+                "main": "{projectRoot}/index.ts",
                 "tsConfig": "{projectRoot}/tsconfig.json",
+                "clean": true,
                 "assets": [
-                    "cms/*.md"
+                    "{projectRoot}/*.md",
+                    "{projectRoot}/supabase/**/*"
+                ],
+                "swcExclude": [
+                    "./node_modules/**/*",
+                    "./src/**/.*.spec.ts$",
+                    "./**/.*.spec.ts$",
+                    "./src/**/jest-setup.ts$",
+                    "./**/jest-setup.ts$",
+                    "./**/.*.js$"
                 ]
             }
         },
