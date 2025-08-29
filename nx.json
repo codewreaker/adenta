@@ -59,9 +59,14 @@
       "packages/core",
       "packages/ui"
     ],
-  
     "version": {
-      "preVersionCommand": "pnpm exec nx run-many -t build"
+      "preVersionCommand": "pnpm exec nx run-many -t build",
+      "manifestRootsToUpdate": [
+        "{projectRoot}",
+        "dist/{projectRoot}"
+      ],
+      "currentVersionResolver": "git-tag",
+      "fallbackCurrentVersionResolver": "disk"
     }
   },
   "plugins": [
