@@ -30,6 +30,9 @@
       }
     },
     "nx-release-publish": {
+      "dependsOn": [
+        "build"
+      ],
       "options": {
         "packageRoot": "dist/{projectRoot}"
       }
