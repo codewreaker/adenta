@@ -8,10 +8,6 @@
   },
   "main": "./src/index.js",
   "types": "./src/index.d.ts",
-  "files": [
-    "dist/core",
-    "dist/core/README.md"
-  ],
   "dependencies": {
     "@swc/helpers": "~0.5.17"
   },

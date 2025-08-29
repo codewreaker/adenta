@@ -2,7 +2,7 @@
     "name": "cms",
     "$schema": "../../node_modules/nx/schemas/project-schema.json",
     "sourceRoot": "packages/cms/src",
-    "projectType": "application",
+    "projectType": "library",
     "release": {
         "version": {
             "manifestRootsToUpdate": [
@@ -112,14 +112,14 @@
                 "command": "NODE_OPTIONS=--no-deprecation vitest run --config ./vitest.config.mts",
                 "cwd": "packages/cms"
             }
-        }
-    },
-    "nx-release-publish": {
-        "dependsOn": [
-            "build"
-        ],
-        "options": {
-            "packageRoot": "dist/{projectRoot}"
+        },
+        "nx-release-publish": {
+            "dependsOn": [
+                "build"
+            ],
+            "options": {
+                "packageRoot": "dist/{projectRoot}"
+            }
         }
     }
 }
