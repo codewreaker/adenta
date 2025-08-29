@@ -15,10 +15,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [20]
-        pnpm-version: [10]
     permissions:
       contents: read
       id-token: write # needed for provenance data generation
@@ -29,12 +25,12 @@ jobs:
       - name: Install pnpm
         uses: pnpm/action-setup@v2
         with:
-          version: ${{ matrix.pnpm-version }}
+          version: 10
           
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 20
           cache: "pnpm"
           registry-url: https://registry.npmjs.org/
 
