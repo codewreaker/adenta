@@ -3,7 +3,6 @@ import {logger} from "@adenta/core"
 
 const log = logger("playground-app")
 
-
 function App() {
   log.info("Hello There")
   return (
