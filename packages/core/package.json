@@ -6,6 +6,7 @@
     "type": "git",
     "url": "https://github.com/codewreaker/adenta"
   },
+  "module": "./src/index.js",
   "main": "./src/index.js",
   "types": "./src/index.d.ts",
   "dependencies": {
@@ -15,7 +16,14 @@
     "tinyglobby": "^0.2.14"
   },
   "exports": {
-    "./*": "./*"
+    ".": {
+      "import":"./dist/index.js",
+      "types":"./dist/index.d.ts"
+    },
+    "./logger":{
+      "import":"./dist/logger/index.js",
+      "types":"./dist/logger/index.d.ts"
+    }
   },
   "publishConfig": {
     "access": "public"

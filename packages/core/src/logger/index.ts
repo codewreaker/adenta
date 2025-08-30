@@ -29,7 +29,7 @@ export const logger = (
     return logTypes.reduce((acc, type) => {
         acc[type] = inst[type];
         return acc
-    }, {}) as ConsolaInstance;
+    }, {} as ConsolaInstance);
 }
 
 
@@ -46,15 +46,5 @@ log.warn('Warning message');
 log.debug('Debug information');
 log.box("Box Message")
  */
-
-const log = logger("@adenta/cli")
-
-// Usage examples:
-log.info('Hello World');
-log.success('Operation completed');
-log.error('Something went wrong');
-log.warn('Warning message');
-log.debug('Debug information');
-log.box("Box Message")
 
 export default logger

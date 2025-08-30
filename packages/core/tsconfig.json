@@ -1,13 +1,24 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
+    "target": "esnext",
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "rewriteRelativeImportExtensions": true,
+    "allowImportingTsExtensions": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
     "outDir": "../dist/out-tsc",
     "declaration": true,
-    "types": [
-      "node"
-    ]
   },
   "include": [
     "src/**/*.ts"
-  ]
+, "examples/logger.ts"  ]
 }
