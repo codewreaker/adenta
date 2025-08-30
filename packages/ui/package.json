@@ -5,7 +5,7 @@
     "type": "git",
     "url": "https://github.com/codewreaker/adenta"
   },
-  "type": "commonjs",
+  "type": "module",
   "main": "./src/index.js",
   "types": "./src/index.d.ts",
   "dependencies": {

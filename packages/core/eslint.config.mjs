@@ -16,11 +16,7 @@ export default [
             '{projectRoot}/vite.config.{js,ts,mjs,mts}',
           ],
           ignoredDependencies:[
-            "react-dom",
-            "react",
-            "hono",
-            "@hono/node-server",
-            "vite",
+            "@swc/helpers"
           ]
           
         },
