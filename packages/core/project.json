@@ -7,18 +7,25 @@
   "targets": {
     "build": {
       "executor": "@nx/js:swc",
-      "outputs": ["{options.outputPath}"],
+      "outputs": [
+        "{options.outputPath}"
+      ],
       "options": {
         "outputPath": "dist/{projectName}",
         "main": "{projectRoot}/src/index.ts",
         "tsConfig": "{projectRoot}/tsconfig.lib.json",
         "clean": true,
         "stripLeadingPaths": true,
-        "assets": ["{projectRoot}/*.md", "{projectRoot}/examples"]
+        "assets": [
+          "{projectRoot}/*.md",
+          "{projectRoot}/examples"
+        ]
       }
     },
     "nx-release-publish": {
-      "dependsOn": ["build"],
+      "dependsOn": [
+        "build"
+      ],
       "options": {
         "packageRoot": "dist/{projectName}"
       }

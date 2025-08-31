@@ -118,7 +118,7 @@
                 "build"
             ],
             "options": {
-                "packageRoot": "dist/{projectRoot}"
+                "packageRoot": "dist/{projectName}"
             }
         }
     }
