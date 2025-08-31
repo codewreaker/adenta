@@ -41,7 +41,7 @@
   "release": {
     "projects": ["packages/cli", "packages/cms", "packages/ui", "packages/core"],
     "version": {
-      "preVersionCommand": "pnpm exec nx run-many -t build",
+      "preVersionCommand": "pnpm exec nx run-many -t build -p cli cms ui core",
       "manifestRootsToUpdate": ["{projectRoot}", "dist/{projectRoot}"],
       "currentVersionResolver": "git-tag",
       "fallbackCurrentVersionResolver": "disk"

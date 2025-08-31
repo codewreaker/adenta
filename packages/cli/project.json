@@ -11,7 +11,7 @@
         "{options.outputPath}"
       ],
       "options": {
-        "outputPath": "dist/{projectRoot}",
+        "outputPath": "dist/{projectName}",
         "main": "{projectRoot}/index.ts",
         "tsConfig": "{projectRoot}/tsconfig.json",
         "stripLeadingPaths": true,
