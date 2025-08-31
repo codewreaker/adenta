@@ -1,7 +1,7 @@
 {
   "name": "cli",
   "$schema": "../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "cli/src",
+  "sourceRoot": "packages/cli/src",
   "projectType": "library",
   "tags": [],
   "targets": {
@@ -12,8 +12,9 @@
       ],
       "options": {
         "outputPath": "dist/{projectRoot}",
-        "main": "cli/src/index.ts",
+        "main": "{projectRoot}/index.ts",
         "tsConfig": "{projectRoot}/tsconfig.json",
+        "stripLeadingPaths": true,
         "clean": true,
         "assets": [
           "cli/*.md"

@@ -1,0 +1,15 @@
+{
+  "name": "@adenta/core",
+  "version": "0.0.1",
+  "type": "module",
+  "main": "./src/index.js",
+  "types": "./src/index.d.ts",
+  "dependencies": {
+    "jiti": "2.5.1",
+    "consola": "^3.4.2",
+    "std-env": "^3.9.0",
+    "c12": "^3.2.0",
+    "string-width": "8.0.0",
+    "pathe": "^2.0.3"
+  }
+}

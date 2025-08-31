@@ -39,11 +39,7 @@
     }
   },
   "release": {
-    "projects": [
-      "packages/cli",
-      "packages/cms",
-      "packages/ui"
-    ],
+    "projects": ["packages/cli", "packages/cms", "packages/ui", "core"],
     "version": {
       "preVersionCommand": "pnpm exec nx run-many -t build",
       "manifestRootsToUpdate": ["{projectRoot}", "dist/{projectRoot}"],
