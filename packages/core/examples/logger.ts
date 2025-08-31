@@ -1,4 +1,4 @@
-import { logger } from "../src/index.ts"
+import { logger } from "../src/index.js"
 const log = logger("@adenta/cli");
 
 const error = new Error("This is an error\nWith second line\nAnd another", {

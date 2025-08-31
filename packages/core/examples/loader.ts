@@ -1,5 +1,5 @@
-import {loadAdentaConfig} from "../src/loaders/index.ts"
+import {loadAdentaConfig} from "../src/loaders/index.js"
 
-const d = await loadAdentaConfig;
+const d = await loadAdentaConfig();
 
 console.dir(d)

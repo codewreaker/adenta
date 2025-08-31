@@ -50,7 +50,7 @@ function stringWidth(str: string) {
 }
 
 export class FancyReporter extends BaseReporter {
-  formatStack(stack: string, message: string, opts?: FormatOptions) {
+  override formatStack(stack: string, message: string, opts?: FormatOptions) {
     const indent = "  ".repeat((opts?.errorLevel || 0) + 1);
     return (
       `\n${indent}` +
@@ -86,7 +86,7 @@ export class FancyReporter extends BaseReporter {
     return _type ? getColor(typeColor)(_type) : "";
   }
 
-  formatLogObj(logObj: LogObject, opts: FormatOptions) {
+  override formatLogObj(logObj: LogObject, opts: FormatOptions) {
     const [message, ...additional] = this.formatArgs(logObj.args, opts).split(
       "\n",
     );

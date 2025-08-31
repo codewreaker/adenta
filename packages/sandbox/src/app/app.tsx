@@ -1,11 +1,14 @@
 import { Route, Routes, Link, BrowserRouter } from 'react-router-dom';
-//import { logger } from '@adenta/core/logger';
-//const log = logger('@adenta/sandbox');
+import { logger } from '@adenta/core/logger';
+const log = logger('@adenta/sandbox');
 
 // Uncomment this line to use CSS modules
 // import styles from './app.module.css';
 
-
+log.info("Hello");
+log.fail("You are a failure");
+log.box("Shutup");
+log.error(new Error("This is an error"))
 
 export function App() {
 
