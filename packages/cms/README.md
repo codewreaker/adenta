@@ -1,75 +1,170 @@
-proposed archtiecture
-```
-@adenta/cms/
-├── supabase/
-│   ├── config.toml              # Supabase local config
-│   ├── seed.sql                 # Initial data
-│   └── migrations/              # Database migrations
-│       └── 20240101000000_initial_schema.sql
-├── src/
-│   ├── core/
-│   │   ├── supabase-client.ts   # Supabase client setup
-│   │   ├── payload-config.ts     # Payload CMS configuration
-│   │   ├── database.ts           # DB connection logic
-│   │   └── types.ts              # TypeScript definitions
-│   ├── adapters/
-│   │   ├── supabase.ts           # Supabase adapter
-│   │   ├── postgres.ts           # Native Postgres adapter
-│   │   └── base.ts               # Abstract adapter interface
-|   |
-│   ├── scripts/
-│   │   ├── setup-local.ts       # Local setup automation
-│   │   └── seed-data.ts         # Seed script
-|   |
-|   |
-│   ├── api/
-│   │   ├── routes.ts             # REST API routes
-│   │   └── middleware.ts         # Auth, validation, etc.
-│   ├── migrations/
-│   │   └── initial-schema.sql    # Base database schema
-│   └── index.ts                  # Main export
-├── config/
-│   └── cms.config.js             # User configuration file
-└── package.json
+# @adenta/cms
+
+[![npm version](https://badge.fury.io/js/%40adenta%2Fcms.svg)](https://badge.fury.io/js/%40adenta%2Fcms)
+[![npm downloads](https://img.shields.io/npm/dm/@adenta/cms)](https://www.npmjs.com/package/@adenta/cms)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Next.js](https://img.shields.io/badge/Next.js-000000?logo=next.js&logoColor=white)](https://nextjs.org/)
+[![Payload CMS](https://img.shields.io/badge/Payload_CMS-000000?logo=payload&logoColor=white)](https://payloadcms.com/)
+
+> **⚠️ WARNING: This package is currently in active development and is NOT stable for production use. Breaking changes may occur without notice.**
+
+Content Management System built with Payload CMS and Supabase. Provides a modern, headless CMS with PostgreSQL database, authentication, and admin interface.
+
+## 🚧 Status: Work in Progress
+
+This package is under active development. The API is not stable and may change significantly between versions. Use at your own risk.
+
+The intended solution should feel like below
+
+## 📦 Installation
+
+```bash
+npm install @adenta/cms
+# or
+yarn add @adenta/cms
+# or
+pnpm add @adenta/cms
 ```
 
+## 🔧 Requirements
 
-The library would expose a simple API:
-typescriptimport { createCMS } from '@adenta/cms'
+- Node.js >= 18.20.2
+- PostgreSQL or Supabase
+- pnpm >= 9.0.0
 
-```tsx
+## 📖 Quick Start
+
+```typescript
+import { createCMS } from '@adenta/cms'
+
 const cms = createCMS({
   database: {
-    type: 'postgres', // or 'supabase'
+    type: 'postgres',
     url: process.env.DATABASE_URL
   },
   collections: [
-    // User-defined collections
+    {
+      name: 'posts',
+      fields: [
+        {
+          name: 'title',
+          type: 'text',
+          required: true
+        },
+        {
+          name: 'content',
+          type: 'richText'
+        }
+      ]
+    }
   ]
 })
 
 export default cms
 ```
 
-1. Create a cli that sets up the project.
-2. Command should setup and install supabase
-3. cli should make it easy to display necessary details
+## 🛠️ Features
 
-```
-Started supabase local development setup.
+### Database Adapters
+```typescript
+// PostgreSQL
+const postgresConfig = {
+  type: 'postgres',
+  url: process.env.DATABASE_URL
+}
 
-         API URL: http://127.0.0.1:54321
-     GraphQL URL: http://127.0.0.1:54321/graphql/v1
-  S3 Storage URL: http://127.0.0.1:54321/storage/v1/s3
-          DB URL: postgresql://postgres:postgres@127.0.0.1:54322/postgres
-      Studio URL: http://127.0.0.1:54323
-    Inbucket URL: http://127.0.0.1:54324
-      JWT secret: super-secret-jwt-token-with-at-least-32-characters-long
-        anon key: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24iLCJleHAiOjE5ODM4MTI5OTZ9.CRXP1A7WOeoJeXxjNni43kdQwgnWNReilDMblYTn_I0
-service_role key: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImV4cCI6MTk4MzgxMjk5Nn0.EGIM96RAZx35lJzdJsyH-qQwv8Hdp7fsn3W0YpN81IU
-   S3 Access Key: 625729a08b95bf1b7ff351a663f3a23c
-   S3 Secret Key: 850181e4652dd023b7a98c58ae0d2d34bd487ee0cc3254aed6eda37307425907
-       S3 Region: local
+// Supabase
+const supabaseConfig = {
+  type: 'supabase',
+  url: process.env.SUPABASE_URL,
+  key: process.env.SUPABASE_ANON_KEY
+}
 ```
 
-4. Module federate the admin dashboard and the supabase dash
+### Collections
+```typescript
+import { CollectionConfig } from '@adenta/cms'
+
+const Posts: CollectionConfig = {
+  name: 'posts',
+  fields: [
+    {
+      name: 'title',
+      type: 'text',
+      required: true
+    },
+    {
+      name: 'slug',
+      type: 'text',
+      unique: true
+    },
+    {
+      name: 'content',
+      type: 'richText'
+    },
+    {
+      name: 'featuredImage',
+      type: 'upload',
+      relationTo: 'media'
+    }
+  ]
+}
+```
+
+### Authentication
+```typescript
+import { auth } from '@adenta/cms'
+
+// Login
+const user = await auth.login({
+  email: 'user@example.com',
+  password: 'password'
+})
+
+// Register
+const newUser = await auth.register({
+  email: 'newuser@example.com',
+  password: 'password',
+  name: 'John Doe'
+})
+```
+
+## 🚀 Development
+
+```bash
+# Start development server
+pnpm start
+
+# Build for production
+pnpm build
+
+# Run tests
+pnpm test
+```
+
+## 📚 Documentation
+
+For detailed documentation, visit [docs.adenta.dev](https://docs.israelprempeh.com/)
+
+## 🤝 Contributing
+
+Contributions are welcome! Please read our [Contributing Guide](CONTRIBUTING.md) before submitting pull requests.
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🔗 Related Packages
+
+- [`@adenta/core`](../core) - Core utilities and shared functionality
+- [`@adenta/cli`](../cli) - Command-line interface tools
+- [`@adenta/ui`](../ui) - React UI components
+
+## 📊 Version History
+
+See [CHANGELOG.md](CHANGELOG.md) for a complete list of changes.
+
+---
+
+**Note**: This package is part of the Adenta ecosystem. For more information, visit [adenta.dev](https://adenta.dev).
