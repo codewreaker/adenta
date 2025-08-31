@@ -2,6 +2,8 @@ import { useEffect } from 'react';
 import { Route, Routes, Link, BrowserRouter } from 'react-router-dom';
 
 import { logger } from '@adenta/core/logger';
+import loadedConfig from '@adenta/core/loaders';
+
 // Uncomment this line to use CSS modules
 // import styles from './app.module.css';
 const log = logger('@adenta/sandbox');
@@ -15,6 +17,12 @@ export function App() {
     log.debug('Debug information');
     log.box('Box Message');
   }, []);
+
+  useEffect(() => {
+    log.info('Hello World', loadedConfig);
+    log.success('Operation completed');
+  }, []);
+
   return (
     <div>
       <h1>

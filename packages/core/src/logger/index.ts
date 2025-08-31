@@ -4,23 +4,20 @@
  * Format the logger to look as nice as possible like a clack browser with console.log
  */
 
-import { isNode, isDeno, isBun } from 'std-env'
 import {
     createConsola,
     type LogType, type ConsolaOptions, type ConsolaInstance
 } from 'consola/browser';
+import { isBrowser } from '../utils/env-utils.ts';
 
 
-const isBrowser = !isNode && !isDeno && !isBun;
-
-console.log(`isBrowser::${isBrowser}`);
 
 export const logger = (
     tag = '@adenta/core',
     opts: Partial<ConsolaOptions & { fancy: boolean }> = { fancy: true }
 ) => {
     const inst = createConsola(opts).withTag(tag).addReporter({
-        log: (logObj, ctx) => {
+        log: ({args,date,level,tag,type,additional,message}, ctx) => {
             if(!isBrowser) console.log(JSON.stringify(logObj))
         }
     })
