@@ -26,6 +26,10 @@ function reporterDemo(
 
     const consola = createConsola({
         ...opts,
+        reporters: [
+            ...opts.reporters || [],
+            new FancyReporter()
+        ]
     });
 
 

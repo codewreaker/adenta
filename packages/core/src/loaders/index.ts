@@ -1,18 +1,21 @@
 import { NAME } from '../constants/index.ts';
 import {createJiti} from 'jiti';
-import {loadConfig} from 'c12';
-import {logger} from "../logger/index.ts"
+import {loadConfig, createDefineConfig} from 'c12';
+import { AdentaConfig, LoadOptions } from '../types/index.js';
 
 const jiti = createJiti(import.meta.url);
-const log = logger('@adenta/sandbox')
 
-
-const {config } = await loadConfig({
+const loadAdentaConfig =(opts: LoadOptions = {})=>loadConfig<AdentaConfig>({
     name: NAME,
-    jiti
+    jiti,
+    ...opts
 })
 
+const defineConfig = createDefineConfig<AdentaConfig>()
 
-log.info(config);
 
-export default config;
+export {
+    loadAdentaConfig,
+    jiti,
+    defineConfig
+};

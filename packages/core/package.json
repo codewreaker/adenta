@@ -7,24 +7,26 @@
     "url": "https://github.com/codewreaker/adenta"
   },
   "module": "./src/index.js",
-  "main": "./src/index.js",
   "types": "./src/index.d.ts",
   "dependencies": {
     "jiti": "2.5.1",
     "consola": "^3.4.2",
     "std-env": "^3.9.0",
     "c12": "^3.2.0",
-    "is-unicode-supported": "^2.1.0",
-    "string-width": "8.0.0"
+    "string-width": "8.0.0",
+    "pathe": "^2.0.3"
+  },
+  "devDependencies": {
+    "sentencer": "0.2.1"
   },
   "exports": {
     ".": {
-      "import":"./dist/index.js",
-      "types":"./dist/index.d.ts"
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
     },
-    "./logger":{
-      "import":"./dist/logger/index.js",
-      "types":"./dist/logger/index.d.ts"
+    "./logger": {
+      "import": "./dist/logger/index.js",
+      "types": "./dist/logger/index.d.ts"
     }
   },
   "publishConfig": {

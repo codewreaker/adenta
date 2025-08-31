@@ -16,7 +16,10 @@ export default [
             '{projectRoot}/vite.config.{js,ts,mjs,mts}',
           ],
           ignoredDependencies:[
-            "@swc/helpers"
+            "@swc/helpers",
+            "pathe", //its used
+            "std-env", //its used,
+            "string-width" //its used
           ]
           
         },

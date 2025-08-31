@@ -1,7 +1,6 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "target": "esnext",
     "module": "nodenext",
     "moduleResolution": "nodenext",
     "lib": [
@@ -18,7 +17,6 @@
     "outDir": "../dist/out-tsc",
     "declaration": true,
   },
-  "include": [
-    "src/**/*.ts"
-, "examples/logger.ts"  ]
+  "files": [],
+  "include": [ "src/**/*.ts","examples/logger.ts"  ]
 }

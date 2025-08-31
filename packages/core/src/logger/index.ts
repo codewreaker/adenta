@@ -1,34 +1,39 @@
 /**
- * @todo
- * Add a reporter for node environment. I have a checker which lets me know if I am not in the browser.
- * Format the logger to look as nice as possible like a clack browser with console.log
+ * I've standardised this library to use only one version of `consola/browser`
+ * to power both the browser and node. Had to do this because there is currently no way
+ * of conditionally loading node or browser as webpack evaluates at runtime and require throws error.
+ * I didn't want to polyfill and create a true ESM experience
  */
-
-import {
-    createConsola,
-    type LogType, type ConsolaOptions, type ConsolaInstance
+import { createConsola } from 'consola/browser';
+import type {
+  LogType,
+  ConsolaOptions,
+  ConsolaInstance
 } from 'consola/browser';
+import { FancyReporter } from './reporters/fancy.ts';
 import { isBrowser } from '../utils/env-utils.ts';
 
+type LogInstance = Record<LogType, ConsolaInstance[LogType]>;
 
 
 export const logger = (
-    tag = '@adenta/core',
-    opts: Partial<ConsolaOptions & { fancy: boolean }> = { fancy: true }
+  tag = '@adenta/core',
+  opts: Partial<ConsolaOptions> = {},
 ) => {
-    const inst = createConsola(opts).withTag(tag).addReporter({
-        log: ({args,date,level,tag,type,additional,message}, ctx) => {
-            if(!isBrowser) console.log(JSON.stringify(logObj))
-        }
-    })
-    const logTypes = Object.keys(inst.options.types) as LogType[]
+  const inst = isBrowser
+    ? createConsola({ ...opts }).withTag(tag)
+    : createConsola({
+        ...opts,
+        reporters: [...(opts.reporters || []), new FancyReporter()],
+      }).withTag(tag);
 
-    return logTypes.reduce((acc, type) => {
-        acc[type] = inst[type];
-        return acc
-    }, {} as ConsolaInstance);
-}
+  const logTypes = Object.keys(inst.options.types) as LogType[];
 
+  return logTypes.reduce((acc, type) => {
+    acc[type] = inst[type];
+    return acc;
+  }, {} as LogInstance);
+};
 
 /**
  * @example
@@ -44,4 +49,4 @@ log.debug('Debug information');
 log.box("Box Message")
  */
 
-export default logger
+export default logger;

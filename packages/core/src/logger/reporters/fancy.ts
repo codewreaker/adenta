@@ -5,10 +5,10 @@
  */
 import { colors, stripAnsi, box, type BoxOpts} from "consola/utils";
 import type { FormatOptions, LogObject, LogLevel, LogType } from "consola/browser";
-import { parseStack } from "../utils/error.ts";
+import { BaseReporter } from "../reporters/basic.ts";
+import { parseStack } from "../../utils/error.ts";
 
 import _stringWidth from "string-width";
-import isUnicodeSupported from "is-unicode-supported";
 
 
 export const TYPE_COLOR_MAP: { [k in LogType]?: string } = {
@@ -24,7 +24,7 @@ export const LEVEL_COLOR_MAP: { [k in LogLevel]?: string } = {
   1: "yellow",
 };
 
-const unicode = isUnicodeSupported();
+const unicode = true;
 const s = (c: string, fallback: string) => (unicode ? c : fallback);
 const TYPE_ICONS: { [k in LogType]?: string } = {
   error: s("✖", "×"),
@@ -49,7 +49,7 @@ function stringWidth(str: string) {
   return _stringWidth(str);
 }
 
-export class FancyReporter extends BasicReporter {
+export class FancyReporter extends BaseReporter {
   formatStack(stack: string, message: string, opts?: FormatOptions) {
     const indent = "  ".repeat((opts?.errorLevel || 0) + 1);
     return (
