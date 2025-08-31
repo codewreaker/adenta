@@ -42,7 +42,6 @@
     "projects": [
       "packages/cli",
       "packages/cms",
-      "packages/core",
       "packages/ui"
     ],
     "version": {
