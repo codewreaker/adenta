@@ -279,6 +279,9 @@ importers:
       payload:
         specifier: 3.53.0
         version: 3.53.0(graphql@16.11.0)(typescript@5.9.2)
+      picocolors:
+        specifier: ^1.1.1
+        version: 1.1.1
       playwright:
         specifier: 1.54.1
         version: 1.54.1

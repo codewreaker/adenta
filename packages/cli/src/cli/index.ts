@@ -9,7 +9,9 @@ import {
   isCancel,
   note,
 } from '@clack/prompts';
-import chalk from 'chalk';
+
+
+import chalk from 'picocolors'
 import { promises as fs } from 'node:fs';
 import path from 'node:path';
 

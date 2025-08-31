@@ -14,6 +14,7 @@
         "outputPath": "dist/{projectRoot}",
         "main": "core/src/index.ts",
         "tsConfig": "{projectRoot}/tsconfig.json",
+        "stripLeadingPaths": false,
         "assets": [
           "core/*.md"
         ]
