@@ -1,20 +1,21 @@
 {
   "name": "@adenta/core",
-  "version": "0.0.8",
+  "version": "0.0.9-1",
   "type": "module",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/codewreaker/adenta"
-  },
-  "main": "./src/index.js",
-  "types": "./src/index.d.ts",
+  "main": "./index.js",
+  "module": "./index.js",
+  "types": "./index.d.ts",
   "dependencies": {
-    "@swc/helpers": "~0.5.17"
+    "jiti": "2.5.1",
+    "consola": "^3.4.2",
+    "std-env": "^3.9.0",
+    "c12": "^3.2.0",
+    "string-width": "8.0.0",
+    "pathe": "^2.0.3"
   },
-  "exports": {
-    "./*": "./*"
+  ".": {
+    "import": "./index.js",
+    "types": "./index.d.ts"
   },
-  "publishConfig": {
-    "access": "public"
-  }
+  "./*": "./*"
 }

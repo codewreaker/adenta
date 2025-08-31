@@ -12,7 +12,7 @@
       ],
       "options": {
         "script": "build",
-        "outputPath": "dist/{projectRoot}",
+        "outputPath": "dist/{projectName}",
         "main": "{projectRoot}/src/index.ts"
       }
     }
