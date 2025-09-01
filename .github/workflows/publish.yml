@@ -46,9 +46,10 @@ jobs:
       - name: Run Tests
         run: echo "Test Here"
         shell: bash
-          
+       
+      # Todo make this step automated
       - name: Version and Changelog
-        run: pnpx nx release --skip-publish --specifier prerelease --first-release
+        run: pnpm exec nx release --skip-publish --specifier prerelease --first-release
         shell: bash
 
       - name: Publish packages
