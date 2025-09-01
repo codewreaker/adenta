@@ -48,7 +48,7 @@ jobs:
         shell: bash
           
       - name: Version and Changelog
-        run: echo "pnpx nx release --skip-publish --specifier prerelease --dry-run"
+        run: pnpx nx release --skip-publish --specifier prerelease --dry-run
         shell: bash
 
       - name: Publish packages
