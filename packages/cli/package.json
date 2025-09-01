@@ -4,12 +4,12 @@
     "type": "git",
     "url": "https://github.com/codewreaker/adenta"
   },
-  "version": "0.0.9-4",
+  "version": "0.0.9-5",
   "type": "module",
   "main": "./src/index.js",
   "types": "./src/index.d.ts",
   "dependencies": {
-    "@adenta/core": "*",
+    "@adenta/core": "0.0.9-5",
     "@clack/prompts": "^0.11.0",
     "picocolors": "~1.1.1",
     "@swc/helpers": "~0.5.17"
