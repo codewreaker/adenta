@@ -47,13 +47,16 @@ jobs:
         run: echo "Test Here"
         shell: bash
           
+      - name: Version and Changelog
+        run: echo "pnpx nx release --skip-publish --specifier prerelease --dry-run"
+        shell: bash
+
       - name: Publish packages
-        run: pnpm exec nx release publish
+        run: pnpm exec nx release publish --verbose
         shell: bash
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           NPM_CONFIG_PROVENANCE: true
-
 
   # publish-npm:
   #   needs: build

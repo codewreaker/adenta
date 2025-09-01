@@ -11,3 +11,4 @@ export const getCwd = (): string => {
     throw error;
   }
 };
+
