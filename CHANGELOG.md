@@ -1,3 +1,7 @@
+## 0.0.9-4 (2025-09-01)
+
+This was a version bump only, there were no code changes.
+
 ## 0.0.9-3 (2025-09-01)
 
 ### 🚀 Features
