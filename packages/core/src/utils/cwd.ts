@@ -1,6 +1,7 @@
 import { dirname } from 'pathe';
 import { isBrowser } from './env-utils.js';
 
+
 export const getCwd = (): string => {
   // Node.js/Deno/Bun - use process.cwd() or fallback to import.meta.url
   try {
