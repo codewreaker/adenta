@@ -1,6 +1,6 @@
 {
   "name": "@adenta/core",
-  "version": "0.0.9-2",
+  "version": "1.0.1-0",
   "repository": {
     "type": "git",
     "url": "https://github.com/codewreaker/adenta"
@@ -22,7 +22,7 @@
     ".": "./index.js",
     "./logger": "./logger/index.js",
     "./loaders": "./loaders/index.js",
-     "./utils": "./utils/index.js",
-     "./*":"./*"
+    "./utils": "./utils/index.js",
+    "./*": "./*"
   }
 }
