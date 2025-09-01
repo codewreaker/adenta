@@ -9,9 +9,10 @@
   "main": "./src/index.js",
   "types": "./src/index.d.ts",
   "dependencies": {
+    "@adenta/core": "workspace:*",
     "@clack/prompts": "^0.11.0",
-    "consola": "^3.4.2",
-    "picocolors": "~1.1.1"
+    "picocolors": "~1.1.1",
+    "@swc/helpers": "~0.5.17"
   },
   "publishConfig": {
     "access": "public"

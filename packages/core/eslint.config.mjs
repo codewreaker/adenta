@@ -13,7 +13,6 @@ export default [
             '{projectRoot}/vite.config.{js,ts,mjs,mts}',
           ],
           "ignoredDependencies":[
-            "@swc/helpers"
           ]
         },
       ],

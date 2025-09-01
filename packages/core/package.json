@@ -15,11 +15,14 @@
     "std-env": "^3.9.0",
     "c12": "^3.2.0",
     "string-width": "8.0.0",
-    "pathe": "^2.0.3"
+    "pathe": "^2.0.3",
+    "@swc/helpers": "~0.5.17"
   },
-  ".": {
-    "import": "./index.js",
-    "types": "./index.d.ts"
-  },
-  "./*": "./*"
+  "exports": {
+    ".": "./index.js",
+    "./logger": "./logger/index.js",
+    "./loaders": "./loaders/index.js",
+     "./utils": "./utils/index.js",
+     "./*":"./*"
+  }
 }

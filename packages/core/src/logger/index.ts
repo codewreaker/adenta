@@ -4,7 +4,7 @@
  * of conditionally loading node or browser as webpack evaluates at runtime and require throws error.
  * I didn't want to polyfill and create a true ESM experience
  */
-import { createConsola } from 'consola/browser';
+import { createConsola} from 'consola/browser';
 import type {
   LogType,
   ConsolaOptions,

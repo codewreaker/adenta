@@ -14,7 +14,5 @@ export function parseStack(stack: string, message: string) {
     .split('\n')
     .splice(message.split('\n').length)
     .map((l) => l.trim().replace('file://', '').replace(cwd, ''));
-
-  console.log('CWD:', lines);
   return lines;
 }
