@@ -15,7 +15,7 @@
         "main": "ui/src/index.ts",
         "tsConfig": "{projectRoot}/tsconfig.json",
         "assets": [
-          "ui/*.md"
+          "{projectRoot}/*.md"
         ]
       }
     },

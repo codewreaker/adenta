@@ -17,7 +17,7 @@
         "stripLeadingPaths": true,
         "clean": true,
         "assets": [
-          "cli/*.md"
+          "{projectRoot}/*.md"
         ]
       }
     },
