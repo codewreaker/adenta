@@ -16,7 +16,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
-      contents: read
+      contents: write # for tagging
       id-token: write # needed for provenance data generation
     steps:
       - name: Checkout Repository
