@@ -16,4 +16,4 @@ export const execString = (pm:'npm'|'yarn'|'pnpm'=detectPackageManager()) => (({
         npm: 'npx',
         yarn: 'yarn dlx',
         pnpm: 'pnpm exec',
-    })[pm] || 'npx')
+    })[pm] || 'npx');

@@ -12,6 +12,7 @@
     "start": "pnpm exec nx run cms:start"
   },
   "dependencies": {
+    "@adenta/core": "workspace:*",
     "@payloadcms/next": "3.53.0",
     "@payloadcms/payload-cloud": "3.53.0",
     "@payloadcms/richtext-lexical": "3.53.0",

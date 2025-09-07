@@ -4,15 +4,18 @@
     "type": "git",
     "url": "https://github.com/codewreaker/adenta"
   },
+  "bin": {
+    "adenta":"./bin/index.ts"
+  },
   "version": "0.0.9-6",
   "type": "module",
   "main": "./src/index.js",
   "types": "./src/index.d.ts",
   "dependencies": {
-    "@adenta/core": "0.0.9-6",
     "@clack/prompts": "^0.11.0",
     "picocolors": "~1.1.1",
-    "@swc/helpers": "~0.5.17"
+    "commander": "^14.0.0",
+    "tsx": "^4.20.5"
   },
   "publishConfig": {
     "access": "public"

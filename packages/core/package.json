@@ -22,6 +22,7 @@
     ".": "./index.js",
     "./logger": "./logger/index.js",
     "./loaders": "./loaders/index.js",
+    "./setup": "./setup/index.js",
     "./utils": "./utils/index.js",
     "./*": "./*"
   }

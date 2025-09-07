@@ -1,0 +1,1 @@
+export {default as initPrompts} from './init.js'

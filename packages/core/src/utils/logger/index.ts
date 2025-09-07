@@ -11,7 +11,7 @@ import type {
   ConsolaInstance
 } from 'consola/browser';
 import { FancyReporter } from './reporters/fancy.js';
-import { isBrowser } from '../utils/env-utils.js';
+import { isBrowser } from '../env-utils.js';
 
 type LogInstance = Record<LogType, ConsolaInstance[LogType]>;
 
