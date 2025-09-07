@@ -1,0 +1,9 @@
+{
+  "generators": {
+    "@adenta/gen:gen": {
+      "factory": "./src/generators/gen",
+      "schema": "./src/generators/schema.json",
+      "description": "generator for all things adenta apps"
+    }
+  }
+}
