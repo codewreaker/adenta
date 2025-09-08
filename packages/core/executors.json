@@ -1,19 +1,19 @@
 {
   "executors": {
     "@adenta/js:cms": {
-      "implementation": "./src/executors/cms",
-      "schema": "./src/executors/schema.json",
-      "description": "executor to handle payload configurations from adenta config"
+      "implementation": "./src/executors/cms/index",
+      "schema": "./src/executors/cms/schema.json",
+      "description": "Executor to handle all adenta cms actions"
     },
     "@adenta/js:db": {
-      "implementation": "./src/executors/database",
-      "schema": "./src/executors/schema.json",
-      "description": "executor to handle postgres configurations from adenta config"
+      "implementation": "./src/executors/database/index",
+      "schema": "./src/executors/database/schema.json",
+      "description": "Executor to handle all adenta database actions"
     },
     "@adenta/js:ui": {
-      "implementation": "./src/executors/ui",
-      "schema": "./src/executors/schema.json",
-      "description": "executor to handle ui or client configurations from adenta config"
+      "implementation": "./src/executors/ui/index",
+      "schema": "./src/executors/ui/schema.json",
+      "description": "Executor to handle all dev UI actions in config"
     }
   }
 }

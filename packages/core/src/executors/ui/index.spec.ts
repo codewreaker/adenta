@@ -1,9 +1,9 @@
 import { ExecutorContext } from '@nx/devkit';
 
-import { AdentaJsDbExecutorSchema } from './schema';
-import executor from './database';
+import { AdentaJsUiExecutorSchema } from './schema';
+import executor from './index';
 
-const options: AdentaJsDbExecutorSchema = {};
+const options: AdentaJsUiExecutorSchema = {};
 const context: ExecutorContext = {
   root: '',
   cwd: process.cwd(),
@@ -19,7 +19,7 @@ const context: ExecutorContext = {
   nxJsonConfiguration: {},
 };
 
-describe('AdentaJsDb Executor', () => {
+describe('AdentaJsUi Executor', () => {
   it('can run', async () => {
     const output = await executor(options, context);
     expect(output.success).toBe(true);

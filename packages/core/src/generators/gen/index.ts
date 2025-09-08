@@ -5,11 +5,11 @@ import {
   Tree,
 } from '@nx/devkit';
 import * as path from 'path';
-import { AdentaGenGenGeneratorSchema } from './schema';
+import { AdentaGenGeneratorSchema } from './schema.js';
 
-export async function adentaGenGenGenerator(
+export async function adentaGenGenerator(
   tree: Tree,
-  options: AdentaGenGenGeneratorSchema,
+  options: AdentaGenGeneratorSchema,
 ) {
   const projectRoot = `libs/${options.name}`;
   addProjectConfiguration(tree, options.name, {
@@ -22,4 +22,4 @@ export async function adentaGenGenGenerator(
   await formatFiles(tree);
 }
 
-export default adentaGenGenGenerator;
+export default adentaGenGenerator;
