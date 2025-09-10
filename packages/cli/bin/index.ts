@@ -4,6 +4,18 @@
 import { Command, Option } from "commander";
 import { initPrompts } from '../src/prompts/index.js'
 import { validateProjectName } from "../src/prompts/init.js";
+import {
+  run
+} from '@adenta/core'
+
+import { resolve } from 'node:path';
+// file: example.mjs
+import { fileURLToPath } from "url";
+import { dirname } from "path";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
 
 const program = new Command();
 
@@ -24,8 +36,19 @@ program
   .action(initPrompts);
 
 program
-  .command("dev")
-  .action(console.log);
+  .command("run")
+  .action(() => {
+    run(
+      process.cwd(),
+      resolve(__dirname),
+      {
+        project: 'adenta',
+        target: 'build',
+        configuration:'production'
+      },
+      true
+    )
+  });
 
 program
   .command("db")

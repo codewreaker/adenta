@@ -151,7 +151,6 @@ async function runExecutorInternal<T extends { success: boolean }>(
     root: string,
     cwd: string,
     projectConfiguration: ProjectConfiguration,
-    taskGraph: TaskGraph,
     isVerbose: boolean
 ): Promise<AsyncIterableIterator<T>> {
 
@@ -173,7 +172,6 @@ async function runExecutorInternal<T extends { success: boolean }>(
         projectName: project,
         targetName: target,
         configurationName: configuration,
-        taskGraph,
         cwd,
         isVerbose,
     }) as Promise<T> | AsyncIterableIterator<T>;
@@ -239,7 +237,6 @@ export async function runExecutor<T extends { success: boolean }>(
         context.root,
         context.cwd,
         context.projectConfiguration,
-        context.taskGraph as TaskGraph,
         context.isVerbose
     );
 }
@@ -248,20 +245,17 @@ export function run(
     cwd: string,
     root: string,
     targetDescription: Target,
-    overrides: { [k: string]: any },
     isVerbose: boolean,
-    taskGraph: TaskGraph
 ) {
 
     return handleErrors(isVerbose, async () => {
-        const projectConfiguration = await loadAdentaConfig() as unknown as ProjectConfiguration;
+        const projectConfiguration = (await loadAdentaConfig())?.config;
         return iteratorToProcessStatusCode(
             await runExecutorInternal(
                 targetDescription,
                 root,
                 cwd,
                 projectConfiguration,
-                taskGraph,
                 isVerbose
             )
         );

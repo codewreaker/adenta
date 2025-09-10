@@ -6,9 +6,9 @@
 import { colors, stripAnsi, box, type BoxOpts} from "consola/utils";
 import type { FormatOptions, LogObject, LogLevel, LogType } from "consola/browser";
 import { BaseReporter } from "./basic.js";
-import { parseStack } from "../../utils/error.js";
 
 import _stringWidth from "string-width";
+import { parseStack } from "../../error.js";
 
 
 export const TYPE_COLOR_MAP: { [k in LogType]?: string } = {

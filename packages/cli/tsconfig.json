@@ -19,7 +19,8 @@
   },
   "files": [],
   "include": [
-    "src/**/*.ts"
+    "src/**/*.ts",
+    "bin/**/*.ts"
   ],
   "exclude": [
     "vite.config.ts",
