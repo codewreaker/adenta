@@ -1,321 +1,251 @@
 import { LoadConfigOptions } from "c12";
-
-export interface AdentaConfig {
-    name: string;
-    meta: Record<string, string | number | boolean |object >;
-}
-
-export type LoadOptions = Omit<LoadConfigOptions<AdentaConfig>, 'name' | 'jiti'>;
-
-/**
- * Projects Configurations
- * @note: when adding properties here add them to `allowedWorkspaceExtensions` in adapter/compat.ts
- */
-export interface ProjectsConfigurations {
-  /**
-   * Version of the configuration format
-   */
-  version: number;
-  /**
-   * Projects' projects
-   */
-  projects: {
-    [projectName: string]: ProjectConfiguration;
-  };
-}
-
-/**
- * Type of project supported
- */
-export type ProjectType = 'library' | 'application';
-
-/**
- * Project configuration
- *
- * @note: when adding properties here add them to `allowedProjectExtensions` in adapter/compat.ts
- */
-export interface ProjectConfiguration {
-  /**
-   * Project's name. Optional if specified in workspace.json
-   */
-  name?: string;
-
-  /**
-   * Project's targets
-   */
-  targets?: { [targetName: string]: TargetConfiguration };
-
-  /**
-   * Project's location relative to the root of the workspace
-   */
-  root: string;
-
-  /**
-   * The location of project's sources relative to the root of the workspace
-   */
-  sourceRoot?: string;
-
-  /**
-   * Project type
-   */
-  projectType?: ProjectType;
-
-  /**
-   * List of default values used by generators.
-   *
-   * These defaults are project specific.
-   *
-   * Example:
-   *
-   * ```
-   * {
-   *   "@nx/react": {
-   *     "library": {
-   *       "style": "scss"
-   *     }
-   *   }
-   * }
-   * ```
-   */
-  generators?: { [collectionName: string]: { [generatorName: string]: any } };
-
-  /**
-   * List of projects which are added as a dependency
-   */
-  implicitDependencies?: string[];
-
-  /**
-   * Named inputs targets can refer to reduce duplication
-   */
-  namedInputs?: { [inputName: string]: (string | InputDefinition)[] };
-
-  /**
-   * List of tags used by enforce-module-boundaries / project graph
-   */
-  tags?: string[];
+import type {
+    ProjectGraph, TargetConfiguration, ProjectConfiguration
+} from "../project-graph/types.js";
 
 
-  /**
-   * Metadata about the project
-   */
-  metadata?: ProjectMetadata;
-}
 
-export interface ProjectMetadata {
-  [k: string]: any;
+export type LoadOptions = LoadConfigOptions<ProjectConfiguration>;
 
-  description?: string;
-  technologies?: string[];
-  targetGroups?: Record<string, string[]>;
-  owners?: {
-    [ownerId: string]: {
-      ownedFiles: {
-        files: ['*'] | string[];
-        fromConfig?: {
-          filePath: string;
-          location: {
-            startLine: number;
-            endLine: number;
-          };
-        };
-      }[];
-    };
-  };
-  js?: {
-    packageName: string;
-    packageExports?: PackageJson['exports'];
-    packageMain?: string;
-    isInPackageManagerWorkspaces?: boolean;
-  };
-}
-
-export interface TargetMetadata {
-  [k: string]: any;
-
-  description?: string;
-  technologies?: string[];
-  nonAtomizedTarget?: string;
-  help?: {
-    command: string;
-    example: {
-      options?: Record<string, unknown>;
-      args?: string[];
-    };
-  };
-}
-
-export interface TargetDependencyConfig {
-  /**
-   * A list of projects that have `target`.
-   * Should not be specified together with `dependencies`.
-   */
-  projects?: string[] | string;
-
-  /**
-   * If true, the target will be executed for each project that this project depends on.
-   * Should not be specified together with `projects`.
-   */
-  dependencies?: boolean;
-
-  /**
-   * The name of the target to run. If `projects` and `dependencies` are not specified,
-   * the target will be executed for the same project the the current target is running on`.
-   */
-  target: string;
-
-  /**
-   * Configuration for params handling.
-   */
-  params?: 'ignore' | 'forward';
-}
-
-export type InputDefinition =
-  | { input: string; projects: string | string[] }
-  | { input: string; dependencies: true }
-  | { input: string }
-  | { fileset: string }
-  | { runtime: string }
-  | { externalDependencies: string[] }
-  | { dependentTasksOutputFiles: string; transitive?: boolean }
-  | { env: string };
-
-/**
- * Target's configuration
- */
-export interface TargetConfiguration<T = any> {
-  /**
-   * The executor/builder used to implement the target.
-   *
-   * Example: '@nx/rollup:rollup'
-   */
-  executor?: string;
-
-  /**
-   * Used as a shorthand for nx:run-commands, a command to run.
-   */
-  command?: string;
-
-  /**
-   * List of the target's outputs. The outputs will be cached by the Nx computation
-   * caching engine.
-   */
-  outputs?: string[];
-
-  /**
-   * This describes other targets that a target depends on.
-   */
-  dependsOn?: (TargetDependencyConfig | string)[];
-
-  /**
-   * This describes filesets, runtime dependencies and other inputs that a target depends on.
-   */
-  inputs?: (InputDefinition | string)[];
-
-  /**
-   * Target's options. They are passed in to the executor.
-   */
-  options?: T;
-
-  /**
-   * Sets of options
-   */
-  configurations?: { [config: string]: any };
-
-  /**
-   * A default named configuration to use when a target configuration is not provided.
-   */
-  defaultConfiguration?: string;
-
-  /**
-   * Determines if Nx is able to cache a given target.
-   */
-  cache?: boolean;
-
-  /**
-   * Metadata about the target
-   */
-  metadata?: TargetMetadata;
-
-  /**
-   * Whether this target can be run in parallel with other tasks
-   * Default is true
-   */
-  parallelism?: boolean;
-
-  /**
-   * Whether this target runs continuously
-   */
-  continuous?: boolean;
-
-  /**
-   * List of generators to run before the target to ensure the workspace
-   * is up to date.
-   */
-  syncGenerators?: string[];
-}
-
-export interface PackageJson {
-}
 
 export interface Target {
-  project: string;
-  target: string;
-  configuration?: string;
+    project: string;
+    target: string;
+    configuration?: string;
 }
+
+/**
+ * A representation of the invocation of an Executor
+ */
+export interface Task {
+    /**
+     * Unique ID
+     */
+    id: string;
+    /**
+     * Details about which project, target, and configuration to run.
+     */
+    target: {
+        /**
+         * The project for which the task belongs to
+         */
+        project: string;
+        /**
+         * The target name which the task should invoke
+         */
+        target: string;
+        /**
+         * The configuration of the target which the task invokes
+         */
+        configuration?: string;
+    };
+    /**
+     * Overrides for the configured options of the target
+     */
+    overrides: any;
+    /**
+     * The outputs the task may produce
+     */
+    outputs: string[];
+    /**
+     * Root of the project the task belongs to
+     */
+    projectRoot?: string;
+    /**
+     * Hash of the task which is used for caching.
+     */
+    hash?: string;
+    /**
+     * Details about the composition of the hash
+     */
+    hashDetails?: {
+        /**
+         * Command of the task
+         */
+        command: string;
+        /**
+         * Hashes of inputs used in the hash
+         */
+        nodes: {
+            [name: string]: string;
+        };
+        /**
+         * Hashes of implicit dependencies which are included in the hash
+         */
+        implicitDeps?: {
+            [fileName: string]: string;
+        };
+        /**
+         * Hash of the runtime environment which the task was executed
+         */
+        runtime?: {
+            [input: string]: string;
+        };
+    };
+    /**
+     *
+     * Unix timestamp of when a Batch Task starts
+     **/
+    startTime?: number;
+    /**
+     *
+     * Unix timestamp of when a Batch Task ends
+     **/
+    endTime?: number;
+    /**
+     * Determines if a given task should be cacheable.
+     */
+    cache?: boolean;
+    /**
+     * Determines if a given task should be parallelizable.
+     */
+    parallelism: boolean;
+    /**
+     * This denotes if the task runs continuously
+     */
+    continuous?: boolean;
+}
+
+/**
+ * Graph of Tasks to be executed
+ */
+export interface TaskGraph {
+    /**
+     * IDs of Tasks which do not have any dependencies and are thus ready to execute immediately
+     */
+    roots: string[];
+    /**
+     * Map of Task IDs to Tasks
+     */
+    tasks: Record<string, Task>;
+    /**
+     * Map of Task IDs to IDs of tasks which the task depends on
+     */
+    dependencies: Record<string, string[]>;
+    continuousDependencies: Record<string, string[]>;
+}
+
+
+type TaskResult = {
+  success: boolean;
+  terminalOutput: string;
+  startTime?: number;
+  endTime?: number;
+};
+
+type BatchExecutorResult = Record<string, TaskResult>;
+
+type BatchExecutorTaskResult = {
+  task: string;
+  result: TaskResult;
+};
+
+/**
+ * Implementation of a target of a project that handles multiple projects to be batched
+ */
+type TaskGraphExecutor<T = any> = (
+  /**
+   * Graph of Tasks to be executed
+   */
+  taskGraph: TaskGraph,
+  /**
+   * Map of Task IDs to options for the task
+   */
+  options: Record<string, T>,
+  /**
+   * Set of overrides for the overall execution
+   */
+  overrides: T,
+  context: ExecutorContext
+) => Promise<
+  BatchExecutorResult | AsyncIterableIterator<BatchExecutorTaskResult>
+>;
+
+export interface ExecutorConfig {
+  schema: {
+    version?: number;
+    outputCapture?: 'direct-nodejs' | 'pipe';
+    continuous?: boolean;
+  };
+  implementationFactory: () => Executor;
+  batchImplementationFactory?: () => TaskGraphExecutor;
+}
+
+/**
+ * An executor implementation that returns a promise
+ */
+type PromiseExecutor<T = any> = (
+  /**
+   * Options that users configure or pass via the command line
+   */
+  options: T,
+  context: ExecutorContext
+) => Promise<{ success: boolean }>;
+
+
+/**
+ * An executor implementation that returns an async iterator
+ */
+type AsyncIteratorExecutor<T = any> = (
+  /**
+   * Options that users configure or pass via the command line
+   */
+  options: T,
+  context: ExecutorContext
+) => AsyncIterableIterator<{ success: boolean }>;
+
+/**
+ * Implementation of a target of a project
+ */
+export type Executor<T = any> = PromiseExecutor<T> | AsyncIteratorExecutor<T>;
 
 /**
  * Context that is passed into an executor
  */
 export interface ExecutorContext {
-  /**
-   * The root of the workspace
-   */
-  root: string;
+    /**
+     * The root of the workspace
+     */
+    root: string;
 
-  /**
-   * The name of the project being executed on
-   */
-  projectName?: string;
+    /**
+     * The name of the project being executed on
+     */
+    projectName?: string;
 
-  /**
-   * The name of the target being executed
-   */
-  targetName?: string;
+    /**
+     * The name of the target being executed
+     */
+    targetName?: string;
 
-  /**
-   * The name of the configuration being executed
-   */
-  configurationName?: string;
+    /**
+     * The name of the configuration being executed
+     */
+    configurationName?: string;
 
-  /**
-   * The configuration of the target being executed
-   */
-  target?: TargetConfiguration;
+    /**
+     * The configuration of the target being executed
+     */
+    target?: TargetConfiguration;
 
-  /**
-   * Projects config
-   */
-  projectsConfigurations: ProjectsConfigurations;
+    /**
+     * The current working directory
+     */
+    cwd: string;
 
-  /**
-   * The current working directory
-   */
-  cwd: string;
+    /**
+     * Enable verbose logging
+     */
+    isVerbose: boolean;
 
-  /**
-   * Enable verbose logging
-   */
-  isVerbose: boolean;
+    /**
+    * Projects config
+    */
+    projectConfiguration: ProjectConfiguration;
 
-  /**
-   * A snapshot of the project graph as
-   * it existed when the Nx command was kicked off
-   */
-  projectGraph: ProjectGraph;
-
-  /**
-   * A snapshot of the task graph as
-   * it existed when the Nx command was kicked off
-   */
-  taskGraph?: TaskGraph;
+    /**
+     * A snapshot of the task graph as
+     * it existed when the Nx command was kicked off
+     */
+    taskGraph?: TaskGraph;
 }
