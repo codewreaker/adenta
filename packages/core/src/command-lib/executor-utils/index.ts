@@ -1,7 +1,7 @@
 import { ExecutorsJson } from "@nx/devkit";
 import { ProjectConfiguration } from "../project-graph/types.js";
 import type { Executor, ExecutorConfig } from "../../types/index.js";
-import { readJsonFile } from '../../utils/json.js'
+import { readJsonFile } from '../../utils/index.js'
 import { readFileSync } from 'node:fs'
 
 import {

@@ -10,10 +10,13 @@ import type {
   ConsolaOptions,
 } from 'consola/browser';
 import {
-  writeStream, 
-  fallbackStreams,
   formatWithOptions,
-} from '../../utils/index.js';
+} from '../formatWithOptions.js';
+
+import {
+  fallbackStreams,
+  writeStream
+} from '../stream.js'
 
 
 
