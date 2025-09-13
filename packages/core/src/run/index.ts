@@ -39,8 +39,7 @@ import { exec } from 'node:child_process';
 import type {
     Executor,
     ExecutorContext,
-    Target,
-    TaskGraph
+    Target
 } from '../types/index.js';
 import { loadAdentaConfig } from '@adenta/core/loaders';
 
@@ -59,15 +58,15 @@ import { loadAdentaConfig } from '@adenta/core/loaders';
 
 
 function isPromise<T extends { success: boolean }>(
-  v: Promise<T> | AsyncIterableIterator<T>
+    v: Promise<T> | AsyncIterableIterator<T>
 ): v is Promise<T> {
-  return typeof (v as any)?.then === 'function';
+    return typeof (v as any)?.then === 'function';
 }
 
 async function* promiseToIterator<T extends { success: boolean }>(
-  v: Promise<T>
+    v: Promise<T>
 ): AsyncIterableIterator<T> {
-  yield await v;
+    yield await v;
 }
 
 
@@ -163,8 +162,32 @@ async function handleErrors(
     }
 }
 
-
-async function runExecutorInternal<T extends { success: boolean }>(
+/**
+ * Loads and invokes executor.
+ *
+ * This is analogous to invoking executor from the terminal, with the exception
+ * that the params aren't parsed from the string, but instead provided parsed already.
+ *
+ * Apart from that, it works the same way:
+ *
+ * - it will load the workspace configuration
+ * - it will resolve the target
+ * - it will load the executor and the schema
+ * - it will load the options for the appropriate configuration
+ * - it will run the validations and will set the default
+ * - and, of course, it will invoke the executor
+ *
+ * Example:
+ *
+ * ```typescript
+ * for await (const s of await runExecutor({project: 'myproj', target: 'serve'},root, cwd, projectCOnfiguration, isVerbose)) {
+ *   // s.success
+ * }
+ * ```
+ *
+ * Note that the return value is a promise of an iterator, so you need to await before iterating over it.
+ */
+async function runExecutor<T extends { success: boolean }>(
     { project, target, configuration }: Target,
     root: string,
     cwd: string,
@@ -220,62 +243,19 @@ async function runExecutorInternal<T extends { success: boolean }>(
 //   });
 // }
 
-/**
- * Loads and invokes executor.
- *
- * This is analogous to invoking executor from the terminal, with the exception
- * that the params aren't parsed from the string, but instead provided parsed already.
- *
- * Apart from that, it works the same way:
- *
- * - it will load the workspace configuration
- * - it will resolve the target
- * - it will load the executor and the schema
- * - it will load the options for the appropriate configuration
- * - it will run the validations and will set the default
- * - and, of course, it will invoke the executor
- *
- * Example:
- *
- * ```typescript
- * for await (const s of await runExecutor({project: 'myproj', target: 'serve'}, {watch: true}, context)) {
- *   // s.success
- * }
- * ```
- *
- * Note that the return value is a promise of an iterator, so you need to await before iterating over it.
- */
-export async function runExecutor<T extends { success: boolean }>(
+export async function run(
     targetDescription: Target,
-    overrides: { [k: string]: any },
     context: ExecutorContext
-): Promise<AsyncIterableIterator<T>> {
-    return await runExecutorInternal<T>(
-        targetDescription,
-        context.root,
-        context.cwd,
-        context.projectConfiguration,
-        context.isVerbose
-    );
-}
-
-export function run(
-    cwd: string,
-    root: string,
-    targetDescription: Target,
-    isVerbose: boolean,
 ) {
-
-    return handleErrors(isVerbose, async () => {
-        const projectConfiguration = (await loadAdentaConfig())?.config;
+    context.projectConfiguration ??= (await loadAdentaConfig())?.config;
+    return handleErrors(context.isVerbose, async () => {
         return iteratorToProcessStatusCode(
-            await runExecutorInternal(
+            await runExecutor(
                 targetDescription,
-                root,
-                cwd,
-                projectConfiguration,
-                isVerbose
-            )
-        );
+                context.root,
+                context.cwd,
+                context.projectConfiguration as ProjectConfiguration,
+                context.isVerbose
+            ))
     });
 }

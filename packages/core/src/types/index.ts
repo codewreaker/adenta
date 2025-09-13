@@ -1,7 +1,7 @@
 import { LoadConfigOptions } from "c12";
 import type {
     ProjectGraph, TargetConfiguration, ProjectConfiguration
-} from "../command-lib/project-graph/types.js";
+} from "../run/project-graph/types.js";
 
 
 
@@ -106,60 +106,7 @@ export interface Task {
     continuous?: boolean;
 }
 
-/**
- * Graph of Tasks to be executed
- */
-export interface TaskGraph {
-    /**
-     * IDs of Tasks which do not have any dependencies and are thus ready to execute immediately
-     */
-    roots: string[];
-    /**
-     * Map of Task IDs to Tasks
-     */
-    tasks: Record<string, Task>;
-    /**
-     * Map of Task IDs to IDs of tasks which the task depends on
-     */
-    dependencies: Record<string, string[]>;
-    continuousDependencies: Record<string, string[]>;
-}
 
-
-type TaskResult = {
-  success: boolean;
-  terminalOutput: string;
-  startTime?: number;
-  endTime?: number;
-};
-
-type BatchExecutorResult = Record<string, TaskResult>;
-
-type BatchExecutorTaskResult = {
-  task: string;
-  result: TaskResult;
-};
-
-/**
- * Implementation of a target of a project that handles multiple projects to be batched
- */
-type TaskGraphExecutor<T = any> = (
-  /**
-   * Graph of Tasks to be executed
-   */
-  taskGraph: TaskGraph,
-  /**
-   * Map of Task IDs to options for the task
-   */
-  options: Record<string, T>,
-  /**
-   * Set of overrides for the overall execution
-   */
-  overrides: T,
-  context: ExecutorContext
-) => Promise<
-  BatchExecutorResult | AsyncIterableIterator<BatchExecutorTaskResult>
->;
 
 export interface ExecutorConfig {
   schema: {
@@ -168,7 +115,6 @@ export interface ExecutorConfig {
     continuous?: boolean;
   };
   implementationFactory: () => Executor;
-  batchImplementationFactory?: () => TaskGraphExecutor;
 }
 
 /**
@@ -241,11 +187,5 @@ export interface ExecutorContext {
     /**
     * Projects config
     */
-    projectConfiguration: ProjectConfiguration;
-
-    /**
-     * A snapshot of the task graph as
-     * it existed when the Nx command was kicked off
-     */
-    taskGraph?: TaskGraph;
+    projectConfiguration: ProjectConfiguration | null;
 }

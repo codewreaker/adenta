@@ -340,7 +340,7 @@ importers:
         specifier: ^3.9.0
         version: 3.9.0
       string-width:
-        specifier: ^8.0.0
+        specifier: 8.1.0
         version: 8.1.0
       style-loader:
         specifier: ^4.0.0

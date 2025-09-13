@@ -66,6 +66,7 @@ function stringWidth(str: string) {
   if (!hasICU || !Intl.Segmenter) {
     return stripAnsi(str).length;
   }
+  debugger
   return _stringWidth(str);
 }
 
