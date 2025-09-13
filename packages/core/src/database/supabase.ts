@@ -1,5 +1,5 @@
 import { spawn } from 'child_process';
-import { log } from '../utils/logger/self-logger.js';
+import { log } from '../logger/self-logger.js';
 import { execString } from '../utils/detectPackageManager.js';
 import fs from 'node:fs';
 import path from 'node:path';

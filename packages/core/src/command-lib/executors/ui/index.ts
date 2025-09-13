@@ -1,5 +1,5 @@
 import { PromiseExecutor } from '@nx/devkit';
-import { AdentaJsUiExecutorSchema } from './schema';
+import { AdentaJsUiExecutorSchema } from './schema.js';
 
 const runExecutor: PromiseExecutor<AdentaJsUiExecutorSchema> = async (
   options,

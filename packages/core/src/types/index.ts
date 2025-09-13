@@ -1,7 +1,7 @@
 import { LoadConfigOptions } from "c12";
 import type {
     ProjectGraph, TargetConfiguration, ProjectConfiguration
-} from "../project-graph/types.js";
+} from "../command-lib/project-graph/types.js";
 
 
 

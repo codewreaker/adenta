@@ -1,7 +1,7 @@
 import { ExecutorContext } from '@nx/devkit';
 
-import { AdentaJsUiExecutorSchema } from './schema';
-import executor from './index';
+import { AdentaJsUiExecutorSchema } from './schema.js';
+import executor from './index.js';
 
 const options: AdentaJsUiExecutorSchema = {};
 const context: ExecutorContext = {

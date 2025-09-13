@@ -1,7 +1,7 @@
 import { ExecutorContext } from '@nx/devkit';
 
-import { AdentaJsDbExecutorSchema } from './schema';
-import executor from './index';
+import { AdentaJsDbExecutorSchema } from './schema.js';
+import executor from './index.js';
 
 const options: AdentaJsDbExecutorSchema = {};
 const context: ExecutorContext = {

@@ -1,7 +1,7 @@
 import { ExecutorsJson } from "@nx/devkit";
 import { ProjectConfiguration } from "../project-graph/types.js";
-import type { Executor, ExecutorConfig } from "../types/index.js";
-import { readJsonFile } from '../utils/json.js'
+import type { Executor, ExecutorConfig } from "../../types/index.js";
+import { readJsonFile } from '../../utils/json.js'
 import { readFileSync } from 'node:fs'
 
 import {
@@ -10,7 +10,7 @@ import {
     resolve
 } from 'pathe'
 
-import { PATHS } from "../config/paths.js";
+import { PATHS } from "../../paths/index.js";
 
 export function parseExecutor(
     executorString: string

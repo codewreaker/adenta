@@ -1,4 +1,4 @@
-import { PackageJson } from "../package-json/types.js";
+import { PackageJson } from "../../types/package-json.types.js";
 
 export interface TargetDependencyConfig {
     /**

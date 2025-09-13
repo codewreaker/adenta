@@ -1,7 +1,7 @@
 // borrowed run executor logic from nx
 // import { env as appendLocalEnv } from 'npm-run-path';
 // import { combineOptionsForExecutor, Schema } from '../../utils/params';
-import { handleErrors } from '../utils/handle-errors.js';
+import { handleErrors } from '../logger/handle-errors.js';
 // import { printHelp } from '../../utils/print-help';
 // import { NxJsonConfiguration } from '../../config/nx-json';
 // import { relative } from 'node:path';
@@ -11,13 +11,13 @@ import { handleErrors } from '../utils/handle-errors.js';
 import {
     readCachedProjectGraph,
     readProjectsConfigurationFromProjectGraph,
-} from '../project-graph/project-graph.js';
+} from './project-graph/project-graph.js';
 // import { ProjectGraph } from '../../config/project-graph';
 // import { readNxJson } from '../../config/configuration';
 import {
     iteratorToProcessStatusCode,
     isAsyncIterator,
-} from '../utils/async-iterator.js';
+} from './executor-utils/async-iterator.js';
 
 import type {
     ProjectGraphProjectNode, DependencyType, FileData,
@@ -26,10 +26,10 @@ import type {
     fileDataDepTarget, fileDataDepType, isProjectGraphExternalNode, isProjectGraphProjectNode,
     ProjectGraph, TargetConfiguration, ProjectsConfigurations,
     ProjectConfiguration
-} from "../project-graph/types.js";
+} from "./project-graph/types.js";
 
 
-import { getExecutorInformation, parseExecutor } from './executor-utils.js';
+import { getExecutorInformation, parseExecutor } from './executor-utils/index.js';
 // import {
 //   createPseudoTerminal,
 //   PseudoTerminal,
