@@ -3,7 +3,7 @@ import type {
     ProjectGraph, TargetConfiguration, ProjectConfiguration
 } from "../run/project-graph/types.js";
 
-
+export type * from '../run/project-graph/types.js'
 
 export type LoadOptions = LoadConfigOptions<ProjectConfiguration>;
 

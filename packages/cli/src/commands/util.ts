@@ -1,7 +1,9 @@
-import { ExecutorContext, Target } from "@adenta/core/types";
+import { ExecutorContext, Target, TargetConfiguration } from "@adenta/core/types";
 import { Command } from "commander";
 import { resolve } from "node:path";
-
+const t:TargetConfiguration={
+    
+}
 // Shared options that will be available across all commands
 export const addSharedOptions = (command: Command): Command => {
     return command
