@@ -1,7 +1,7 @@
 // borrowed run executor logic from nx
 // import { env as appendLocalEnv } from 'npm-run-path';
 // import { combineOptionsForExecutor, Schema } from '../../utils/params';
-import { handleErrors } from '../logger/handle-errors.js';
+import { log } from "../logger/self-logger.js";
 // import { printHelp } from '../../utils/print-help';
 // import { NxJsonConfiguration } from '../../config/nx-json';
 // import { relative } from 'node:path';
@@ -144,6 +144,24 @@ async function parseExecutorAndTarget(
 //     process.exit(0);
 //   }
 // }
+
+
+
+async function handleErrors(
+    isVerbose: boolean,
+    fn: Function
+): Promise<number> {
+    try {
+        const result = await fn();
+        if (typeof result === 'number') {
+            return result;
+        }
+        return 0;
+    } catch (err) {
+        log.error(err);
+        return 1
+    }
+}
 
 
 async function runExecutorInternal<T extends { success: boolean }>(

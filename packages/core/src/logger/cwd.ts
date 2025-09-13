@@ -1,5 +1,5 @@
 import { dirname } from 'pathe';
-import { isBrowser } from './env-utils.js';
+import { isBrowser } from '../utils/env-utils.js';
 
 
 export const getCwd = (): string => {

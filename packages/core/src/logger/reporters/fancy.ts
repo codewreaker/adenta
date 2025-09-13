@@ -8,7 +8,9 @@ import type { FormatOptions, LogObject, LogLevel, LogType } from "consola/browse
 import { BaseReporter } from "./basic.js";
 
 import _stringWidth from "string-width";
-import { parseStack } from "../../error.js";
+import { getCwd } from '../cwd.js';
+import { sep } from 'pathe';
+
 
 
 export const TYPE_COLOR_MAP: { [k in LogType]?: string } = {
@@ -39,6 +41,24 @@ const TYPE_ICONS: { [k in LogType]?: string } = {
   start: s("◐", "o"),
   log: "",
 };
+
+
+
+/**
+ * Parses a stack trace string and normalises its paths by removing the current working directory and the "file://" protocol.
+ * @param {string} stack - The stack trace string.
+ * @returns {string[]} An array of stack trace lines with normalised paths.
+ */
+function parseStack(stack: string, message: string) {
+  const cwd = getCwd() + sep;
+
+  const lines = stack
+    .split('\n')
+    .splice(message.split('\n').length)
+    .map((l) => l.trim().replace('file://', '').replace(cwd, ''));
+  return lines;
+}
+
 
 function stringWidth(str: string) {
   // https://github.com/unjs/consola/issues/204

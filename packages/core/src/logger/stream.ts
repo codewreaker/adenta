@@ -1,4 +1,4 @@
-import { isBrowser } from "./env-utils.js";
+import { isBrowser } from "../utils/env-utils.js";
 
 /**
  * Copied from https://github.com/unjs/consola/blob/512d570b3f99a27b6766a885cae2730aa3dc0ed4/src/utils/stream.ts
