@@ -1,8 +1,8 @@
 import { LoadConfigOptions } from "c12";
 import type {
-    ProjectGraph, TargetConfiguration, ProjectConfiguration
+    TargetConfiguration, ProjectConfiguration,
+    ProjectGraph
 } from "../run/project-graph/types.js";
-
 export type * from '../run/project-graph/types.js'
 
 export type LoadOptions = LoadConfigOptions<ProjectConfiguration>;
@@ -109,23 +109,24 @@ export interface Task {
 
 
 export interface ExecutorConfig {
-  schema: {
-    version?: number;
-    outputCapture?: 'direct-nodejs' | 'pipe';
-    continuous?: boolean;
-  };
-  implementationFactory: () => Executor;
+    schema: {
+        version?: number;
+        outputCapture?: 'direct-nodejs' | 'pipe';
+        continuous?: boolean;
+        properties?: any;
+    };
+    implementationFactory: () => Executor;
 }
 
 /**
  * An executor implementation that returns a promise
  */
 type PromiseExecutor<T = any> = (
-  /**
-   * Options that users configure or pass via the command line
-   */
-  options: T,
-  context: ExecutorContext
+    /**
+     * Options that users configure or pass via the command line
+     */
+    options: T,
+    context: ExecutorContext
 ) => Promise<{ success: boolean }>;
 
 
@@ -133,11 +134,11 @@ type PromiseExecutor<T = any> = (
  * An executor implementation that returns an async iterator
  */
 type AsyncIteratorExecutor<T = any> = (
-  /**
-   * Options that users configure or pass via the command line
-   */
-  options: T,
-  context: ExecutorContext
+    /**
+     * Options that users configure or pass via the command line
+     */
+    options: T,
+    context: ExecutorContext
 ) => AsyncIterableIterator<{ success: boolean }>;
 
 /**
@@ -188,4 +189,30 @@ export interface ExecutorContext {
     * Projects config
     */
     projectConfiguration: ProjectConfiguration | null;
+    projectGraph?: ProjectGraph;
+}
+
+export interface ExecutorJsonEntryConfig {
+    schema: string;
+    implementation: string;
+    batchImplementation?: string;
+    description?: string;
+    hasher?: string;
+}
+export type ExecutorsJsonEntry = string | ExecutorJsonEntryConfig;
+
+/**
+ * ExecutorJSON
+ */
+export interface ExecutorsJson {
+    executors?: Record<string, ExecutorsJsonEntry>;
+    builders?: Record<string, ExecutorsJsonEntry>;
+}
+
+export interface ExecutorTargetReturn {
+    executor: string;
+    implementationFactory: () => Executor;
+    nodeModule: string;
+    schema: ExecutorConfig['schema'];
+    targetConfig: TargetConfiguration<any>;
 }

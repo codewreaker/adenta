@@ -1,5 +1,6 @@
 import { run } from "@adenta/core/run";
-import { createTarget, createExecutorContext, addSharedOptions } from "./util.js";
+import { addSharedOptions } from "./util.js";
+import { createRunnerConfig } from '@adenta/core/run'
 import { Command } from "commander";
 
 export const runCommand = (program: Command) => {
@@ -12,21 +13,10 @@ export const runCommand = (program: Command) => {
     runCommander
         .argument("<executor>", "dev|build")
         .action((executor, options, command) => {
-            debugger
-
             const parentOptions = command.parent.opts();
             const projectName = parentOptions.project || 'default';
-
-            const target = createTarget(projectName, executor, parentOptions.configuration);
-            const context = createExecutorContext(parentOptions, executor);
-
-            context.projectConfiguration = {
-                ...context.projectConfiguration,
-                ...(options as any)
-            }
-
-
-
+            const configuration = parentOptions.configuration;
+            const { target, context } = createRunnerConfig(executor, projectName, configuration)
             run(target, context)
         })
 }

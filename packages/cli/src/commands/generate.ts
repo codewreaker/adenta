@@ -1,10 +1,10 @@
-// ============================================================================
-// GENERATE COMMAND
-
 import { run } from "@adenta/core";
 import type { Command } from "commander";
-import { addSharedOptions, createTarget, createExecutorContext } from "./util.js";
+import { addSharedOptions } from "./util.js";
+import { createRunnerConfig } from '@adenta/core/run'
 
+// ============================================================================
+// GENERATE COMMAND `npx adenta generate`
 // ============================================================================
 export const generateCommand = (program: Command) => addSharedOptions(
     program
@@ -17,14 +17,7 @@ export const generateCommand = (program: Command) => addSharedOptions(
     .option("--dry-run", "Show what would be generated without creating files")
     .action((schematic, name, options) => {
         const projectName = options.project || 'default';
-
-        const target = createTarget(projectName, 'generate', options.configuration);
-        const context = createExecutorContext(options, 'generate');
-
-        context.projectConfiguration = {
-            ...context.projectConfiguration,
-            ...(options as any)
-        }
-
+        const configuration = options.configuration;
+        const { target, context } = createRunnerConfig('generate', projectName, configuration)
         run(target, context)
     });

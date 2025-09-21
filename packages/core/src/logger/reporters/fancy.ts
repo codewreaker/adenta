@@ -3,14 +3,13 @@
  * but i've hijacked and removed all node related code so I can skip the conidional await issue
  * with JavaScript between import and require and also use a single logger for both browser and node
  */
-import { colors, stripAnsi, box, type BoxOpts} from "consola/utils";
+import { colors, stripAnsi, box, type BoxOpts } from "consola/utils";
 import type { FormatOptions, LogObject, LogLevel, LogType } from "consola/browser";
 import { BaseReporter } from "./basic.js";
 
 import _stringWidth from "string-width";
-import { getCwd } from '../cwd.js';
+import { getCwd } from '../../utils/env-utils.js';
 import { sep } from 'pathe';
-
 
 
 export const TYPE_COLOR_MAP: { [k in LogType]?: string } = {
@@ -43,7 +42,6 @@ const TYPE_ICONS: { [k in LogType]?: string } = {
 };
 
 
-
 /**
  * Parses a stack trace string and normalises its paths by removing the current working directory and the "file://" protocol.
  * @param {string} stack - The stack trace string.
@@ -66,7 +64,7 @@ function stringWidth(str: string) {
   if (!hasICU || !Intl.Segmenter) {
     return stripAnsi(str).length;
   }
-  debugger
+
   return _stringWidth(str);
 }
 
@@ -176,5 +174,5 @@ function getBgColor(color = "bgWhite") {
   return (
     (colors as any)[`bg${color[0].toUpperCase()}${color.slice(1)}`] ||
     colors.bgWhite
-  );
+  )
 }

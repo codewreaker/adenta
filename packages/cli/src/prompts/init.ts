@@ -1,4 +1,5 @@
 // packages/cli/src/commands/new.ts
+import { run, createRunnerConfig } from '@adenta/core/run'
 import { intro, text, select, confirm } from '@clack/prompts';
 import type { ProjectOptions } from '../types/index.js';
 import { InvalidOptionArgumentError, type Command } from 'commander';
@@ -54,8 +55,6 @@ export const createProjectPath = (input: string) => {
     }
 }
 
-
-
 export const validateProjectName = (val?: string) => {
     if (!val) return;
     const validation = validateName(val);
@@ -102,7 +101,11 @@ async function prompts(options: ProjectOptions, command: Command) {
         supabase: useSupabase
     };
 
+    const { target, context } = createRunnerConfig('build', name);
     console.log(answers)
+
+    await run(target, context)
+
 }
 
 export default prompts;

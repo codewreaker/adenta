@@ -1,3 +1,4 @@
+import { ExecutorContext } from "@adenta/core/types";
 import { PackageJson } from "../../types/package-json.types.js";
 
 export interface TargetDependencyConfig {
@@ -416,3 +417,11 @@ export interface ProjectGraphProcessorContext {
      */
     filesToProcess: ProjectFileMap;
 }
+
+
+export interface ExecutorOptions extends Omit<ExecutorContext, 'isVerbose' | 'target' | 'projectName' | 'configurationName'> {
+    verbose: ExecutorContext['isVerbose'];
+    configuration?: ExecutorContext['configurationName'];
+    project: ExecutorContext['projectName'];
+}
+

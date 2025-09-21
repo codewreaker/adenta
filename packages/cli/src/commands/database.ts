@@ -1,14 +1,12 @@
 
 
-import { run } from "@adenta/core/run";
-import { addSharedOptions, createExecutorContext, createTarget } from "./util.js";
+import { run, createRunnerConfig } from "@adenta/core/run";
+import { addSharedOptions } from "./util.js";
 import type { Command } from "commander";
 
 // ============================================================================
 // DATABASE COMMANDS
 // ============================================================================
-
-
 export const dbCommand = (program: Command) => {
     const dbCommander = addSharedOptions(
         program
@@ -23,16 +21,9 @@ export const dbCommand = (program: Command) => {
         .option("--to <version>", "Migrate to specific version")
         .action((options, command) => {
             const parentOptions = command.parent.opts();
+            const configuration = parentOptions.configuration;
             const projectName = parentOptions.project || 'default';
-
-            const target = createTarget(projectName, 'migrate', parentOptions.configuration);
-            const context = createExecutorContext(parentOptions, 'migrate');
-
-            context.projectConfiguration = {
-                ...context.projectConfiguration,
-                ...(options as any)
-            }
-            
+            const { target, context } = createRunnerConfig('migrate', projectName, configuration)
             run(target, context);
         });
 
@@ -43,14 +34,11 @@ export const dbCommand = (program: Command) => {
         .option("--reset", "Reset database before seeding")
         .action(async (options, command) => {
             const parentOptions = command.parent.opts();
+            const configuration = parentOptions.configuration;
             const projectName = parentOptions.project || 'default';
 
-            const target = createTarget(projectName, 'seed', parentOptions.configuration);
-            const context = createExecutorContext(parentOptions, 'seed');
-            context.projectConfiguration = {
-                ...context.projectConfiguration,
-                ...(options as any)
-            }
+            const { target, context } = createRunnerConfig('seed', projectName, configuration)
+
             try {
                 await run(target, context);
             } catch (error) {

@@ -11,12 +11,12 @@ import type {
 } from 'consola/browser';
 import {
   formatWithOptions,
-} from '../formatWithOptions.js';
+} from '../node-polyfills.js';
 
 import {
   fallbackStreams,
   writeStream
-} from '../stream.js'
+} from '../node-polyfills.js'
 
 
 

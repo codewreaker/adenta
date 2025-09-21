@@ -1,11 +1,6 @@
 import { Command } from "commander";
-import { run } from '@adenta/core/run'
-import {
-    addSharedOptions,
-    createExecutorContext,
-    createTarget
-} from "./util.js";
-
+import { run, createRunnerConfig} from '@adenta/core/run'
+import { addSharedOptions } from "./util.js";
 import { initCommand } from "./init.js";
 import { dbCommand } from "./database.js";
 import { generateCommand } from './generate.js'
@@ -20,7 +15,6 @@ program
 
 // Add shared options to the main program
 addSharedOptions(program);
-
 // ============================================================================
 // INIT COMMAND `npx adenta init`
 // ============================================================================
@@ -37,18 +31,17 @@ generateCommand(program)
 // RUN COMMAND `npx adenta run`
 // ============================================================================
 runCommand(program)
-
-
-
 // ============================================================================
 // NX-STYLE COMMANDS - Pattern: adenta myproject:build or myproject:build:production
 // ============================================================================
 
-// This will handle patterns like:
-// - adenta myproject:build
-// - adenta myproject:build:production  
-// - adenta myproject:dev
-// - adenta myproject:test:unit
+/**
+ * This will handle patterns like:
+ * - adenta myproject:build
+ * - adenta myproject:build:production  
+ * - adenta myproject:dev
+ * - adenta myproject:test:unit
+ */
 program
     .argument("[target]", "Project target in format '[project]:[target]' or '[project]:[target]:[config]'")
     .action(async (targetString, options) => {
@@ -64,11 +57,7 @@ program
         const [projectName, taskName, configName] = parts;
         const configuration = configName || options.configuration || 'development';
 
-        const target = createTarget(projectName, taskName, configuration);
-        const context = createExecutorContext({
-            ...options,
-            project: projectName
-        }, taskName);
+        const {target, context} = createRunnerConfig(taskName, projectName, configuration)
 
         try {
             await run(target, context);
@@ -77,7 +66,6 @@ program
             process.exit(1);
         }
     });
-
 
 
 // Error handling for unknown commands

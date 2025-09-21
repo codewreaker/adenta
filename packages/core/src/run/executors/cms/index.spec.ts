@@ -1,4 +1,4 @@
-import { ExecutorContext } from '@nx/devkit';
+import { ExecutorContext } from '../../../types/index.js';
 
 import { AdentaJsCmsExecutorSchema } from './schema.js';
 import executor from './index.js';
@@ -11,12 +11,7 @@ const context: ExecutorContext = {
   projectGraph: {
     nodes: {},
     dependencies: {},
-  },
-  projectsConfigurations: {
-    projects: {},
-    version: 2,
-  },
-  nxJsonConfiguration: {},
+  }
 };
 
 describe('AdentaJsCms Executor', () => {
