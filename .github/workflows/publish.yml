@@ -126,10 +126,16 @@ jobs:
         shell: bash
 
       - name: Generate Version and Changelog
-        run: pnpm exec nx release version --skip-publish
+        run: |
+          if [ -z "$(git tag)" ]; then
+            pnpm exec nx release version --specifier=minor --first-release
+          else
+            pnpm exec nx release version --specifier=minor
+          fi
         shell: bash
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NX_BRANCH: ${{ github.ref_name }}
 
       - name: Commit Version Changes
         run: |
