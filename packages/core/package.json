@@ -17,7 +17,8 @@
     "string-width": "8.1.0",
     "pathe": "^2.0.3",
     "@swc/helpers": "~0.5.17",
-    "resolve.exports": "2.0.3"
+    "resolve.exports": "2.0.3",
+    "@nx/devkit": "21.6.5"
   },
   "exports": {
     ".": "./index.js",

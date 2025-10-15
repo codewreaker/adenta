@@ -90,7 +90,7 @@ export function resolveImplementation(
             return require.resolve(maybeImplementation, {
                 paths: [directory],
             });
-        } catch { }
+        } catch {/** Nothing */}
     }
 
     throw new Error(
@@ -168,7 +168,7 @@ function tryResolveFromSource(
                 }
             }
         }
-    } catch { }
+    } catch {/** Nothing */}
 
     /**
      * Fall back to try to "guess" the source by checking the path in some common directories:
