@@ -37,7 +37,7 @@ export default [
           ],
         },
       ],
-      '@typescript-eslint/no-inferrable-types': 'off'
+      '@typescript-eslint/no-inferrable-types': 'off',
     },
   },
   {

@@ -43,7 +43,8 @@
       "packages/cli",
       "packages/cms",
       "packages/ui",
-      "packages/core"
+      "packages/core",
+      "mcp-server"
     ],
     "version": {
       "preVersionCommand": "pnpm exec nx run-many -t build -p cli cms ui core",
