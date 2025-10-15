@@ -7,4 +7,4 @@ import logger from './index.js';
 
 const log = logger('@adenta/core');
 
-export {log}
+export { log }

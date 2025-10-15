@@ -1,17 +1,18 @@
 import { NAME } from '../constants/index.js';
 import {createJiti} from 'jiti';
 import {loadConfig, createDefineConfig} from 'c12';
-import { AdentaConfig, LoadOptions } from '../types/index.js';
+import { LoadOptions } from '../types/index.js';
+import { ProjectConfiguration } from '../run/project-graph/types.js';
 
 const jiti = createJiti(import.meta.url);
 
-const loadAdentaConfig =(opts: LoadOptions = {})=>loadConfig<AdentaConfig>({
+const loadAdentaConfig =(opts: LoadOptions = {})=>loadConfig<ProjectConfiguration>({
     name: NAME,
     jiti,
     ...opts
 })
 
-const defineConfig = createDefineConfig<AdentaConfig>()
+const defineConfig = createDefineConfig<ProjectConfiguration>()
 
 
 export {

@@ -10,10 +10,13 @@ import type {
   ConsolaOptions,
 } from 'consola/browser';
 import {
-  writeStream, 
-  fallbackStreams,
   formatWithOptions,
-} from '../../utils/index.js';
+} from '../node-polyfills.js';
+
+import {
+  fallbackStreams,
+  writeStream
+} from '../node-polyfills.js'
 
 
 

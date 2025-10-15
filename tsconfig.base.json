@@ -15,12 +15,18 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@/*": [
+        "./src/*"
+      ],
+      "@payload-config": [
+        "./src/payload.config.ts"
+      ],
       "@adenta/cli": ["packages/cli/src/index.ts"],
       "@adenta/cli/*": ["packages/cli/src/*/index.ts"],
       "@adenta/cms": ["packages/cms/src/index.ts"],
       "@adenta/cms/*": ["packages/cms/src/*/index.ts"],
-      "@adenta/core/*": ["packages/core/src/*/index.ts"],
       "@adenta/core": ["packages/core/src/index.ts"],
+      "@adenta/core/*": ["packages/core/src/*/index.ts"],
       "@adenta/ui": ["packages/ui/src/index.ts"],
       "@adenta/ui/*": ["packages/ui/src/*/index.ts"]
     }

@@ -1,4 +1,5 @@
-# This workflow will run tests using node and then publish a package to GitHub Packages when a release is created
+# This workflow automatically versions, builds, tests, and publishes Nx monorepo packages to npm
+# It uses OIDC trusted publishing for enhanced security
 # For more information see: https://docs.github.com/en/actions/publishing-packages/publishing-nodejs-packages
 
 name: "@adenta-npm-publish"
@@ -7,20 +8,18 @@ on:
   push:
     branches:
       - main    # Triggers when code is pushed to main branch
-    tags:
-      - 'v*.*.*'   # Triggers when version tags are pushed
-  release:
-    types: [created]   # Triggers when a new release is created
 
 jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
-      contents: write # for tagging
-      id-token: write # needed for provenance data generation
+      id-token: write  # Required for OIDC trusted publishing
+      contents: read
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Required for git history
         
       - name: Install pnpm
         uses: pnpm/action-setup@v2
@@ -34,42 +33,164 @@ jobs:
           cache: "pnpm"
           registry-url: https://registry.npmjs.org/
 
+      - name: Restore dependencies
+        uses: actions/cache@v3
+        with:
+          path: |
+            node_modules
+            packages/*/node_modules
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
 
       - name: Install dependencies
-        run: pnpm install
+        run: pnpm install --frozen-lockfile
         shell: bash
 
       - name: Print Environment Info
         run: pnpm exec nx report
         shell: bash
 
-      - name: Run Tests
-        run: echo "Test Here"
+      - name: Build packages
+        run: pnpm exec nx run-many --target=build --all
         shell: bash
-       
-      # Todo make this step automated
-      # - name: Version and Changelog
-      #   run: pnpm exec nx release --skip-publish --specifier prerelease --first-release
-      #   shell: bash
 
-      - name: Publish packages
+  test:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write  # Required for OIDC trusted publishing
+      contents: read
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Required for git history
+        
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 10
+          
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "pnpm"
+          registry-url: https://registry.npmjs.org/
+
+      - name: Restore dependencies
+        uses: actions/cache@v3
+        with:
+          path: |
+            node_modules
+            packages/*/node_modules
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+        shell: bash
+
+      - name: Run Tests
+        run: pnpm exec nx run-many --target=test --all
+        shell: bash
+
+  version:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write  # Required for OIDC trusted publishing
+      contents: write  # Required for committing version changes
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Required for git history
+          token: ${{ secrets.GITHUB_TOKEN }}
+        
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 10
+          
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "pnpm"
+          registry-url: https://registry.npmjs.org/
+
+      - name: Restore dependencies
+        uses: actions/cache@v3
+        with:
+          path: |
+            node_modules
+            packages/*/node_modules
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+        shell: bash
+
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+        shell: bash
+
+      - name: Generate Version and Changelog
+        run: pnpm exec nx release version --skip-publish
+        shell: bash
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Commit Version Changes
+        run: |
+          git add .
+          git diff --staged --quiet || git commit -m "chore(release): update version and changelog"
+          git push origin main --follow-tags
+        shell: bash
+
+  publish:
+    needs: [build, test, version]
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write  # Required for OIDC trusted publishing
+      contents: write  # for tagging and releases
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Required for git history
+        
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 10
+          
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "pnpm"
+          registry-url: https://registry.npmjs.org/
+
+      - name: Restore dependencies
+        uses: actions/cache@v3
+        with:
+          path: |
+            node_modules
+            packages/*/node_modules
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+        shell: bash
+
+      - name: Ensure npm 11.5.1 or later for trusted publishing
+        run: npm install -g npm@latest
+        shell: bash
+
+      - name: Publish packages with Nx Release
         run: pnpm exec nx release publish --verbose
         shell: bash
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          # No NODE_AUTH_TOKEN needed with trusted publishing!
+          # OIDC token is automatically generated and used
           NPM_CONFIG_PROVENANCE: true
-
-  # publish-npm:
-  #   needs: build
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v4
-  #     - uses: actions/setup-node@v4
-  #       with:
-  #         node-version: ${{ matrix.node-version }}
-  #         registry-url: https://registry.npmjs.org/
-          
-  #     - name: Install pnpm
-  #       uses: pnpm/action-setup@v2
-  #       with:
-  #         version: 10

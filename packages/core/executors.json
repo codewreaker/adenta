@@ -1,0 +1,19 @@
+{
+  "executors": {
+    "@adenta/cms:payload": {
+      "implementation": "./src/executors/cms/index",
+      "schema": "./src/executors/cms/schema.json",
+      "description": "Executor to handle all adenta cms actions"
+    },
+    "@adenta/cms:db": {
+      "implementation": "./src/executors/database/index",
+      "schema": "./src/executors/database/schema.json",
+      "description": "Executor to handle all adenta database actions"
+    },
+    "@adenta/ui:web": {
+      "implementation": "./src/executors/ui/index",
+      "schema": "./src/executors/ui/schema.json",
+      "description": "Executor to handle all dev UI actions in config"
+    }
+  }
+}

@@ -1,4 +1,4 @@
-import fs from 'node:fs';
+import fs, {readFileSync} from 'node:fs';
 
 
 export function detectPackageManager() {
@@ -17,3 +17,7 @@ export const execString = (pm:'npm'|'yarn'|'pnpm'=detectPackageManager()) => (({
         yarn: 'yarn dlx',
         pnpm: 'pnpm exec',
     })[pm] || 'npx');
+
+
+
+export const readJsonFile = (path: string) => (JSON.parse(readFileSync(path, 'utf8')));
