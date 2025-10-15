@@ -1,5 +1,6 @@
-# This workflow automatically versions, builds, tests, and publishes Nx monorepo packages to npm
-# It uses OIDC trusted publishing for enhanced security
+# Optimized workflow with matrix strategy for Nx monorepo
+# Sequential execution: build -> version -> test (matrix) -> lint (matrix) -> publish
+# Uses package-based matrix strategy for parallel testing and linting
 # For more information see: https://docs.github.com/en/actions/publishing-packages/publishing-nodejs-packages
 
 name: "@adenta-npm-publish"
@@ -10,6 +11,7 @@ on:
       - main    # Triggers when code is pushed to main branch
 
 jobs:
+  # Step 1: Build all packages first (single job - dependencies matter)
   build:
     runs-on: ubuntu-latest
     permissions:
@@ -33,16 +35,21 @@ jobs:
           cache: "pnpm"
           registry-url: https://registry.npmjs.org/
 
-      - name: Restore dependencies
+      - name: Cache dependencies
         uses: actions/cache@v3
         with:
           path: |
+            ~/.pnpm-store
             node_modules
             packages/*/node_modules
           key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-
 
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: |
+          pnpm config set store-dir ~/.pnpm-store
+          pnpm install --frozen-lockfile
         shell: bash
 
       - name: Print Environment Info
@@ -53,46 +60,28 @@ jobs:
         run: pnpm exec nx run-many --target=build --all
         shell: bash
 
-  test:
-    runs-on: ubuntu-latest
-    permissions:
-      id-token: write  # Required for OIDC trusted publishing
-      contents: read
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
         with:
-          fetch-depth: 0  # Required for git history
-        
-      - name: Install pnpm
-        uses: pnpm/action-setup@v2
-        with:
-          version: 10
-          
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: "pnpm"
-          registry-url: https://registry.npmjs.org/
+          name: build-artifacts
+          path: |
+            dist/
+            packages/*/dist/
+          retention-days: 1
 
-      - name: Restore dependencies
-        uses: actions/cache@v3
+      - name: Upload dependency cache
+        uses: actions/upload-artifact@v4
         with:
+          name: dependency-cache
           path: |
             node_modules
             packages/*/node_modules
-          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
+            ~/.pnpm-store
+          retention-days: 1
 
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-        shell: bash
-
-      - name: Run Tests
-        run: pnpm exec nx run-many --target=test --all
-        shell: bash
-
+  # Step 2: Version packages (single job - modifies repo)
   version:
+    needs: build
     runs-on: ubuntu-latest
     permissions:
       id-token: write  # Required for OIDC trusted publishing
@@ -116,16 +105,21 @@ jobs:
           cache: "pnpm"
           registry-url: https://registry.npmjs.org/
 
-      - name: Restore dependencies
-        uses: actions/cache@v3
+      - name: Download dependency cache
+        uses: actions/download-artifact@v4
         with:
-          path: |
-            node_modules
-            packages/*/node_modules
-          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
+          name: dependency-cache
+          path: .
 
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: build-artifacts
+          path: .
+
+      - name: Configure pnpm store
+        run: |
+          pnpm config set store-dir ~/.pnpm-store
         shell: bash
 
       - name: Configure Git
@@ -147,8 +141,126 @@ jobs:
           git push origin main --follow-tags
         shell: bash
 
+  # Step 3: Matrix strategy for testing - parallel package testing
+  test:
+    needs: version
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        # Test by package - each package gets its own runner
+        package: [cli, core, ui, cms, sandbox]
+        # Include test type for packages that have multiple test types
+        include:
+          - package: cms
+            test-type: unit
+          - package: cms
+            test-type: integration
+          - package: cms
+            test-type: e2e
+          - package: cli
+            test-type: unit
+          - package: core
+            test-type: unit
+          - package: ui
+            test-type: unit
+          - package: sandbox
+            test-type: unit
+    permissions:
+      id-token: write  # Required for OIDC trusted publishing
+      contents: read
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Required for git history
+        
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 10
+          
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "pnpm"
+          registry-url: https://registry.npmjs.org/
+
+      - name: Download dependency cache
+        uses: actions/download-artifact@v4
+        with:
+          name: dependency-cache
+          path: .
+
+      - name: Configure pnpm store
+        run: |
+          pnpm config set store-dir ~/.pnpm-store
+        shell: bash
+
+      - name: Run Tests
+        run: |
+          case "${{ matrix.test-type }}" in
+            unit)
+              pnpm exec nx test ${{ matrix.package }}
+              ;;
+            integration)
+              pnpm exec nx run ${{ matrix.package }}:test:int
+              ;;
+            e2e)
+              pnpm exec nx run ${{ matrix.package }}:test:e2e
+              ;;
+            *)
+              pnpm exec nx test ${{ matrix.package }}
+              ;;
+          esac
+        shell: bash
+
+  # Step 4: Lint all packages in parallel
+  lint:
+    needs: version
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        package: [cli, core, ui, cms, sandbox, documentation]
+    permissions:
+      id-token: write  # Required for OIDC trusted publishing
+      contents: read
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Required for git history
+        
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 10
+          
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "pnpm"
+          registry-url: https://registry.npmjs.org/
+
+      - name: Download dependency cache
+        uses: actions/download-artifact@v4
+        with:
+          name: dependency-cache
+          path: .
+
+      - name: Configure pnpm store
+        run: |
+          pnpm config set store-dir ~/.pnpm-store
+        shell: bash
+
+      - name: Run Lint
+        run: pnpm exec nx lint ${{ matrix.package }}
+        shell: bash
+
+  # Step 5: Publish packages (depends on all tests passing)
   publish:
-    needs: [build, test, version]
+    needs: [build, version, test, lint]
     runs-on: ubuntu-latest
     permissions:
       id-token: write  # Required for OIDC trusted publishing
@@ -171,16 +283,15 @@ jobs:
           cache: "pnpm"
           registry-url: https://registry.npmjs.org/
 
-      - name: Restore dependencies
-        uses: actions/cache@v3
+      - name: Download dependency cache
+        uses: actions/download-artifact@v4
         with:
-          path: |
-            node_modules
-            packages/*/node_modules
-          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
+          name: dependency-cache
+          path: .
 
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+      - name: Configure pnpm store
+        run: |
+          pnpm config set store-dir ~/.pnpm-store
         shell: bash
 
       - name: Ensure npm 11.5.1 or later for trusted publishing
