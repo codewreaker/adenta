@@ -128,9 +128,9 @@ jobs:
       - name: Generate Version and Changelog
         run: |
           if [ -z "$(git tag)" ]; then
-            pnpm exec nx release version --specifier=minor --first-release
+            pnpm exec nx release version --specifier=patch --first-release
           else
-            pnpm exec nx release version --specifier=minor
+            pnpm exec nx release version --specifier=patch
           fi
         shell: bash
         env:
