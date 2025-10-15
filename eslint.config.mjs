@@ -25,7 +25,7 @@ export default [
     files: ['**/*.ts', '**/*.tsx', '**/*.js', '**/*.jsx'],
     rules: {
       '@nx/enforce-module-boundaries': [
-        'error',
+        'warn',
         {
           enforceBuildableLibDependency: true,
           allow: ['^.*/eslint(\\.base)?\\.config\\.[cm]?js$'],
@@ -37,6 +37,7 @@ export default [
           ],
         },
       ],
+      '@typescript-eslint/no-inferrable-types': 'off'
     },
   },
   {

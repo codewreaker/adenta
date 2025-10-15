@@ -74,13 +74,11 @@ async function* promiseToIterator<T extends { success: boolean }>(
 
 async function handleErrors(
     isVerbose: boolean,
-    fn: Function
+    fn: ()=>void
 ): Promise<number> {
     try {
         const result = await fn();
-        debugger
         if (typeof result === 'number') {
-            debugger
             return result;
         }
         return 0;
