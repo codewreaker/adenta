@@ -95,13 +95,6 @@
                 "command": "nx run cms:test:int"
             }
         },
-        "test:e2e": {
-            "executor": "nx:run-commands",
-            "options": {
-                "command": "NODE_OPTIONS=\"--no-deprecation --no-experimental-strip-types\" playwright test",
-                "cwd": "packages/cms"
-            }
-        },
         "test:int": {
             "executor": "nx:run-commands",
             "options": {
