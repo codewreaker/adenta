@@ -1,6 +1,7 @@
 # Optimized workflow with matrix strategy for Nx monorepo
 # Sequential execution: build -> version -> test (matrix) -> lint (matrix) -> publish
 # Uses package-based matrix strategy for parallel testing and linting
+# Optimized dependency installation with enhanced caching
 # For more information see: https://docs.github.com/en/actions/publishing-packages/publishing-nodejs-packages
 
 name: "@adenta-npm-publish"
@@ -35,7 +36,7 @@ jobs:
           cache: "pnpm"
           registry-url: https://registry.npmjs.org/
 
-      - name: Cache dependencies
+      - name: Cache pnpm store and dependencies
         uses: actions/cache@v3
         with:
           path: |
@@ -49,7 +50,7 @@ jobs:
       - name: Install dependencies
         run: |
           pnpm config set store-dir ~/.pnpm-store
-          pnpm install --frozen-lockfile
+          pnpm install --frozen-lockfile --prefer-offline
         shell: bash
 
       - name: Print Environment Info
@@ -67,16 +68,6 @@ jobs:
           path: |
             dist/
             packages/*/dist/
-          retention-days: 1
-
-      - name: Upload dependency cache
-        uses: actions/upload-artifact@v4
-        with:
-          name: dependency-cache
-          path: |
-            node_modules
-            packages/*/node_modules
-            ~/.pnpm-store
           retention-days: 1
 
   # Step 2: Version packages (single job - modifies repo)
@@ -105,22 +96,28 @@ jobs:
           cache: "pnpm"
           registry-url: https://registry.npmjs.org/
 
-      - name: Download dependency cache
-        uses: actions/download-artifact@v4
+      - name: Cache pnpm store and dependencies
+        uses: actions/cache@v3
         with:
-          name: dependency-cache
-          path: .
+          path: |
+            ~/.pnpm-store
+            node_modules
+            packages/*/node_modules
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-
+
+      - name: Install dependencies
+        run: |
+          pnpm config set store-dir ~/.pnpm-store
+          pnpm install --frozen-lockfile --prefer-offline
+        shell: bash
 
       - name: Download build artifacts
         uses: actions/download-artifact@v4
         with:
           name: build-artifacts
           path: .
-
-      - name: Configure pnpm store
-        run: |
-          pnpm config set store-dir ~/.pnpm-store
-        shell: bash
 
       - name: Configure Git
         run: |
@@ -186,15 +183,21 @@ jobs:
           cache: "pnpm"
           registry-url: https://registry.npmjs.org/
 
-      - name: Download dependency cache
-        uses: actions/download-artifact@v4
+      - name: Cache pnpm store and dependencies
+        uses: actions/cache@v3
         with:
-          name: dependency-cache
-          path: .
+          path: |
+            ~/.pnpm-store
+            node_modules
+            packages/*/node_modules
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-
 
-      - name: Configure pnpm store
+      - name: Install dependencies
         run: |
           pnpm config set store-dir ~/.pnpm-store
+          pnpm install --frozen-lockfile --prefer-offline
         shell: bash
 
       - name: Run Tests
@@ -243,15 +246,21 @@ jobs:
           cache: "pnpm"
           registry-url: https://registry.npmjs.org/
 
-      - name: Download dependency cache
-        uses: actions/download-artifact@v4
+      - name: Cache pnpm store and dependencies
+        uses: actions/cache@v3
         with:
-          name: dependency-cache
-          path: .
+          path: |
+            ~/.pnpm-store
+            node_modules
+            packages/*/node_modules
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-
 
-      - name: Configure pnpm store
+      - name: Install dependencies
         run: |
           pnpm config set store-dir ~/.pnpm-store
+          pnpm install --frozen-lockfile --prefer-offline
         shell: bash
 
       - name: Run Lint
@@ -283,15 +292,21 @@ jobs:
           cache: "pnpm"
           registry-url: https://registry.npmjs.org/
 
-      - name: Download dependency cache
-        uses: actions/download-artifact@v4
+      - name: Cache pnpm store and dependencies
+        uses: actions/cache@v3
         with:
-          name: dependency-cache
-          path: .
+          path: |
+            ~/.pnpm-store
+            node_modules
+            packages/*/node_modules
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-
 
-      - name: Configure pnpm store
+      - name: Install dependencies
         run: |
           pnpm config set store-dir ~/.pnpm-store
+          pnpm install --frozen-lockfile --prefer-offline
         shell: bash
 
       - name: Ensure npm 11.5.1 or later for trusted publishing
