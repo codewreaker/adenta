@@ -5,9 +5,9 @@
     "url": "https://github.com/codewreaker/adenta"
   },
   "bin": {
-    "adenta":"./bin/index.ts"
+    "adenta": "./bin/index.ts"
   },
-  "version": "0.0.9-6",
+  "version": "0.1.0",
   "type": "module",
   "main": "./src/index.js",
   "types": "./src/index.d.ts",
