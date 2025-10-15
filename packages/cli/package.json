@@ -16,7 +16,8 @@
     "@clack/prompts": "^0.11.0",
     "picocolors": "~1.1.1",
     "commander": "^14.0.0",
-    "tsx": "^4.20.5"
+    "pathe": "^2.0.3",
+    "@swc/helpers": "~0.5.17"
   },
   "publishConfig": {
     "access": "public"

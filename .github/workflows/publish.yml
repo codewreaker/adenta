@@ -144,30 +144,10 @@ jobs:
           git push origin main --follow-tags
         shell: bash
 
-  # Step 3: Matrix strategy for testing - parallel package testing
+  # Step 3: Run tests for all packages
   test:
     needs: version
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        # Test by package - each package gets its own runner
-        package: [cli, core, ui, cms, sandbox]
-        # Include test type for packages that have multiple test types
-        include:
-          - package: cms
-            test-type: unit
-          - package: cms
-            test-type: integration
-          - package: cms
-            test-type: e2e
-          - package: cli
-            test-type: unit
-          - package: core
-            test-type: unit
-          - package: ui
-            test-type: unit
-          - package: sandbox
-            test-type: unit
     permissions:
       id-token: write  # Required for OIDC trusted publishing
       contents: read
@@ -208,29 +188,17 @@ jobs:
 
       - name: Run Tests
         run: |
-          case "${{ matrix.test-type }}" in
-            unit)
-              pnpm exec nx test ${{ matrix.package }}
-              ;;
-            integration)
-              pnpm exec nx run ${{ matrix.package }}:test:int
-              ;;
-            e2e)
-              pnpm exec nx run ${{ matrix.package }}:test:e2e
-              ;;
-            *)
-              pnpm exec nx test ${{ matrix.package }}
-              ;;
-          esac
+          # Run all unit tests in parallel
+          pnpm exec nx run-many --target=test --all --parallel
+          # Run integration and e2e tests for cms
+          pnpm exec nx run cms:test:int
+          pnpm exec nx run cms:test:e2e
         shell: bash
 
-  # Step 4: Lint all packages in parallel
+  # Step 4: Run lint for all packages
   lint:
     needs: version
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        package: [cli, core, ui, cms, sandbox, documentation]
     permissions:
       id-token: write  # Required for OIDC trusted publishing
       contents: read
@@ -270,7 +238,7 @@ jobs:
         shell: bash
 
       - name: Run Lint
-        run: pnpm exec nx lint ${{ matrix.package }}
+        run: pnpm exec nx run-many --target=lint --all --parallel
         shell: bash
 
   # Step 5: Publish packages (depends on all tests passing)
