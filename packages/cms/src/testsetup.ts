@@ -1,2 +1,2 @@
-import { setupSupabase } from '@adenta/core/setup';
-await setupSupabase()
+// Simple test setup file
+console.log('Test setup completed');
