@@ -1,7 +1,7 @@
 import { run } from "@adenta/core";
 import type { Command } from "commander";
 import { addSharedOptions } from "./util.js";
-import { createRunnerConfig } from '@adenta/core/run'
+import { createRunnerConfig } from '@adenta/core'
 
 // ============================================================================
 // GENERATE COMMAND `npx adenta generate`

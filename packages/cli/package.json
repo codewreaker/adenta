@@ -12,6 +12,7 @@
   "main": "./src/index.js",
   "types": "./src/index.d.ts",
   "dependencies": {
+    "@adenta/core": "workspace:*",
     "@clack/prompts": "^0.11.0",
     "picocolors": "~1.1.1",
     "commander": "^14.0.0",

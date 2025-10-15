@@ -1,5 +1,5 @@
 // packages/cli/src/commands/new.ts
-import { run, createRunnerConfig } from '@adenta/core/run'
+import { run, createRunnerConfig } from '@adenta/core'
 import { intro, text, select, confirm } from '@clack/prompts';
 import type { ProjectOptions } from '../types/index.js';
 import { InvalidOptionArgumentError, type Command } from 'commander';

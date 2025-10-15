@@ -1,6 +1,6 @@
 
 
-import { run, createRunnerConfig } from "@adenta/core/run";
+import { run, createRunnerConfig } from "@adenta/core";
 import { addSharedOptions } from "./util.js";
 import type { Command } from "commander";
 

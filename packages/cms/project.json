@@ -92,11 +92,7 @@
         "test": {
             "executor": "nx:run-commands",
             "options": {
-                "commands": [
-                    "nx run cms:test:int",
-                    "nx run cms:test:e2e"
-                ],
-                "parallel": false
+                "command": "nx run cms:test:int"
             }
         },
         "test:e2e": {

@@ -1,5 +1,5 @@
 import { Command } from "commander";
-import { run, createRunnerConfig} from '@adenta/core/run'
+import { run, createRunnerConfig} from '@adenta/core'
 import { addSharedOptions } from "./util.js";
 import { initCommand } from "./init.js";
 import { dbCommand } from "./database.js";
